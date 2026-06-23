@@ -19,7 +19,7 @@
   --ink:       #f4f6fa;
   --muted:     #9aa6b8;
   --line:      rgba(255,255,255,.10);
-  --accent:    #f2c84b;   /* warm yellow, echoing the reference */
+  --accent:    #ffffff;   /* neutral accent (no yellow) */
   --accent-ink:#0a0e14;
   --maxw:      1320px;
   --hero-gutter: clamp(22px, 5vw, 64px); /* shared inset for all hero edges */
@@ -257,16 +257,38 @@ ul, ol { list-style: none; }
 .hero__sub { color: #fff; font-size: clamp(.95rem, 2vw, 1.2rem); }
 
 .hero__play {
-  display: flex; align-items: center; gap: 16px;
+  display: flex; align-items: center; gap: 18px;
   background: none; border: 0; cursor: pointer; color: var(--ink); text-align: left;
 }
 .hero__play-icon {
-  width: 64px; height: 64px; border-radius: 50%;
-  border: 1px solid rgba(255,255,255,.5);
-  display: grid; place-items: center; font-size: .9rem;
-  transition: background .3s, color .3s, transform .3s; flex: none;
+  position: relative; width: 66px; height: 66px; border-radius: 50%;
+  display: grid; place-items: center; font-size: .95rem; flex: none; color: #fff;
+  background: rgba(255,255,255,.08); backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,.4);
+  transition: background .35s var(--ease), color .35s var(--ease), transform .35s var(--ease);
 }
-.hero__play:hover .hero__play-icon { background: var(--accent); color: var(--accent-ink); transform: scale(1.06); }
+/* nudge the ▶ glyph to optical centre */
+.hero__play-icon { padding-left: 3px; }
+/* outer playful rotating dashed circle */
+.hero__play-icon::before {
+  content: ""; position: absolute; inset: -10px; border-radius: 50%;
+  border: 1.5px dashed rgba(255,255,255,.45);
+  animation: playSpin 9s linear infinite;
+}
+/* soft sonar ring */
+.hero__play-icon::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.6); opacity: 0;
+  animation: playPulse 2.6s var(--ease) infinite;
+}
+@keyframes playSpin { to { transform: rotate(360deg); } }
+@keyframes playPulse {
+  0%   { transform: scale(1);    opacity: .75; }
+  75%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+.hero__play:hover .hero__play-icon { background: #fff; color: var(--bg); transform: scale(1.08); }
+.hero__play:hover .hero__play-icon::before { animation-duration: 3s; border-color: rgba(255,255,255,.85); }
 .hero__play-label { font-size: .82rem; line-height: 1.4; color: #fff; }
 
 .hero__scroll {
@@ -296,7 +318,7 @@ ul, ol { list-style: none; }
   transition: transform .8s var(--ease), filter .5s;
   filter: saturate(.9) brightness(.78);
 }
-.work-card:hover { border-color: rgba(242,200,75,.5); }
+.work-card:hover { border-color: rgba(255,255,255,.5); }
 .work-card:hover .work-card__bg { transform: scale(1.07); filter: saturate(1.05) brightness(.9); }
 .work-card__grad { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(10,14,20,.9) 100%); }
 .work-card__meta {
@@ -348,7 +370,7 @@ ul, ol { list-style: none; }
   display: flex; flex-direction: column;
   transition: transform .4s var(--ease), border-color .4s;
 }
-.plan:hover { transform: translateY(-6px); border-color: rgba(242,200,75,.4); }
+.plan:hover { transform: translateY(-6px); border-color: rgba(255,255,255,.4); }
 .plan--featured { border-color: var(--accent); background: linear-gradient(180deg, #1a2230, #121927); }
 .plan__badge {
   position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
