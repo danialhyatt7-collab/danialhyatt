@@ -9,12 +9,12 @@
    Leave poster empty to use the generated gradient fallback.
 ------------------------------------------------------------- */
 const WORK = [
-  { cat: "Tech · 15s",       title: "Pulse App Launch",   poster: "", video: "" },
-  { cat: "Beauty · 15s",     title: "Lumé Serum",         poster: "", video: "" },
-  { cat: "Beverage · 15s",   title: "Hydra Can Drop",     poster: "", video: "" },
-  { cat: "Fashion · 15s",    title: "Nordic Sneaker",     poster: "", video: "" },
-  { cat: "SaaS · 15s",       title: "Flowstack Promo",    poster: "", video: "" },
-  { cat: "Gadget · 15s",     title: "Aero Earbuds",       poster: "", video: "" },
+  { cat: "Tech · 15s",       title: "Pulse App Launch",   poster: "assets/img/work-1.jpg", video: "" },
+  { cat: "Beauty · 15s",     title: "Lumé Serum",         poster: "assets/img/work-2.jpg", video: "" },
+  { cat: "Beverage · 15s",   title: "Hydra Can Drop",     poster: "assets/img/work-3.jpg", video: "" },
+  { cat: "Fashion · 15s",    title: "Nordic Sneaker",     poster: "assets/img/work-4.jpg", video: "" },
+  { cat: "SaaS · 15s",       title: "Flowstack Promo",    poster: "assets/img/work-5.jpg", video: "" },
+  { cat: "Gadget · 15s",     title: "Aero Earbuds",       poster: "assets/img/work-6.jpg", video: "" },
 ];
 
 const GRADIENTS = [
@@ -154,7 +154,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbo
 
 /* Hero reel button → opens showreel in lightbox */
 document.getElementById("reelBtn")?.addEventListener("click", () =>
-  openLightbox({ title: "2024 Showreel", video: "assets/video/showreel.mp4" })
+  openLightbox({ title: "2024 Showreel", video: "assets/video/hero.mp4" })
 );
 
 /* ---------- Contact form (front-end only) ------------------- */
