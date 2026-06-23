@@ -29,7 +29,7 @@
   <!-- ===== Top Nav ===== -->
   <header class="nav" id="nav">
     <a href="#home" class="nav__logo" aria-label="DanialH home">
-      <span class="nav__logo-mark" aria-hidden="true"></span>
+      <canvas class="nav__logo-canvas" id="logoCanvas" width="34" height="34" aria-hidden="true"></canvas>
       <span class="nav__logo-text">DanialH.</span>
     </a>
 
@@ -249,10 +249,49 @@
       </div>
 
       <footer class="footer">
-        <span>© <span id="year"></span> Danial Hyatt</span>
+        <span>© <span id="year"></span> DanialH.</span>
         <span>Product Motion Design</span>
         <a href="#home">Back to top &#94;</a>
       </footer>
+    </section>
+
+    <!-- ===== Studio status panel (under footer) ===== -->
+    <section class="studio" aria-label="Studio status">
+      <div class="studio__tabs">
+        <div class="studio__panel studio__panel--active">Info &amp; Credits</div>
+        <a href="#contact" class="studio__panel studio__panel--ghost">
+          <span>Launch Campaign</span>
+          <span class="studio__panel-tag">GBL · M</span>
+        </a>
+      </div>
+
+      <div class="studio__player">
+        <button class="studio__play" id="studioPlay" aria-label="Toggle playback">
+          <span class="studio__play-ico" aria-hidden="true"></span>
+          <span class="studio__play-label">Pause</span>
+        </button>
+        <div class="studio__track"><span class="studio__track-fill" id="studioFill"></span></div>
+        <span class="studio__time" id="studioTime">00:54</span>
+        <button class="studio__sound" id="studioSound">Sound&nbsp;<b>On</b></button>
+      </div>
+
+      <div class="studio__cities">
+        <div class="studio__city">
+          <span class="studio__clock" data-tz="Europe/Paris">--:--:--</span>
+          <h4>Paris</h4>
+          <p>Available for work<br />CET · UTC+1<br />Remote worldwide</p>
+        </div>
+        <div class="studio__city">
+          <span class="studio__clock" data-tz="America/New_York">--:--:--</span>
+          <h4>New York</h4>
+          <p>Available for work<br />EST · UTC−5<br />Remote worldwide</p>
+        </div>
+        <div class="studio__city">
+          <span class="studio__clock" data-tz="Asia/Dubai">--:--:--</span>
+          <h4>Dubai</h4>
+          <p>Available for work<br />GST · UTC+4<br />Remote worldwide</p>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -263,5 +302,54 @@
   </div>
 
   <script src="script.js"></script>
+
+  <!-- 3D animated play-triangle logo (three.js) -->
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js";
+    const canvas = document.getElementById("logoCanvas");
+    if (canvas) {
+      const S = 34;
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(S, S, false);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      camera.position.z = 4.2;
+
+      // a play-triangle, extruded into 3D with soft bevels
+      const shape = new THREE.Shape();
+      shape.moveTo(-0.7, -0.92);
+      shape.lineTo(-0.7, 0.92);
+      shape.lineTo(1.0, 0);
+      shape.lineTo(-0.7, -0.92);
+      const geo = new THREE.ExtrudeGeometry(shape, {
+        depth: 0.55, bevelEnabled: true, bevelThickness: 0.14, bevelSize: 0.14, bevelSegments: 3
+      });
+      geo.center();
+      const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.65, roughness: 0.22 });
+      const mesh = new THREE.Mesh(geo, mat);
+      scene.add(mesh);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+      const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(2, 2.5, 3); scene.add(key);
+      const rim = new THREE.PointLight(0xf2c84b, 4, 12); rim.position.set(-2.4, -1.5, 2); scene.add(rim);
+
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let hover = 0;
+      canvas.closest(".nav__logo")?.addEventListener("mouseenter", () => (hover = 1));
+      canvas.closest(".nav__logo")?.addEventListener("mouseleave", () => (hover = 0));
+
+      let t = 0;
+      function loop() {
+        t += 0.016 * (1 + hover * 1.6);
+        mesh.rotation.y = Math.sin(t * 0.8) * 0.9 + t * 0.35;
+        mesh.rotation.x = Math.sin(t * 0.6) * 0.22;
+        renderer.render(scene, camera);
+        if (!reduce) requestAnimationFrame(loop);
+      }
+      loop();
+    }
+  </script>
 </body>
 </html>

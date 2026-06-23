@@ -172,3 +172,46 @@ form?.addEventListener("submit", e => {
 
 /* ---------- Year ------------------------------------------- */
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ============================================================
+   Studio status panel — playback toggle, progress, live clocks
+   ============================================================ */
+(function studioPanel() {
+  const play = document.getElementById("studioPlay");
+  if (!play) return;
+  const fill = document.getElementById("studioFill");
+  const timeEl = document.getElementById("studioTime");
+  const sound = document.getElementById("studioSound");
+  const clocks = [...document.querySelectorAll(".studio__clock")];
+
+  let playing = true, sec = 54;
+  const dur = 180; // 3:00 loop
+  const fmt = s => String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+  const render = () => { fill.style.width = (sec / dur * 100).toFixed(1) + "%"; timeEl.textContent = fmt(sec); };
+  render();
+  setInterval(() => { if (playing) { sec = (sec + 1) % dur; render(); } }, 1000);
+
+  play.addEventListener("click", () => {
+    playing = !playing;
+    play.classList.toggle("is-paused", !playing);
+    play.querySelector(".studio__play-label").textContent = playing ? "Pause" : "Play";
+  });
+
+  sound?.addEventListener("click", () => {
+    const off = sound.classList.toggle("is-off");
+    sound.querySelector("b").textContent = off ? "Off" : "On";
+  });
+
+  function tick() {
+    const now = new Date();
+    clocks.forEach(c => {
+      try {
+        c.textContent = new Intl.DateTimeFormat("en-GB", {
+          timeZone: c.dataset.tz, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
+        }).format(now);
+      } catch (e) { /* timezone unsupported */ }
+    });
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
