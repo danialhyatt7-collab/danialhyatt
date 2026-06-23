@@ -2,6 +2,24 @@
    Danial Hyatt — Product Motion Design  ·  interactions
    ============================================================ */
 
+/* ---------- Fit logo SVG viewBox to its content ------------- */
+(function fitLogo() {
+  const svg = document.getElementById("logoSvg");
+  const g = document.getElementById("logoGroup");
+  if (!svg || !g) return;
+  function fit() {
+    try {
+      const b = g.getBBox();
+      const pad = 3, h = 30;
+      svg.setAttribute("viewBox", `${b.x - pad} ${b.y - pad} ${b.width + pad * 2} ${b.height + pad * 2}`);
+      svg.setAttribute("height", h);
+      svg.setAttribute("width", ((b.width + pad * 2) / (b.height + pad * 2) * h).toFixed(1));
+    } catch (e) { /* not yet measurable */ }
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fit();
+})();
+
 /* ---------- Portfolio data ----------------------------------
    Edit this array to manage video placements.
    - `video` accepts a YouTube/Vimeo embed URL OR a local mp4 path.
