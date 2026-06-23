@@ -29,7 +29,7 @@
   <!-- ===== Top Nav ===== -->
   <header class="nav" id="nav">
     <a href="#home" class="nav__logo" aria-label="DanialH home">
-      <canvas class="nav__logo-canvas" id="logoCanvas" width="34" height="34" aria-hidden="true"></canvas>
+      <span class="nav__logo-lottie" id="logoLottie" aria-hidden="true"></span>
       <span class="nav__logo-text">DanialH.</span>
     </a>
 
@@ -99,53 +99,26 @@
 
   <script src="script.js"></script>
 
-  <!-- 3D animated play-triangle logo (three.js) -->
-  <script type="module">
-    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js";
-    const canvas = document.getElementById("logoCanvas");
-    if (canvas) {
-      const S = 34;
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(S, S, false);
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-      camera.position.z = 4.2;
-
-      // a play-triangle, extruded into 3D with soft bevels
-      const shape = new THREE.Shape();
-      shape.moveTo(-0.7, -0.92);
-      shape.lineTo(-0.7, 0.92);
-      shape.lineTo(1.0, 0);
-      shape.lineTo(-0.7, -0.92);
-      const geo = new THREE.ExtrudeGeometry(shape, {
-        depth: 0.55, bevelEnabled: true, bevelThickness: 0.14, bevelSize: 0.14, bevelSegments: 3
+  <!-- Lottie animated logo mark -->
+  <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+  <script>
+    (function () {
+      var box = document.getElementById("logoLottie");
+      if (!box || !window.lottie) return;
+      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var anim = lottie.loadAnimation({
+        container: box,
+        renderer: "svg",
+        loop: true,
+        autoplay: !reduce,
+        // swap this path for your purchased UI8 Lottie JSON to use that animation
+        path: "assets/lottie/logo.json"
       });
-      geo.center();
-      const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.65, roughness: 0.22 });
-      const mesh = new THREE.Mesh(geo, mat);
-      scene.add(mesh);
-
-      scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-      const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(2, 2.5, 3); scene.add(key);
-      const rim = new THREE.PointLight(0xf2c84b, 4, 12); rim.position.set(-2.4, -1.5, 2); scene.add(rim);
-
-      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      let hover = 0;
-      canvas.closest(".nav__logo")?.addEventListener("mouseenter", () => (hover = 1));
-      canvas.closest(".nav__logo")?.addEventListener("mouseleave", () => (hover = 0));
-
-      let t = 0;
-      function loop() {
-        t += 0.016 * (1 + hover * 1.6);
-        mesh.rotation.y = Math.sin(t * 0.8) * 0.9 + t * 0.35;
-        mesh.rotation.x = Math.sin(t * 0.6) * 0.22;
-        renderer.render(scene, camera);
-        if (!reduce) requestAnimationFrame(loop);
-      }
-      loop();
-    }
+      if (reduce) anim.goToAndStop(60, true);
+      var link = box.closest(".nav__logo");
+      link && link.addEventListener("mouseenter", function () { anim.setSpeed(2.2); });
+      link && link.addEventListener("mouseleave", function () { anim.setSpeed(1); });
+    })();
   </script>
 </body>
 </html>

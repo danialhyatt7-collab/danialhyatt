@@ -122,10 +122,11 @@ ul, ol { list-style: none; }
   font-family: 'Syne Extra', sans-serif; font-weight: 400;
   font-size: 1.18rem; letter-spacing: -.01em; color: #fff; line-height: 1;
 }
-/* triangle-only logo, rendered + animated in 3D via three.js */
-.nav__logo-canvas {
-  width: 34px; height: 34px; flex: none; display: block;
+/* Lottie animated logo mark */
+.nav__logo-lottie {
+  width: 34px; height: 34px; flex: none; display: block; line-height: 0;
 }
+.nav__logo-lottie svg { display: block; }
 /* right cluster: inline quick links + labeled menu toggle */
 .nav__right { display: flex; align-items: center; gap: clamp(20px, 4vw, 48px); }
 .nav__inline { display: flex; align-items: center; gap: 14px;
