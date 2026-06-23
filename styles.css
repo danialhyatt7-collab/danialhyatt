@@ -199,6 +199,8 @@ ul, ol { list-style: none; }
   font-size: clamp(3rem, 12vw, 11rem); line-height: .9;
   letter-spacing: .03em; text-transform: uppercase;
   color: #fff; margin: 0;
+  /* compensate Anton's left side-bearing so the M aligns with the eyebrow */
+  margin-left: -0.06em;
   filter: drop-shadow(0 20px 50px rgba(0,0,0,.5));
 }
 .hero__sub { color: #fff; font-size: clamp(.95rem, 2vw, 1.2rem); }
