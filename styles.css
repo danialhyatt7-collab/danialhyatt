@@ -124,17 +124,36 @@ ul, ol { list-style: none; }
 }
 /* modern play mark: soft squircle + rounded triangle */
 .nav__logo-mark {
-  width: 30px; height: 30px; border-radius: 9px; flex: none;
+  position: relative; width: 30px; height: 30px; border-radius: 9px; flex: none;
   background: #fff; display: grid; place-items: center;
   transition: transform .3s var(--ease), background .3s;
+}
+/* sonar "play" pulse radiating outward */
+.nav__logo-mark::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  border: 2px solid var(--accent); opacity: 0;
+  animation: markPulse 2.6s var(--ease) infinite;
 }
 .nav__logo-mark::after {
   content: ""; width: 0; height: 0;
   border-style: solid; border-width: 6px 0 6px 10px;
   border-color: transparent transparent transparent var(--bg);
   margin-left: 3px; /* optically centre the triangle */
+  transform-origin: 35% 50%;
+  animation: markBeat 2.6s var(--ease) infinite;
 }
-.nav__logo:hover .nav__logo-mark { transform: scale(1.06) rotate(-3deg); background: var(--accent); }
+@keyframes markPulse {
+  0%   { transform: scale(1);   opacity: .65; }
+  70%  { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+@keyframes markBeat {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(.84); }
+}
+.nav__logo:hover .nav__logo-mark { transform: scale(1.08) rotate(-3deg); background: var(--accent); }
+.nav__logo:hover .nav__logo-mark::after { border-left-color: var(--accent-ink); }
+.nav__logo:hover .nav__logo-mark::before { border-color: #fff; animation-duration: 1.3s; }
 /* right cluster: inline quick links + labeled menu toggle */
 .nav__right { display: flex; align-items: center; gap: clamp(20px, 4vw, 48px); }
 .nav__inline { display: flex; align-items: center; gap: 14px;
