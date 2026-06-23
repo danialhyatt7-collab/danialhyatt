@@ -172,3 +172,91 @@ form?.addEventListener("submit", e => {
 
 /* ---------- Year ------------------------------------------- */
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ============================================================
+   Showcase slider — scroll advances slides, then hands off
+   to the page once the last slide is reached.
+   ============================================================ */
+(function showcaseSlider() {
+  const sec = document.getElementById("showcase");
+  if (!sec) return;
+  const slides = [...sec.querySelectorAll(".slide")];
+  const dots = [...sec.querySelectorAll(".slider__dots button")];
+  const home = document.getElementById("home");
+  let i = 0, locked = false;
+  const last = slides.length - 1;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function show(n) {
+    n = Math.max(0, Math.min(last, n));
+    if (n === i) return;
+    slides[i].classList.remove("is-active");
+    dots[i] && dots[i].classList.remove("is-active");
+    i = n;
+    slides[i].classList.add("is-active");
+    dots[i] && dots[i].classList.add("is-active");
+  }
+  dots.forEach(d => d.addEventListener("click", () => show(+d.dataset.i)));
+
+  /* hide global side rails while the slider fills the viewport */
+  new IntersectionObserver(es => es.forEach(e =>
+    document.body.classList.toggle("slider-active", e.isIntersecting && e.intersectionRatio > 0.55)
+  ), { threshold: [0, 0.55, 1] }).observe(sec);
+
+  /* wire the feature-card play buttons to the existing lightbox */
+  sec.querySelectorAll(".slide__card-play").forEach(b =>
+    b.addEventListener("click", () => openLightbox({ title: b.dataset.title, video: b.dataset.video || "" }))
+  );
+
+  /* "Scroll" hint: advance, or drop into the page on the last slide */
+  document.getElementById("sliderNext")?.addEventListener("click", () => {
+    if (i < last) show(i + 1);
+    else home?.scrollIntoView({ behavior: "smooth" });
+  });
+
+  if (reduce) return; // no scroll-jacking when reduced motion is preferred
+
+  const atTop = () => window.scrollY <= 2;
+  const lock = () => { locked = true; setTimeout(() => (locked = false), 800); };
+
+  function step(dir) {
+    if (locked) return;
+    if (dir > 0 && i < last) { lock(); show(i + 1); }
+    else if (dir < 0 && i > 0) { lock(); show(i - 1); }
+  }
+
+  /* Wheel: intercept only while the slider owns the top of the page.
+     One deliberate scroll = one slide. At the last slide a downward
+     scroll is left alone so the page scrolls on to the hero. */
+  window.addEventListener("wheel", e => {
+    if (!atTop()) return;
+    const dir = e.deltaY > 0 ? 1 : -1;
+    if (dir > 0 && i >= last) return;   // hand off to normal page scroll
+    if (dir < 0 && i <= 0) return;      // already at first slide / top
+    if (Math.abs(e.deltaY) < 4) return;
+    e.preventDefault();
+    step(dir);
+  }, { passive: false });
+
+  /* Touch: swipe up/down to change slides under the same rules */
+  let ty = null;
+  window.addEventListener("touchstart", e => { ty = e.touches[0].clientY; }, { passive: true });
+  window.addEventListener("touchmove", e => {
+    if (ty === null || !atTop()) return;
+    const dy = ty - e.touches[0].clientY;
+    if (Math.abs(dy) < 36) return;
+    const dir = dy > 0 ? 1 : -1;
+    if (dir > 0 && i >= last) return;
+    if (dir < 0 && i <= 0) return;
+    if (e.cancelable) e.preventDefault();
+    step(dir);
+    ty = e.touches[0].clientY;
+  }, { passive: false });
+
+  /* Arrow keys for accessibility */
+  window.addEventListener("keydown", e => {
+    if (!atTop()) return;
+    if (e.key === "ArrowDown" && i < last) { e.preventDefault(); step(1); }
+    if (e.key === "ArrowUp" && i > 0) { e.preventDefault(); step(-1); }
+  });
+})();
