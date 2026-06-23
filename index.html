@@ -29,8 +29,10 @@
   <!-- ===== Top Nav ===== -->
   <header class="nav" id="nav">
     <a href="#home" class="nav__logo" aria-label="DanialH home">
-      <span class="nav__logo-lottie" id="logoLottie" aria-hidden="true"></span>
-      <span class="nav__logo-text">DanialH.</span>
+      <span class="nav__logo-inner">
+        <span class="nav__logo-tri" aria-hidden="true"></span>
+        <span class="nav__logo-text">DanialH.</span>
+      </span>
     </a>
 
     <div class="nav__right">
@@ -123,27 +125,5 @@
   </div>
 
   <script src="script.js"></script>
-
-  <!-- Lottie animated logo mark -->
-  <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
-  <script>
-    (function () {
-      var box = document.getElementById("logoLottie");
-      if (!box || !window.lottie) return;
-      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      var anim = lottie.loadAnimation({
-        container: box,
-        renderer: "svg",
-        loop: true,
-        autoplay: !reduce,
-        // swap this path for your purchased UI8 Lottie JSON to use that animation
-        path: "assets/lottie/logo.json"
-      });
-      if (reduce) anim.goToAndStop(60, true);
-      var link = box.closest(".nav__logo");
-      link && link.addEventListener("mouseenter", function () { anim.setSpeed(2.2); });
-      link && link.addEventListener("mouseleave", function () { anim.setSpeed(1); });
-    })();
-  </script>
 </body>
 </html>

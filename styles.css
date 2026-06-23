@@ -117,16 +117,39 @@ ul, ol { list-style: none; }
   padding-top: 14px; padding-bottom: 14px;
   border-bottom: 1px solid var(--line);
 }
-.nav__logo { display: flex; align-items: center; gap: 11px; }
+/* ---- Unified logo: triangle + Syne wordmark animate as one ---- */
+.nav__logo {
+  position: relative; display: inline-flex; overflow: hidden;
+  /* slow, commanding reveal of the whole logo together */
+  animation: logoReveal 2s cubic-bezier(.16, 1, .3, 1) both;
+  transition: filter .4s var(--ease);
+}
+.nav__logo:hover { filter: drop-shadow(0 0 9px rgba(255,255,255,.5)); }
+.nav__logo-inner {
+  display: flex; align-items: center; gap: 11px;
+  transform-origin: left center;
+  /* subtle, slow breath keeps it alive once revealed */
+  animation: logoBreath 5.5s ease-in-out 2.1s infinite;
+}
 .nav__logo-text {
   font-family: 'Syne Extra', sans-serif; font-weight: 400;
   font-size: 1.18rem; letter-spacing: -.01em; color: #fff; line-height: 1;
 }
-/* Lottie animated logo mark */
-.nav__logo-lottie {
-  width: 34px; height: 34px; flex: none; display: block; line-height: 0;
+/* play triangle sized to the Syne cap-height so it reads as part of the wordmark */
+.nav__logo-tri {
+  width: 0; height: 0; flex: none; margin-bottom: 1px;
+  border-style: solid; border-width: 8px 0 8px 13px;
+  border-color: transparent transparent transparent #fff;
 }
-.nav__logo-lottie svg { display: block; }
+@keyframes logoReveal {
+  0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
+  100% { clip-path: inset(0 0 0 0);   opacity: 1; }
+}
+@keyframes logoBreath {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.025); }
+}
+
 /* right cluster: inline quick links + labeled menu toggle */
 .nav__right { display: flex; align-items: center; gap: clamp(20px, 4vw, 48px); }
 .nav__inline { display: flex; align-items: center; gap: 14px;
