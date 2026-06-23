@@ -35,9 +35,7 @@
 
     <div class="nav__right">
       <div class="nav__inline">
-        <a href="#work">Showreel</a>
-        <span class="nav__sep">/</span>
-        <a href="#contact">Contact</a>
+        <a href="mailto:hello@danialhyatt.com">Contact</a>
       </div>
       <button class="nav__menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">
         <span class="nav__menu-icon"><span></span><span></span></span>
@@ -49,11 +47,8 @@
   <!-- ===== Full menu overlay ===== -->
   <nav class="menu" id="menuOverlay" aria-label="Primary" aria-hidden="true">
     <ol class="menu__list">
-      <li><a href="#home"    data-num="01">Home</a></li>
-      <li><a href="#work"    data-num="02">Portfolio</a></li>
-      <li><a href="#about"   data-num="03">About</a></li>
-      <li><a href="#pricing" data-num="04">Pricing</a></li>
-      <li><a href="#contact" data-num="05">Contact</a></li>
+      <li><a href="#home" data-num="01">Home</a></li>
+      <li><a href="mailto:hello@danialhyatt.com" data-num="02">Contact</a></li>
     </ol>
     <div class="menu__foot">
       <a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>
@@ -63,26 +58,13 @@
     </div>
   </nav>
 
-  <!-- ===== Side numbered pagination ===== -->
-  <aside class="sidenav" aria-label="Section navigation">
-    <button class="sidenav__arrow" data-dir="up" aria-label="Previous section">&#94;</button>
-    <ol class="sidenav__list" id="sidenavList">
-      <li><a href="#home"    data-num="01">01</a></li>
-      <li><a href="#work"    data-num="02">02</a></li>
-      <li><a href="#about"   data-num="03">03</a></li>
-      <li><a href="#pricing" data-num="04">04</a></li>
-      <li><a href="#contact" data-num="05">05</a></li>
-    </ol>
-    <button class="sidenav__arrow" data-dir="down" aria-label="Next section">&#118;</button>
-  </aside>
-
   <!-- ===== Social rail ===== -->
   <aside class="social" aria-label="Social links">
     <a href="#" aria-label="Instagram">IG</a>
     <a href="#" aria-label="Behance">Be</a>
     <a href="#" aria-label="Vimeo">Vi</a>
     <a href="#" aria-label="LinkedIn">In</a>
-    <a href="#contact" class="social__sub">Hire me</a>
+    <a href="mailto:hello@danialhyatt.com" class="social__sub">Hire me</a>
   </aside>
 
   <main>
@@ -105,194 +87,8 @@
           <span class="hero__play-label">Watch the<br />2024 showreel</span>
         </button>
       </div>
-
-      <a href="#work" class="hero__scroll">
-        <span>Scroll to explore</span>
-        <span class="hero__chevron">&#8964;</span>
-      </a>
     </section>
 
-    <!-- ===== 02 — WORK ===== -->
-    <section class="work section" id="work">
-      <div class="section__head">
-        <p class="section__label">02 — Selected work</p>
-        <h2 class="section__title">Video<br />placements</h2>
-        <p class="section__lead">A reel of product spots, app promos and brand films. Hover to preview, click to play full screen.</p>
-      </div>
-
-      <div class="work__grid" id="workGrid">
-        <!-- Cards are injected by script.js. Edit the data array there. -->
-      </div>
-    </section>
-
-    <!-- ===== 03 — ABOUT ===== -->
-    <section class="about section" id="about">
-      <div class="about__grid">
-        <div class="about__media">
-          <div class="about__photo" role="img" aria-label="Danial Hyatt portrait"></div>
-        </div>
-        <div class="about__body">
-          <p class="section__label">03 — About</p>
-          <h2 class="section__title">I turn products<br />into motion.</h2>
-          <p class="about__text">
-            I'm Danial Hyatt, a motion graphic designer specialising in
-            product-driven advertising. From the first storyboard to the final
-            grade, I build short-form spots that hold attention in the first
-            second and carry it to the call-to-action.
-          </p>
-          <p class="about__text">
-            I work with founders, agencies and brands to translate a product's
-            value into movement &mdash; clean 3D, snappy UI animation, bold
-            typography and sound design that lands.
-          </p>
-          <ul class="about__stats">
-            <li><strong>6</strong><span>Years animating</span></li>
-            <li><strong>180+</strong><span>Spots delivered</span></li>
-            <li><strong>40+</strong><span>Brands worldwide</span></li>
-          </ul>
-          <ul class="about__tools">
-            <li>After Effects</li><li>Cinema 4D</li><li>Blender</li>
-            <li>Premiere Pro</li><li>Figma</li><li>Octane</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== 04 — PRICING ===== -->
-    <section class="pricing section" id="pricing">
-      <div class="section__head section__head--center">
-        <p class="section__label">04 — Pricing &amp; timelines</p>
-        <h2 class="section__title">Pick a pace.</h2>
-        <p class="section__lead">Transparent packages. Every project includes scripting support, two revision rounds and source files.</p>
-      </div>
-
-      <div class="pricing__grid">
-        <article class="plan">
-          <header class="plan__head">
-            <h3>Spark</h3>
-            <p class="plan__for">Single 15s spot</p>
-          </header>
-          <p class="plan__price"><span>from</span>$250</p>
-          <p class="plan__time">Delivered in 24 hours</p>
-          <ul class="plan__list">
-            <li>One 15s vertical or square ad</li>
-            <li>1 platform format (Reels / TikTok)</li>
-            <li>Licensed music + sound design</li>
-            <li>2 revision rounds</li>
-          </ul>
-          <a href="#contact" class="plan__cta">Start a Spark</a>
-        </article>
-
-        <article class="plan plan--featured">
-          <span class="plan__badge">Most booked</span>
-          <header class="plan__head">
-            <h3>Signature</h3>
-            <p class="plan__for">15s hero + cut-downs</p>
-          </header>
-          <p class="plan__price"><span>from</span>$600</p>
-          <p class="plan__time">Delivered in 3&ndash;4 days</p>
-          <ul class="plan__list">
-            <li>15s hero ad + 2 cut-downs</li>
-            <li>3 aspect ratios delivered</li>
-            <li>3D product render &amp; UI animation</li>
-            <li>Storyboard + voiceover direction</li>
-            <li>3 revision rounds</li>
-          </ul>
-          <a href="#contact" class="plan__cta">Start Signature</a>
-        </article>
-
-        <article class="plan">
-          <header class="plan__head">
-            <h3>Studio</h3>
-            <p class="plan__for">Ongoing retainer</p>
-          </header>
-          <p class="plan__price"><span>from</span>$1,500<small>/mo</small></p>
-          <p class="plan__time">Rolling delivery, priority queue</p>
-          <ul class="plan__list">
-            <li>6&ndash;8 finished 15s spots per month</li>
-            <li>Unlimited platform formats</li>
-            <li>Dedicated Slack channel</li>
-            <li>Monthly creative strategy call</li>
-            <li>Unlimited revisions</li>
-          </ul>
-          <a href="#contact" class="plan__cta">Book a call</a>
-        </article>
-      </div>
-      <p class="pricing__note">Rush delivery available. Custom scopes welcome &mdash; <a href="#contact">ask for a quote</a>.</p>
-    </section>
-
-    <!-- ===== 05 — CONTACT ===== -->
-    <section class="contact section" id="contact">
-      <div class="contact__inner">
-        <p class="section__label">05 — Contact</p>
-        <h2 class="contact__title">Let's make<br />it move.</h2>
-        <p class="contact__lead">Tell me about your product and timeline. I reply within one business day.</p>
-
-        <form class="contact__form" id="contactForm" novalidate>
-          <div class="field">
-            <input type="text" id="cName" name="name" required placeholder=" " />
-            <label for="cName">Name</label>
-          </div>
-          <div class="field">
-            <input type="email" id="cEmail" name="email" required placeholder=" " />
-            <label for="cEmail">Email</label>
-          </div>
-          <div class="field field--full">
-            <textarea id="cMsg" name="message" rows="4" required placeholder=" "></textarea>
-            <label for="cMsg">Tell me about the project</label>
-          </div>
-          <button type="submit" class="contact__submit">Send brief &#8594;</button>
-          <p class="contact__status" id="formStatus" role="status"></p>
-        </form>
-
-        <a class="contact__mail" href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>
-      </div>
-
-      <footer class="footer">
-        <span>© <span id="year"></span> DanialH.</span>
-        <span>Product Motion Design</span>
-        <a href="#home">Back to top &#94;</a>
-      </footer>
-    </section>
-
-    <!-- ===== Studio status panel (under footer) ===== -->
-    <section class="studio" aria-label="Studio status">
-      <div class="studio__tabs">
-        <div class="studio__panel studio__panel--active">Info &amp; Credits</div>
-        <a href="#contact" class="studio__panel studio__panel--ghost">
-          <span>Launch Campaign</span>
-          <span class="studio__panel-tag">GBL · M</span>
-        </a>
-      </div>
-
-      <div class="studio__player">
-        <button class="studio__play" id="studioPlay" aria-label="Toggle playback">
-          <span class="studio__play-ico" aria-hidden="true"></span>
-          <span class="studio__play-label">Pause</span>
-        </button>
-        <div class="studio__track"><span class="studio__track-fill" id="studioFill"></span></div>
-        <span class="studio__time" id="studioTime">00:54</span>
-        <button class="studio__sound" id="studioSound">Sound&nbsp;<b>On</b></button>
-      </div>
-
-      <div class="studio__cities">
-        <div class="studio__city">
-          <span class="studio__clock" data-tz="Europe/Paris">--:--:--</span>
-          <h4>Paris</h4>
-          <p>Available for work<br />CET · UTC+1<br />Remote worldwide</p>
-        </div>
-        <div class="studio__city">
-          <span class="studio__clock" data-tz="America/New_York">--:--:--</span>
-          <h4>New York</h4>
-          <p>Available for work<br />EST · UTC−5<br />Remote worldwide</p>
-        </div>
-        <div class="studio__city">
-          <span class="studio__clock" data-tz="Asia/Dubai">--:--:--</span>
-          <h4>Dubai</h4>
-          <p>Available for work<br />GST · UTC+4<br />Remote worldwide</p>
-        </div>
-      </div>
-    </section>
   </main>
 
   <!-- ===== Lightbox ===== -->
