@@ -64,19 +64,19 @@ const onScroll = () => nav?.classList.toggle("is-scrolled", window.scrollY > 40)
 window.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 
-/* ---------- Mobile menu ------------------------------------- */
-const burger = document.getElementById("burger");
-const links = document.querySelector(".nav__links");
-burger?.addEventListener("click", () => {
-  const open = links.classList.toggle("is-open");
-  burger.setAttribute("aria-expanded", String(open));
-});
-links?.querySelectorAll("a").forEach(a =>
-  a.addEventListener("click", () => {
-    links.classList.remove("is-open");
-    burger?.setAttribute("aria-expanded", "false");
-  })
-);
+/* ---------- Menu overlay ------------------------------------ */
+const menuBtn = document.getElementById("menuBtn");
+const menu = document.getElementById("menuOverlay");
+function setMenu(open) {
+  menu?.classList.toggle("is-open", open);
+  menu?.setAttribute("aria-hidden", String(!open));
+  menuBtn?.setAttribute("aria-expanded", String(open));
+  menuBtn?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  document.body.style.overflow = open ? "hidden" : "";
+}
+menuBtn?.addEventListener("click", () => setMenu(!menu.classList.contains("is-open")));
+menu?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
 
 /* ---------- Section spy (side numbered nav) ----------------- */
 const sections = [...document.querySelectorAll("main section[id]")];

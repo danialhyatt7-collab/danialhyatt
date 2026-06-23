@@ -32,16 +32,36 @@
       <span class="nav__logo-mark"></span>
       <span class="nav__logo-text">DANIAL&nbsp;HYATT</span>
     </a>
-    <nav class="nav__links" aria-label="Primary">
-      <a href="#work">Portfolio</a>
-      <a href="#about">About</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact" class="nav__cta">Let's talk</a>
-    </nav>
-    <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span>
-    </button>
+
+    <div class="nav__right">
+      <div class="nav__inline">
+        <a href="#work">Showreel</a>
+        <span class="nav__sep">/</span>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="nav__menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">
+        <span class="nav__menu-icon"><span></span><span></span></span>
+        <span class="nav__menu-label">Menu</span>
+      </button>
+    </div>
   </header>
+
+  <!-- ===== Full menu overlay ===== -->
+  <nav class="menu" id="menuOverlay" aria-label="Primary" aria-hidden="true">
+    <ol class="menu__list">
+      <li><a href="#home"    data-num="01">Home</a></li>
+      <li><a href="#work"    data-num="02">Portfolio</a></li>
+      <li><a href="#about"   data-num="03">About</a></li>
+      <li><a href="#pricing" data-num="04">Pricing</a></li>
+      <li><a href="#contact" data-num="05">Contact</a></li>
+    </ol>
+    <div class="menu__foot">
+      <a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>
+      <div class="menu__social">
+        <a href="#">Instagram</a><a href="#">Behance</a><a href="#">Vimeo</a><a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- ===== Side numbered pagination ===== -->
   <aside class="sidenav" aria-label="Section navigation">
