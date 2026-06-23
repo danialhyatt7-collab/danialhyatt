@@ -106,7 +106,7 @@ document.querySelectorAll(".sidenav__arrow").forEach(btn => {
 
 /* ---------- Reveal on scroll -------------------------------- */
 const revealEls = [
-  ...document.querySelectorAll(".section__head, .about__grid, .plan, .pricing__note, .contact__inner"),
+  ...document.querySelectorAll(".section__head, .reel__head, .about__grid, .plan, .pricing__note, .contact__inner"),
   ...document.querySelectorAll(".work-card"),
 ];
 revealEls.forEach(el => { if (!el.classList.contains("work-card")) el.classList.add("reveal"); });
@@ -119,6 +119,10 @@ const revObs = new IntersectionObserver((entries) => {
   });
 }, { threshold: .15 });
 revealEls.forEach(el => revObs.observe(el));
+
+/* the reel stage has its own slide-in styles — just toggle is-in */
+const reelStageEl = document.getElementById("reelStage");
+if (reelStageEl) revObs.observe(reelStageEl);
 
 /* ---------- Lightbox ---------------------------------------- */
 const lightbox = document.getElementById("lightbox");
@@ -155,6 +159,11 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbo
 /* Hero reel button → opens showreel in lightbox */
 document.getElementById("reelBtn")?.addEventListener("click", () =>
   openLightbox({ title: "2024 Showreel", video: "assets/video/hero.mp4" })
+);
+
+/* Featured reel stage → opens the spot in lightbox */
+document.getElementById("reelStage")?.addEventListener("click", () =>
+  openLightbox({ title: "Valentino Uomo — 15s", video: "assets/video/hero.mp4" })
 );
 
 /* ---------- Contact form (front-end only) ------------------- */
