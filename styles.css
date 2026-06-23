@@ -206,7 +206,7 @@ ul, ol { list-style: none; }
 .hero__sub { color: #fff; font-size: clamp(.95rem, 2vw, 1.2rem); }
 
 .hero__play {
-  position: absolute; z-index: 3; left: var(--hero-gutter); bottom: var(--hero-gutter);
+  margin-top: clamp(10px, 1.4vw, 20px);
   display: flex; align-items: center; gap: 16px;
   background: none; border: 0; cursor: pointer; color: var(--ink); text-align: left;
 }
