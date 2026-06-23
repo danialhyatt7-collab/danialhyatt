@@ -185,7 +185,7 @@ ul, ol { list-style: none; }
   text-align: left; width: 100%;
   /* match the nav's horizontal padding so text lines up with the logo;
      extra bottom padding drops the group near the section bottom */
-  padding: 0 var(--hero-gutter) clamp(54px, 12vh, 120px);
+  padding: 0 var(--hero-gutter) clamp(36px, 8vh, 84px);
   /* one consistent gap → even spacing between all four elements */
   display: flex; flex-direction: column; align-items: flex-start;
   gap: clamp(14px, 1.8vw, 26px);
@@ -409,12 +409,17 @@ ul, ol { list-style: none; }
 }
 
 @media (max-width: 600px) {
+  /* tighter left space; keep nav + hero text on the same edge */
+  .hero { --hero-gutter: 16px; }
+  .nav { padding-left: 16px; padding-right: 16px; }
+  /* drop the group closer to the section bottom */
+  .hero__inner { padding-bottom: clamp(24px, 6vh, 44px); }
   /* keep the wide-tracked eyebrow from forcing horizontal scroll */
   .hero__eyebrow { letter-spacing: .22em; font-size: .68rem; }
   .hero__sub { max-width: 100%; }
   /* hide the centered scroll cue so it can't collide with the play button */
   .hero__scroll { display: none; }
-  .hero__play { bottom: clamp(28px, 6vh, 60px); gap: 12px; }
+  .hero__play { gap: 12px; }
   .hero__play-icon { width: 52px; height: 52px; }
   .about__stats { gap: 26px; flex-wrap: wrap; }
   .footer { flex-direction: column; gap: 8px; text-align: center; }
