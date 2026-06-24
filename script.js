@@ -183,6 +183,33 @@ form?.addEventListener("submit", e => {
 document.getElementById("year").textContent = new Date().getFullYear();
 
 /* ============================================================
+   Marquee ticker — clone enough copies to always fill the
+   viewport so the loop is seamless and never gaps/stops.
+   ============================================================ */
+(function ticker() {
+  const track = document.getElementById("tickerTrack");
+  if (!track) return;
+  const base = track.querySelector(".ticker__group");
+  if (!base) return;
+  const baseHTML = base.outerHTML;
+
+  function build() {
+    track.innerHTML = baseHTML;
+    const groupW = track.firstElementChild.offsetWidth;
+    if (!groupW) return;
+    const perHalf = Math.max(1, Math.ceil(window.innerWidth / groupW) + 1);
+    track.innerHTML = baseHTML.repeat(perHalf * 2); // two equal halves
+    const halfW = groupW * perHalf;
+    track.style.animationDuration = Math.max(14, halfW / 70).toFixed(1) + "s";
+  }
+
+  build();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+  let t;
+  window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(build, 200); });
+})();
+
+/* ============================================================
    Studio status panel — playback toggle, progress, live clocks
    ============================================================ */
 (function studioPanel() {

@@ -116,7 +116,6 @@ ul, ol { list-style: none; }
   transition: background .4s var(--ease);
 }
 .nav.is-scrolled { background: rgba(0, 0, 0, .62); }
-.nav.is-scrolled .ticker { display: none; } /* hide marquee once scrolling */
 
 /* ---- scrolling marquee ---- */
 .ticker { overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.07); }
