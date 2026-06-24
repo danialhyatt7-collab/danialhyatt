@@ -630,7 +630,9 @@ ul, ol { list-style: none; }
 @media (max-width: 600px) {
   /* tighter left space; keep nav + hero text on the same edge */
   .hero { --hero-gutter: 16px; }
-  .nav { padding-left: 16px; padding-right: 16px; }
+  .nav__bar { padding-left: 16px; padding-right: 16px; }
+  /* keep the logo at the previous (smaller) size on mobile */
+  .nav__logo-lottie { width: 30px; height: 30px; }
   /* clean mobile header: logo + Menu only */
   .nav__inline { display: none; }
   /* drop the group closer to the section bottom */
