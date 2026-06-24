@@ -149,16 +149,41 @@ ul, ol { list-style: none; }
 .nav__search input::placeholder { color: rgba(255,255,255,.42); }
 
 .nav__actions { display: flex; align-items: center; gap: 10px; flex: none; }
-.btn {
-  display: inline-flex; align-items: center; padding: 10px 18px; border-radius: 100px;
-  font-size: .8rem; letter-spacing: .01em; white-space: nowrap;
-  transition: transform .2s var(--ease), background .25s, color .25s, border-color .25s;
+
+/* WhatsApp icon button */
+.nav__wa {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center; color: #fff;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  transition: background .25s, color .25s, transform .25s, border-color .25s;
 }
-.btn:hover { transform: translateY(-1px); }
-.btn--solid { background: #fff; color: #000; font-weight: 600; }
-.btn--solid:hover { background: rgba(255,255,255,.85); }
-.btn--outline { border: 1px solid rgba(255,255,255,.35); color: #fff; }
-.btn--outline:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+.nav__wa:hover { background: #25d366; border-color: #25d366; color: #07301a; transform: translateY(-1px); }
+
+/* play-button style, rectangular: frosted + marching-ants dashed outline */
+.btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  padding: 11px 22px; border-radius: 6px;
+  font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  color: #fff; background-color: rgba(255,255,255,.07);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  transition: color .3s var(--ease), background-color .3s var(--ease), transform .2s var(--ease);
+}
+.btn--play {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.75) 0 7px, transparent 7px 14px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.75) 0 7px, transparent 7px 14px),
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.75) 0 7px, transparent 7px 14px),
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.75) 0 7px, transparent 7px 14px);
+  background-size: 100% 1.5px, 100% 1.5px, 1.5px 100%, 1.5px 100%;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  background-repeat: no-repeat;
+  animation: btnAnts 16s linear infinite;
+}
+@keyframes btnAnts {
+  to { background-position: 200% 0, -200% 100%, 0 -200%, 100% 200%; }
+}
+.btn--play:hover { background-color: #fff; color: #000; transform: translateY(-1px); }
 
 .nav__menu-btn {
   display: none; align-items: center; gap: 12px; padding: 6px 0;
