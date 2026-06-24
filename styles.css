@@ -168,12 +168,21 @@ ul, ol { list-style: none; }
   background-size: 100% 1.5px, 100% 1.5px, 1.5px 100%, 1.5px 100%;
   background-position: 0 0, 0 100%, 0 0, 100% 0;
   background-repeat: no-repeat;
-  animation: btnAnts 16s linear infinite;
+  animation: btnAnts 16s linear infinite, beacon 2.6s ease-in-out infinite;
 }
 @keyframes btnAnts {
   to { background-position: 200% 0, -200% 100%, 0 -200%, 100% 200%; }
 }
 .btn--play:hover { background-color: #fff; color: #000; transform: translateY(-1px); }
+
+/* synchronized "jet beacon" blink shared by the Showreel + play buttons */
+@keyframes beacon {
+  0%, 60%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  68% { box-shadow: 0 0 13px 1px rgba(255,255,255,.6); }
+  74% { box-shadow: 0 0 3px 0 rgba(255,255,255,.12); }
+  80% { box-shadow: 0 0 13px 1px rgba(255,255,255,.6); }
+  90% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
 
 .nav__menu-btn {
   display: flex; align-items: center; gap: 12px; padding: 6px 0;
@@ -306,6 +315,7 @@ ul, ol { list-style: none; }
   background: rgba(255,255,255,.08); backdrop-filter: blur(4px);
   border: 1px solid rgba(255,255,255,.4);
   transition: background .35s var(--ease), color .35s var(--ease), transform .35s var(--ease);
+  animation: beacon 2.6s ease-in-out infinite;
 }
 /* nudge the ▶ glyph to optical centre */
 .hero__play-icon { padding-left: 3px; }
@@ -379,6 +389,7 @@ ul, ol { list-style: none; }
   background: rgba(255,255,255,.1); backdrop-filter: blur(6px);
   border: 1px solid rgba(255,255,255,.5);
   transition: background .35s var(--ease), transform .35s var(--ease);
+  animation: beacon 2.6s ease-in-out infinite;
 }
 .reel__play::before {
   content: ""; position: absolute; inset: -14px; border-radius: 50%;
@@ -387,7 +398,7 @@ ul, ol { list-style: none; }
 .reel__play::after {
   content: ""; position: absolute; inset: 0; border-radius: 50%;
   border: 1px solid rgba(255,255,255,.65); opacity: 0;
-  animation: playPulse 2.8s var(--ease) infinite;
+  animation: playPulse 2.6s var(--ease) infinite;
 }
 .reel__play-tri {
   width: 0; height: 0; margin-left: 6px;
