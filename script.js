@@ -226,6 +226,118 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 })();
 
 /* ============================================================
+   Shop + cart  →  checkout with Payoneer
+   ------------------------------------------------------------
+   Paste your Payoneer payment link below (Payoneer dashboard →
+   Get Paid → Request a Payment / payment link). The checkout
+   button opens it with the order total prefilled where supported.
+   ============================================================ */
+const PAYONEER_LINK = ""; // e.g. "https://pay.payoneer.com/xxxxxxxx"
+
+const PRODUCTS = [
+  { id: "spark", name: "Spark", for: "Single 15s spot", price: 250, time: "Delivered in 24 hours",
+    feats: ["One 15s vertical or square ad", "1 platform format", "Licensed music + sound design", "2 revision rounds"] },
+  { id: "signature", name: "Signature", for: "Hero + cut-downs", price: 600, time: "Delivered in 3–4 days", featured: true, badge: "Most booked",
+    feats: ["15s hero ad + 2 cut-downs", "3 aspect ratios", "3D render & UI animation", "3 revision rounds"] },
+  { id: "studio", name: "Studio", for: "Monthly retainer", price: 1500, unit: "/mo", time: "Rolling delivery, priority",
+    feats: ["6–8 finished spots / month", "Unlimited platform formats", "Dedicated Slack channel", "Unlimited revisions"] },
+];
+
+(function shop() {
+  const grid = document.getElementById("shopGrid");
+  if (!grid) return;
+  const money = n => "$" + n.toLocaleString();
+  const byId = id => PRODUCTS.find(p => p.id === id);
+
+  /* ---- render products ---- */
+  grid.innerHTML = PRODUCTS.map(p => `
+    <article class="product${p.featured ? " product--featured" : ""}">
+      ${p.badge ? `<span class="product__badge">${p.badge}</span>` : ""}
+      <h3 class="product__name">${p.name}</h3>
+      <p class="product__for">${p.for}</p>
+      <p class="product__price">${money(p.price)}${p.unit ? `<small>${p.unit}</small>` : ""}</p>
+      <p class="product__time">${p.time}</p>
+      <ul class="product__list">${p.feats.map(f => `<li>${f}</li>`).join("")}</ul>
+      <button class="product__add" data-id="${p.id}">Add to cart</button>
+    </article>`).join("");
+
+  /* ---- cart state (persisted) ---- */
+  let cart = {};
+  try { cart = JSON.parse(localStorage.getItem("dh_cart")) || {}; } catch (e) { cart = {}; }
+  const save = () => localStorage.setItem("dh_cart", JSON.stringify(cart));
+
+  const countEl = document.getElementById("cartCount");
+  const itemsEl = document.getElementById("cartItems");
+  const totalEl = document.getElementById("cartTotal");
+  const checkoutBtn = document.getElementById("cartCheckout");
+  const cartEl = document.getElementById("cart");
+
+  const totalQty = () => Object.values(cart).reduce((a, b) => a + b, 0);
+  const totalSum = () => Object.entries(cart).reduce((s, [id, q]) => s + (byId(id) ? byId(id).price * q : 0), 0);
+
+  function render() {
+    const q = totalQty();
+    countEl.textContent = q;
+    countEl.classList.toggle("is-on", q > 0);
+    const ids = Object.keys(cart);
+    itemsEl.innerHTML = ids.length ? ids.map(id => {
+      const p = byId(id); if (!p) return "";
+      return `<div class="cart-item">
+        <div class="cart-item__info">
+          <div class="cart-item__name">${p.name}</div>
+          <div class="cart-item__price">${money(p.price)}${p.unit || ""}</div>
+        </div>
+        <div class="cart-item__qty">
+          <button data-dec="${id}" aria-label="Decrease">−</button>
+          <span>${cart[id]}</span>
+          <button data-inc="${id}" aria-label="Increase">+</button>
+        </div>
+      </div>`;
+    }).join("") : `<p class="cart__empty">Your cart is empty.</p>`;
+    totalEl.textContent = money(totalSum());
+    checkoutBtn.disabled = q === 0;
+    save();
+  }
+
+  function add(id) { cart[id] = (cart[id] || 0) + 1; render(); openCart(); }
+  function change(id, d) { cart[id] = (cart[id] || 0) + d; if (cart[id] <= 0) delete cart[id]; render(); }
+
+  grid.addEventListener("click", e => { const b = e.target.closest(".product__add"); if (b) add(b.dataset.id); });
+  itemsEl.addEventListener("click", e => {
+    const inc = e.target.closest("[data-inc]"), dec = e.target.closest("[data-dec]");
+    if (inc) change(inc.dataset.inc, 1);
+    if (dec) change(dec.dataset.dec, -1);
+  });
+
+  /* ---- drawer open/close ---- */
+  function openCart() { cartEl.classList.add("is-open"); cartEl.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; }
+  function closeCart() { cartEl.classList.remove("is-open"); cartEl.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; }
+  document.getElementById("cartBtn")?.addEventListener("click", openCart);
+  document.getElementById("cartClose")?.addEventListener("click", closeCart);
+  document.getElementById("cartBackdrop")?.addEventListener("click", closeCart);
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeCart(); });
+
+  /* ---- checkout → Payoneer ---- */
+  checkoutBtn?.addEventListener("click", () => {
+    if (totalQty() === 0) return;
+    const summary = Object.entries(cart).map(([id, q]) => `${byId(id).name} ×${q}`).join(", ");
+    const total = totalSum();
+    if (PAYONEER_LINK) {
+      // append amount/reference where the Payoneer link supports query params
+      const sep = PAYONEER_LINK.includes("?") ? "&" : "?";
+      window.open(`${PAYONEER_LINK}${sep}amount=${total}&description=${encodeURIComponent(summary)}`, "_blank", "noopener");
+    } else {
+      // fallback until the Payoneer link is added: email the order
+      window.location.href =
+        `mailto:hello@danialhyatt.com?subject=${encodeURIComponent("New order — " + money(total))}` +
+        `&body=${encodeURIComponent("I'd like to order:\n" + summary + "\n\nTotal: " + money(total) + "\n\nPlease send a Payoneer payment request.")}`;
+    }
+  });
+
+  render();
+})();
+
+/* ============================================================
    Studio status panel — playback toggle, progress, live clocks
    ============================================================ */
 (function studioPanel() {

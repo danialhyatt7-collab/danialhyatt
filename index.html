@@ -48,7 +48,10 @@
       </div>
 
       <div class="nav__actions">
-        <a href="#reel" class="btn btn--play">Showreel</a>
+        <button class="nav__cart" id="cartBtn" aria-label="Open cart">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l2.4 12.2a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.8L21 8H6"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20" r="1.4" fill="currentColor"/></svg>
+          <span class="nav__cart-count" id="cartCount">0</span>
+        </button>
       </div>
 
       <button class="nav__menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">
@@ -63,7 +66,8 @@
     <ol class="menu__list">
       <li><a href="#home" data-num="01">Home</a></li>
       <li><a href="#reel" data-num="02">Reel</a></li>
-      <li><a href="mailto:hello@danialhyatt.com" data-num="03">Contact</a></li>
+      <li><a href="#shop" data-num="03">Shop</a></li>
+      <li><a href="mailto:hello@danialhyatt.com" data-num="04">Contact</a></li>
     </ol>
     <div class="menu__foot">
       <a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>
@@ -128,7 +132,37 @@
       </button>
     </section>
 
+    <!-- ===== 03 — SHOP ===== -->
+    <section class="shop" id="shop" aria-label="Shop">
+      <div class="shop__head">
+        <p class="section__label">03 — Shop</p>
+        <h2 class="section__title">Book&nbsp;a&nbsp;spot</h2>
+        <p class="section__lead">Pick a package, add it to your cart, and check out securely with Payoneer. Each spot includes scripting support, licensed music and source files.</p>
+      </div>
+
+      <div class="shop__grid" id="shopGrid">
+        <!-- product cards injected by script.js (edit PRODUCTS there) -->
+      </div>
+    </section>
+
   </main>
+
+  <!-- ===== Cart drawer ===== -->
+  <div class="cart" id="cart" aria-hidden="true">
+    <div class="cart__backdrop" id="cartBackdrop"></div>
+    <aside class="cart__panel" role="dialog" aria-label="Your cart">
+      <div class="cart__top">
+        <h3>Your cart</h3>
+        <button class="cart__close" id="cartClose" aria-label="Close cart">&times;</button>
+      </div>
+      <div class="cart__items" id="cartItems"></div>
+      <div class="cart__foot">
+        <div class="cart__total"><span>Total</span><strong id="cartTotal">$0</strong></div>
+        <button class="cart__checkout" id="cartCheckout">Checkout with Payoneer</button>
+        <p class="cart__note">Secure payment via Payoneer. You'll get a confirmation by email.</p>
+      </div>
+    </aside>
+  </div>
 
   <!-- ===== Lightbox ===== -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
