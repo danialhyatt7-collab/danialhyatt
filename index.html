@@ -42,7 +42,7 @@
 
     <div class="nav__bar">
       <a href="#home" class="nav__logo" aria-label="DanialH home">
-        <canvas class="nav__logo-canvas" id="logoCanvas" width="40" height="40" aria-hidden="true"></canvas>
+        <span class="nav__logo-lottie" id="logoLottie" aria-hidden="true"></span>
       </a>
 
       <nav class="nav__links2" aria-label="Primary">
@@ -148,61 +148,22 @@
 
   <script src="script.js"></script>
 
-  <!-- Logo: 3D pause ⇄ play flip (three.js) -->
-  <script type="module">
-    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js";
-    const canvas = document.getElementById("logoCanvas");
-    if (canvas) {
-      const S = 40;
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(S, S, false);
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
-      camera.position.z = 5;
-
-      const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.5, roughness: 0.28 });
-      const icon = new THREE.Group();
-      scene.add(icon);
-
-      // PLAY triangle (faces front)
-      const tri = new THREE.Shape();
-      tri.moveTo(-0.62, -0.78); tri.lineTo(-0.62, 0.78); tri.lineTo(0.78, 0); tri.lineTo(-0.62, -0.78);
-      const triGeo = new THREE.ExtrudeGeometry(tri, { depth: 0.4, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.1, bevelSegments: 2 });
-      triGeo.center();
-      const playMesh = new THREE.Mesh(triGeo, mat);
-      icon.add(playMesh);
-
-      // PAUSE two bars (faces back, revealed when flipped 180°)
-      const pause = new THREE.Group();
-      const barGeo = new THREE.BoxGeometry(0.34, 1.5, 0.4);
-      const b1 = new THREE.Mesh(barGeo, mat); b1.position.x = -0.32;
-      const b2 = new THREE.Mesh(barGeo, mat); b2.position.x = 0.32;
-      pause.add(b1, b2);
-      pause.rotation.y = Math.PI; // sit on the back face
-      icon.add(pause);
-
-      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-      const key = new THREE.DirectionalLight(0xffffff, 2.3); key.position.set(2, 2.5, 3); scene.add(key);
-      const rim = new THREE.PointLight(0xffffff, 2.4, 12); rim.position.set(-2.5, -1.5, 2); scene.add(rim);
-
-      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      let target = 0, hover = 0;
-      const link = canvas.closest(".nav__logo");
-      // each click-free cycle flips a half-turn: play → pause → play …
-      if (!reduce) setInterval(() => { target += Math.PI; }, 2400);
-      link?.addEventListener("mouseenter", () => { hover = 1; target += Math.PI; });
-      link?.addEventListener("mouseleave", () => { hover = 0; });
-
-      function loop() {
-        icon.rotation.y += (target - icon.rotation.y) * 0.12;       // eased flip
-        icon.rotation.x = Math.sin(performance.now() * 0.0006) * 0.12 * (1 + hover);
-        renderer.render(scene, camera);
-        if (!reduce) requestAnimationFrame(loop);
-      }
-      loop();
-      if (reduce) renderer.render(scene, camera);
-    }
+  <!-- Logo: pause → play morph (static ads → motion ads) -->
+  <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+  <script>
+    (function () {
+      var box = document.getElementById("logoLottie");
+      if (!box || !window.lottie) return;
+      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var anim = lottie.loadAnimation({
+        container: box, renderer: "svg", loop: true, autoplay: !reduce,
+        path: "assets/lottie/play-pause.json"
+      });
+      if (reduce) anim.goToAndStop(62, true); // rest on the play triangle
+      var link = box.closest(".nav__logo");
+      link && link.addEventListener("mouseenter", function () { anim.setSpeed(2); });
+      link && link.addEventListener("mouseleave", function () { anim.setSpeed(1); });
+    })();
   </script>
 </body>
 </html>
