@@ -150,16 +150,6 @@ ul, ol { list-style: none; }
 
 .nav__actions { display: flex; align-items: center; gap: 10px; flex: none; }
 
-/* WhatsApp icon button */
-.nav__wa {
-  flex: none; width: 40px; height: 40px; border-radius: 50%;
-  display: grid; place-items: center; color: #fff;
-  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18);
-  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
-  transition: background .25s, color .25s, transform .25s, border-color .25s;
-}
-.nav__wa:hover { background: #25d366; border-color: #25d366; color: #07301a; transform: translateY(-1px); }
-
 /* play-button style, rectangular: frosted + marching-ants dashed outline */
 .btn {
   position: relative; display: inline-flex; align-items: center; justify-content: center;
@@ -186,7 +176,7 @@ ul, ol { list-style: none; }
 .btn--play:hover { background-color: #fff; color: #000; transform: translateY(-1px); }
 
 .nav__menu-btn {
-  display: none; align-items: center; gap: 12px; padding: 6px 0;
+  display: flex; align-items: center; gap: 12px; padding: 6px 0;
   background: none; border: 0; cursor: pointer; color: #fff;
   font-size: .76rem; letter-spacing: .18em; text-transform: uppercase;
 }
