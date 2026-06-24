@@ -107,59 +107,61 @@ ul, ol { list-style: none; }
    ============================================================ */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 80;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px clamp(22px, 5vw, 64px);
+  display: flex; flex-direction: column;
   /* jet-black, transparent, slightly blurred */
-  background: rgba(0, 0, 0, .4);
-  backdrop-filter: blur(9px) saturate(120%);
-  -webkit-backdrop-filter: blur(9px) saturate(120%);
-  border-bottom: 1px solid rgba(255, 255, 255, .06);
-  transition: background .4s var(--ease), padding .4s var(--ease), backdrop-filter .4s;
+  background: rgba(0, 0, 0, .45);
+  backdrop-filter: blur(11px) saturate(120%);
+  -webkit-backdrop-filter: blur(11px) saturate(120%);
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
+  transition: background .4s var(--ease);
 }
-.nav.is-scrolled {
-  background: rgba(0, 0, 0, .55);
-  backdrop-filter: blur(13px) saturate(120%);
-  -webkit-backdrop-filter: blur(13px) saturate(120%);
-  padding-top: 12px; padding-bottom: 12px;
-}
-/* ---- Logo: hairline sketch-draw then fill (Lottie-style) ---- */
-.nav__logo { position: relative; display: inline-flex; transition: filter .4s var(--ease); }
-.nav__logo:hover { filter: drop-shadow(0 0 9px rgba(255,255,255,.45)); }
-.nav__logo-svg {
-  display: block; height: 30px; width: auto; overflow: visible;
-  /* the hairline is revealed left-to-right, like it's being sketched */
-  animation: logoWipe 5.5s ease-in-out infinite;
-}
-.logo-word { font-family: 'Syne Extra', sans-serif; font-weight: 400; font-size: 26px; letter-spacing: -.3px; }
+.nav.is-scrolled { background: rgba(0, 0, 0, .62); }
+.nav.is-scrolled .ticker { display: none; } /* hide marquee once scrolling */
 
-/* hairline stroke stays; the fill flows in once the outline is drawn */
-.logo-draw { fill-opacity: 0; vector-effect: non-scaling-stroke; animation: logoFill 5.5s ease-in-out infinite; }
+/* ---- scrolling marquee ---- */
+.ticker { overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.07); }
+.ticker__track { display: inline-flex; width: max-content; white-space: nowrap; animation: ticker 30s linear infinite; }
+.ticker__group { display: inline-flex; align-items: center; padding: 7px 0; }
+.ticker__group > * { margin: 0 16px; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
+.ticker__group b { color: #fff; font-weight: 600; }
+.ticker__group span { color: rgba(255,255,255,.55); font-weight: 400; }
+.ticker__group i { color: rgba(255,255,255,.4); font-style: normal; margin: 0 4px; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-@keyframes logoWipe {
-  0%   { clip-path: inset(-20% 102% -20% -8%); opacity: 1; }
-  34%  { clip-path: inset(-20% -8% -20% -8%); }   /* outline fully sketched */
-  88%  { clip-path: inset(-20% -8% -20% -8%); opacity: 1; }
-  96%  { clip-path: inset(-20% -8% -20% -8%); opacity: 0; } /* fade filled logo out */
-  97%  { clip-path: inset(-20% 102% -20% -8%); opacity: 0; }/* reset while hidden */
-  100% { clip-path: inset(-20% 102% -20% -8%); opacity: 1; }
-}
-@keyframes logoFill {
-  0%, 34% { fill-opacity: 0; }   /* hairline only while drawing */
-  52%     { fill-opacity: 1; }   /* fill flows in */
-  88%     { fill-opacity: 1; }
-  96%, 100% { fill-opacity: 0; }
-}
+/* ---- header bar ---- */
+.nav__bar { display: flex; align-items: center; gap: clamp(14px, 2vw, 26px); padding: 11px clamp(18px, 4vw, 40px); }
+.nav__logo { flex: none; display: inline-flex; transition: filter .3s; }
+.nav__logo:hover { filter: drop-shadow(0 0 8px rgba(255,255,255,.4)); }
+.nav__logo-canvas { width: 40px; height: 40px; display: block; }
 
-/* right cluster: inline quick links + labeled menu toggle */
-.nav__right { display: flex; align-items: center; gap: clamp(20px, 4vw, 48px); }
-.nav__inline { display: flex; align-items: center; gap: 14px;
-  font-size: .76rem; letter-spacing: .16em; text-transform: uppercase; }
-.nav__inline a { color: var(--muted); transition: color .25s; }
-.nav__inline a:hover { color: #fff; }
-.nav__sep { color: rgba(255,255,255,.3); }
+.nav__links2 { display: flex; align-items: center; gap: clamp(14px, 1.6vw, 26px); flex: none; }
+.nav__links2 a { font-size: .82rem; color: rgba(255,255,255,.7); transition: color .25s; }
+.nav__links2 a:hover { color: #fff; }
+
+.nav__search {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 11px; padding: 10px 15px; color: rgba(255,255,255,.55);
+  transition: border-color .25s, background .25s;
+}
+.nav__search:focus-within { border-color: rgba(255,255,255,.35); background: rgba(255,255,255,.09); }
+.nav__search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: #fff; font: inherit; font-size: .9rem; }
+.nav__search input::placeholder { color: rgba(255,255,255,.42); }
+
+.nav__actions { display: flex; align-items: center; gap: 10px; flex: none; }
+.btn {
+  display: inline-flex; align-items: center; padding: 10px 18px; border-radius: 100px;
+  font-size: .8rem; letter-spacing: .01em; white-space: nowrap;
+  transition: transform .2s var(--ease), background .25s, color .25s, border-color .25s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn--solid { background: #fff; color: #000; font-weight: 600; }
+.btn--solid:hover { background: rgba(255,255,255,.85); }
+.btn--outline { border: 1px solid rgba(255,255,255,.35); color: #fff; }
+.btn--outline:hover { border-color: #fff; background: rgba(255,255,255,.08); }
 
 .nav__menu-btn {
-  display: flex; align-items: center; gap: 12px; padding: 6px 0;
+  display: none; align-items: center; gap: 12px; padding: 6px 0;
   background: none; border: 0; cursor: pointer; color: #fff;
   font-size: .76rem; letter-spacing: .18em; text-transform: uppercase;
 }
@@ -612,6 +614,10 @@ ul, ol { list-style: none; }
 @media (max-width: 900px) {
   .sidenav { display: none; }
   .social { display: none; }
+  /* collapse header: logo + menu only */
+  .nav__links2, .nav__search, .nav__actions { display: none; }
+  .nav__menu-btn { display: flex; }
+  .nav__bar { justify-content: space-between; }
   .about__grid { grid-template-columns: 1fr; }
   .about__media { max-width: 320px; }
   .pricing__grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }

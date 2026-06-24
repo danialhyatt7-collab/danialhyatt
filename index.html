@@ -28,19 +28,39 @@
 
   <!-- ===== Top Nav ===== -->
   <header class="nav" id="nav">
-    <a href="#home" class="nav__logo" aria-label="DanialH home">
-      <svg class="nav__logo-svg" id="logoSvg" viewBox="0 0 170 34" width="150" height="30" aria-hidden="true">
-        <g id="logoGroup" fill="#fff" stroke="#fff" stroke-width="1" stroke-linejoin="round" stroke-linecap="round">
-          <path class="logo-draw" pathLength="100" d="M0 7 L0 27 L17 17 Z" />
-          <text class="logo-draw logo-word" x="26" y="27">DanialH.</text>
-        </g>
-      </svg>
-    </a>
-
-    <div class="nav__right">
-      <div class="nav__inline">
-        <a href="mailto:hello@danialhyatt.com">Contact</a>
+    <!-- scrolling marquee -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span class="ticker__group">
+          <b>Available for projects</b><i>☺</i><span>15-second product ads from $250 / spot</span><i>☺</i><b>Booking Q3 2024</b><i>☺</i><span>Remote · worldwide</span><i>☺</i><b>Available for projects</b><i>☺</i><span>15-second product ads from $250 / spot</span><i>☺</i><b>Booking Q3 2024</b><i>☺</i><span>Remote · worldwide</span><i>☺</i>
+        </span>
+        <span class="ticker__group">
+          <b>Available for projects</b><i>☺</i><span>15-second product ads from $250 / spot</span><i>☺</i><b>Booking Q3 2024</b><i>☺</i><span>Remote · worldwide</span><i>☺</i><b>Available for projects</b><i>☺</i><span>15-second product ads from $250 / spot</span><i>☺</i><b>Booking Q3 2024</b><i>☺</i><span>Remote · worldwide</span><i>☺</i>
+        </span>
       </div>
+    </div>
+
+    <div class="nav__bar">
+      <a href="#home" class="nav__logo" aria-label="DanialH home">
+        <canvas class="nav__logo-canvas" id="logoCanvas" width="40" height="40" aria-hidden="true"></canvas>
+      </a>
+
+      <nav class="nav__links2" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#reel">Reel</a>
+        <a href="mailto:hello@danialhyatt.com">Contact</a>
+      </nav>
+
+      <div class="nav__search">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" placeholder="Search work, clients, formats…" aria-label="Search" />
+      </div>
+
+      <div class="nav__actions">
+        <a href="#reel" class="btn btn--solid">Showreel</a>
+        <a href="mailto:hello@danialhyatt.com" class="btn btn--outline">Hire me</a>
+      </div>
+
       <button class="nav__menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">
         <span class="nav__menu-icon"><span></span><span></span></span>
         <span class="nav__menu-label">Menu</span>
@@ -127,5 +147,62 @@
   </div>
 
   <script src="script.js"></script>
+
+  <!-- Logo: 3D pause ⇄ play flip (three.js) -->
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js";
+    const canvas = document.getElementById("logoCanvas");
+    if (canvas) {
+      const S = 40;
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(S, S, false);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+      camera.position.z = 5;
+
+      const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.5, roughness: 0.28 });
+      const icon = new THREE.Group();
+      scene.add(icon);
+
+      // PLAY triangle (faces front)
+      const tri = new THREE.Shape();
+      tri.moveTo(-0.62, -0.78); tri.lineTo(-0.62, 0.78); tri.lineTo(0.78, 0); tri.lineTo(-0.62, -0.78);
+      const triGeo = new THREE.ExtrudeGeometry(tri, { depth: 0.4, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.1, bevelSegments: 2 });
+      triGeo.center();
+      const playMesh = new THREE.Mesh(triGeo, mat);
+      icon.add(playMesh);
+
+      // PAUSE two bars (faces back, revealed when flipped 180°)
+      const pause = new THREE.Group();
+      const barGeo = new THREE.BoxGeometry(0.34, 1.5, 0.4);
+      const b1 = new THREE.Mesh(barGeo, mat); b1.position.x = -0.32;
+      const b2 = new THREE.Mesh(barGeo, mat); b2.position.x = 0.32;
+      pause.add(b1, b2);
+      pause.rotation.y = Math.PI; // sit on the back face
+      icon.add(pause);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+      const key = new THREE.DirectionalLight(0xffffff, 2.3); key.position.set(2, 2.5, 3); scene.add(key);
+      const rim = new THREE.PointLight(0xffffff, 2.4, 12); rim.position.set(-2.5, -1.5, 2); scene.add(rim);
+
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let target = 0, hover = 0;
+      const link = canvas.closest(".nav__logo");
+      // each click-free cycle flips a half-turn: play → pause → play …
+      if (!reduce) setInterval(() => { target += Math.PI; }, 2400);
+      link?.addEventListener("mouseenter", () => { hover = 1; target += Math.PI; });
+      link?.addEventListener("mouseleave", () => { hover = 0; });
+
+      function loop() {
+        icon.rotation.y += (target - icon.rotation.y) * 0.12;       // eased flip
+        icon.rotation.x = Math.sin(performance.now() * 0.0006) * 0.12 * (1 + hover);
+        renderer.render(scene, camera);
+        if (!reduce) requestAnimationFrame(loop);
+      }
+      loop();
+      if (reduce) renderer.render(scene, camera);
+    }
+  </script>
 </body>
 </html>
