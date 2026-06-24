@@ -262,6 +262,41 @@ ul, ol { list-style: none; }
 .cart__checkout:disabled { opacity: .4; cursor: not-allowed; }
 .cart__note { color: var(--muted); font-size: .72rem; text-align: center; margin-top: 12px; }
 
+/* ============================================================
+   Footer — matches the header (jet-black, marquee, logo)
+   ============================================================ */
+.foot { background: rgba(0,0,0,.55); border-top: 1px solid rgba(255,255,255,.07); }
+.ticker--foot { border-bottom: none; border-top: 1px solid rgba(255,255,255,.07); }
+.foot__bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  max-width: var(--maxw); margin: 0 auto; padding: 26px clamp(18px, 4vw, 40px);
+}
+.foot__logo .nav__logo-lottie { width: 36px; height: 36px; }
+.foot__links { display: flex; gap: clamp(14px, 2vw, 28px); }
+.foot__links a { position: relative; color: rgba(255,255,255,.7); font-size: .85rem; transition: color .25s; }
+.foot__links a::after {
+  content: ""; position: absolute; left: 0; bottom: -4px; width: 100%; height: 1px;
+  background: #fff; transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease);
+}
+.foot__links a:hover { color: #fff; }
+.foot__links a:hover::after { transform: scaleX(1); }
+.foot__social { display: flex; gap: 16px; }
+.foot__social a { color: rgba(255,255,255,.55); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+  transition: color .25s, transform .25s var(--ease); }
+.foot__social a:hover { color: #fff; transform: translateY(-3px); }
+.foot__base {
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  max-width: var(--maxw); margin: 0 auto; padding: 16px clamp(18px, 4vw, 40px);
+  border-top: 1px solid rgba(255,255,255,.06);
+  font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+}
+.foot__top { transition: color .25s; }
+.foot__top:hover { color: #fff; }
+
+/* micro-animation: cart count pops when an item is added */
+@keyframes cartBump { 0% { transform: scale(1); } 40% { transform: scale(1.5); } 100% { transform: scale(1); } }
+.nav__cart-count.bump { animation: cartBump .45s var(--ease); }
+
 .nav__menu-btn {
   display: flex; align-items: center; gap: 12px; padding: 6px 0;
   background: none; border: 0; cursor: pointer; color: #fff;
@@ -436,16 +471,21 @@ ul, ol { list-style: none; }
   padding: clamp(90px, 14vh, 150px) var(--hero-gutter) clamp(60px, 10vh, 110px);
   max-width: var(--maxw); margin: 0 auto;
 }
-.reel__head { display: flex; flex-direction: column; gap: 8px; }
+.reel__head { display: flex; flex-direction: column; gap: 8px; margin-bottom: clamp(26px, 4vw, 48px); }
+
+.reel__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 1.8vw, 24px); }
 
 /* slide-in on scroll */
 .reel__stage {
   position: relative; display: block; width: 100%; cursor: pointer;
-  aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden;
+  aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden;
   border: 1px solid var(--line); background: #0a0e14; padding: 0;
-  opacity: 0; transform: translateY(70px) scale(.97);
+  opacity: 0; transform: translateY(60px) scale(.97);
   transition: opacity .9s var(--ease), transform .9s var(--ease), border-color .3s;
 }
+.reel__stage--featured { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
+.reel__stage:nth-child(2) { transition-delay: .08s; }
+.reel__stage:nth-child(3) { transition-delay: .16s; }
 .reel__stage.is-in { opacity: 1; transform: translateY(0) scale(1); }
 .reel__stage:hover { border-color: rgba(255,255,255,.4); }
 
@@ -461,7 +501,7 @@ ul, ol { list-style: none; }
 /* centered play button with playful outer circle */
 .reel__play {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: clamp(78px, 11vw, 112px); height: clamp(78px, 11vw, 112px); border-radius: 50%;
+  width: clamp(58px, 7vw, 82px); height: clamp(58px, 7vw, 82px); border-radius: 50%;
   display: grid; place-items: center;
   background: rgba(255,255,255,.1); backdrop-filter: blur(6px);
   border: 1px solid rgba(255,255,255,.5);
@@ -482,6 +522,7 @@ ul, ol { list-style: none; }
   border-color: transparent transparent transparent #fff;
   transition: border-left-color .35s;
 }
+.reel__stage--featured .reel__play { width: clamp(80px, 9vw, 110px); height: clamp(80px, 9vw, 110px); }
 .reel__stage:hover .reel__play { background: #fff; transform: translate(-50%, -50%) scale(1.08); }
 .reel__stage:hover .reel__play::before { animation-duration: 3.5s; border-color: rgba(255,255,255,.9); }
 .reel__stage:hover .reel__play-tri { border-left-color: var(--bg); }
@@ -743,6 +784,7 @@ ul, ol { list-style: none; }
   /* keep the wide-tracked eyebrow from forcing horizontal scroll */
   .hero__eyebrow { letter-spacing: .22em; font-size: .68rem; }
   .hero__sub { max-width: 100%; }
+  .reel__grid { grid-template-columns: 1fr; }
   /* hide the centered scroll cue so it can't collide with the play button */
   .hero__scroll { display: none; }
   .hero__play { gap: 12px; }

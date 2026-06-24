@@ -106,7 +106,7 @@ document.querySelectorAll(".sidenav__arrow").forEach(btn => {
 
 /* ---------- Reveal on scroll -------------------------------- */
 const revealEls = [
-  ...document.querySelectorAll(".section__head, .reel__head, .about__grid, .plan, .pricing__note, .contact__inner"),
+  ...document.querySelectorAll(".section__head, .reel__head, .shop__head, .about__grid, .plan, .pricing__note, .contact__inner"),
   ...document.querySelectorAll(".work-card"),
 ];
 revealEls.forEach(el => { if (!el.classList.contains("work-card")) el.classList.add("reveal"); });
@@ -120,9 +120,8 @@ const revObs = new IntersectionObserver((entries) => {
 }, { threshold: .15 });
 revealEls.forEach(el => revObs.observe(el));
 
-/* the reel stage has its own slide-in styles — just toggle is-in */
-const reelStageEl = document.getElementById("reelStage");
-if (reelStageEl) revObs.observe(reelStageEl);
+/* reel cards have their own slide-in styles — just toggle is-in */
+document.querySelectorAll(".reel__stage").forEach(el => revObs.observe(el));
 
 /* ---------- Lightbox ---------------------------------------- */
 const lightbox = document.getElementById("lightbox");
@@ -161,9 +160,11 @@ document.getElementById("reelBtn")?.addEventListener("click", () =>
   openLightbox({ title: "2024 Showreel", video: "assets/video/hero.mp4" })
 );
 
-/* Featured reel stage → opens the spot in lightbox */
-document.getElementById("reelStage")?.addEventListener("click", () =>
-  openLightbox({ title: "Valentino Uomo — 15s", video: "assets/video/hero.mp4" })
+/* Reel cards → open each spot in the lightbox */
+document.querySelectorAll(".reel__stage").forEach(card =>
+  card.addEventListener("click", () =>
+    openLightbox({ title: card.dataset.title, video: card.dataset.video || "" })
+  )
 );
 
 /* ---------- Contact form (front-end only) ------------------- */
@@ -188,9 +189,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
    halves; shifting by exactly one half is always seamless, so
    it can never gap or break at the end.
    ============================================================ */
-(function ticker() {
-  const track = document.getElementById("tickerTrack");
-  if (!track) return;
+function initTicker(track) {
   const base = track.querySelector(".ticker__group");
   if (!base) return;
   const baseHTML = base.outerHTML;
@@ -209,7 +208,6 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     x = 0; last = 0;
     if (!reduce) raf = requestAnimationFrame(step);
   }
-
   function step(now) {
     if (!last) last = now;
     const dt = (now - last) / 1000; last = now;
@@ -218,12 +216,12 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     track.style.transform = `translate3d(${x}px,0,0)`;
     raf = requestAnimationFrame(step);
   }
-
   build();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
   let t;
   window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(build, 200); });
-})();
+}
+document.querySelectorAll(".ticker__track").forEach(initTicker);
 
 /* ============================================================
    Shop + cart  →  checkout with Payoneer
@@ -260,6 +258,13 @@ const PRODUCTS = [
       <ul class="product__list">${p.feats.map(f => `<li>${f}</li>`).join("")}</ul>
       <button class="product__add" data-id="${p.id}">Add to cart</button>
     </article>`).join("");
+
+  /* micro-animation: products reveal + stagger on scroll */
+  if (typeof revObs !== "undefined") {
+    grid.querySelectorAll(".product").forEach((el, i) => {
+      el.classList.add("reveal"); el.style.transitionDelay = (i * 0.08) + "s"; revObs.observe(el);
+    });
+  }
 
   /* ---- cart state (persisted) ---- */
   let cart = {};
@@ -299,7 +304,10 @@ const PRODUCTS = [
     save();
   }
 
-  function add(id) { cart[id] = (cart[id] || 0) + 1; render(); openCart(); }
+  function add(id) {
+    cart[id] = (cart[id] || 0) + 1; render(); openCart();
+    countEl.classList.remove("bump"); void countEl.offsetWidth; countEl.classList.add("bump");
+  }
   function change(id, d) { cart[id] = (cart[id] || 0) + d; if (cart[id] <= 0) delete cart[id]; render(); }
 
   grid.addEventListener("click", e => { const b = e.target.closest(".product__add"); if (b) add(b.dataset.id); });

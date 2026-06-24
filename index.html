@@ -39,7 +39,7 @@
 
     <div class="nav__bar">
       <a href="#home" class="nav__logo" aria-label="DanialH home">
-        <span class="nav__logo-lottie" id="logoLottie" aria-hidden="true"></span>
+        <span class="nav__logo-lottie js-logo-lottie" id="logoLottie" aria-hidden="true"></span>
       </a>
 
       <div class="nav__search">
@@ -116,20 +116,36 @@
     <!-- ===== 02 — FEATURED REEL ===== -->
     <section class="reel" id="reel" aria-label="Featured reel">
       <div class="reel__head">
-        <p class="section__label">02 — Featured</p>
+        <p class="section__label">02 — Selected work</p>
         <h2 class="section__title">The&nbsp;reel</h2>
+        <p class="section__lead">Product spots built to stop the scroll. Tap any to play.</p>
       </div>
 
-      <button class="reel__stage" id="reelStage" aria-label="Play featured reel">
-        <span class="reel__img" style="background-image:url('assets/img/reel-thumb.jpg')"></span>
-        <span class="reel__scrim"></span>
-        <span class="reel__play"><span class="reel__play-tri"></span></span>
-        <span class="reel__meta">
-          <span class="reel__meta-cat">Beauty · 15s</span>
-          <span class="reel__meta-title">Valentino Uomo</span>
-        </span>
-        <span class="reel__time">00:15</span>
-      </button>
+      <div class="reel__grid">
+        <button class="reel__stage reel__stage--featured" data-title="Valentino Uomo — 15s" data-video="assets/video/hero.mp4" aria-label="Play Valentino Uomo">
+          <span class="reel__img" style="background-image:url('assets/img/reel-thumb.jpg')"></span>
+          <span class="reel__scrim"></span>
+          <span class="reel__play"><span class="reel__play-tri"></span></span>
+          <span class="reel__meta"><span class="reel__meta-cat">Fragrance · 15s</span><span class="reel__meta-title">Valentino Uomo</span></span>
+          <span class="reel__time">00:15</span>
+        </button>
+
+        <button class="reel__stage" data-title="Amóree Natural Candles — 15s" data-video="assets/video/hero.mp4" aria-label="Play Amóree">
+          <span class="reel__img" style="background-image:url('assets/img/reel-thumb-2.jpg')"></span>
+          <span class="reel__scrim"></span>
+          <span class="reel__play"><span class="reel__play-tri"></span></span>
+          <span class="reel__meta"><span class="reel__meta-cat">Home · 15s</span><span class="reel__meta-title">Amóree Candles</span></span>
+          <span class="reel__time">00:15</span>
+        </button>
+
+        <button class="reel__stage" data-title="Ikkari Hand Wash — 15s" data-video="assets/video/hero.mp4" aria-label="Play Ikkari">
+          <span class="reel__img" style="background-image:url('assets/img/reel-thumb-3.jpg')"></span>
+          <span class="reel__scrim"></span>
+          <span class="reel__play"><span class="reel__play-tri"></span></span>
+          <span class="reel__meta"><span class="reel__meta-cat">Skincare · 15s</span><span class="reel__meta-title">Ikkari Apothecary</span></span>
+          <span class="reel__time">00:15</span>
+        </button>
+      </div>
     </section>
 
     <!-- ===== 03 — SHOP ===== -->
@@ -146,6 +162,35 @@
     </section>
 
   </main>
+
+  <!-- ===== Footer (matches header) ===== -->
+  <footer class="foot" aria-label="Footer">
+    <div class="ticker ticker--foot" aria-hidden="true">
+      <div class="ticker__track">
+        <span class="ticker__group">
+          <b>Let's make your product move</b><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i><span>15-second product ads that convert</span><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i><b>Booking Q3 2024</b><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i><span>hello@danialhyatt.com</span><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="foot__bar">
+      <a href="#home" class="nav__logo foot__logo" aria-label="DanialH home">
+        <span class="nav__logo-lottie js-logo-lottie" aria-hidden="true"></span>
+      </a>
+      <nav class="foot__links" aria-label="Footer navigation">
+        <a href="#home">Home</a><a href="#reel">Reel</a><a href="#shop">Shop</a><a href="mailto:hello@danialhyatt.com">Contact</a>
+      </nav>
+      <div class="foot__social">
+        <a href="#">Instagram</a><a href="#">Behance</a><a href="#">Vimeo</a><a href="#">LinkedIn</a>
+      </div>
+    </div>
+
+    <div class="foot__base">
+      <span>© <span id="year"></span> DanialH.</span>
+      <span>Product Motion Design</span>
+      <a href="#home" class="foot__top">Back to top ↑</a>
+    </div>
+  </footer>
 
   <!-- ===== Cart drawer ===== -->
   <div class="cart" id="cart" aria-hidden="true">
@@ -176,17 +221,18 @@
   <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
   <script>
     (function () {
-      var box = document.getElementById("logoLottie");
-      if (!box || !window.lottie) return;
+      if (!window.lottie) return;
       var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      var anim = lottie.loadAnimation({
-        container: box, renderer: "svg", loop: true, autoplay: !reduce,
-        path: "assets/lottie/play-pause.json"
+      document.querySelectorAll(".js-logo-lottie").forEach(function (box) {
+        var anim = lottie.loadAnimation({
+          container: box, renderer: "svg", loop: true, autoplay: !reduce,
+          path: "assets/lottie/play-pause.json"
+        });
+        if (reduce) anim.goToAndStop(62, true); // rest on the play triangle
+        var link = box.closest(".nav__logo");
+        link && link.addEventListener("mouseenter", function () { anim.setSpeed(2); });
+        link && link.addEventListener("mouseleave", function () { anim.setSpeed(1); });
       });
-      if (reduce) anim.goToAndStop(62, true); // rest on the play triangle
-      var link = box.closest(".nav__logo");
-      link && link.addEventListener("mouseenter", function () { anim.setSpeed(2); });
-      link && link.addEventListener("mouseleave", function () { anim.setSpeed(1); });
     })();
   </script>
 </body>
