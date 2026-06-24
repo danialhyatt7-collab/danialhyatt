@@ -183,8 +183,9 @@ form?.addEventListener("submit", e => {
 document.getElementById("year").textContent = new Date().getFullYear();
 
 /* ============================================================
-   Marquee ticker — clone enough copies to always fill the
-   viewport so the loop is seamless and never gaps/stops.
+   Marquee ticker — rAF loop with modulo wrap. Two identical
+   halves; shifting by exactly one half is always seamless, so
+   it can never gap or break at the end.
    ============================================================ */
 (function ticker() {
   const track = document.getElementById("tickerTrack");
@@ -192,15 +193,29 @@ document.getElementById("year").textContent = new Date().getFullYear();
   const base = track.querySelector(".ticker__group");
   if (!base) return;
   const baseHTML = base.outerHTML;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let halfWidth = 0, x = 0, last = 0, raf = 0;
+  const SPEED = 70; // px per second
 
   function build() {
+    cancelAnimationFrame(raf);
     track.innerHTML = baseHTML;
     const groupW = track.firstElementChild.offsetWidth;
     if (!groupW) return;
-    const perHalf = Math.max(1, Math.ceil(window.innerWidth / groupW) + 1);
-    track.innerHTML = baseHTML.repeat(perHalf * 2); // two equal halves
-    const halfW = groupW * perHalf;
-    track.style.animationDuration = Math.max(14, halfW / 70).toFixed(1) + "s";
+    const perHalf = Math.ceil(window.innerWidth / groupW) + 1;
+    track.innerHTML = baseHTML.repeat(perHalf * 2); // two identical halves
+    halfWidth = groupW * perHalf;
+    x = 0; last = 0;
+    if (!reduce) raf = requestAnimationFrame(step);
+  }
+
+  function step(now) {
+    if (!last) last = now;
+    const dt = (now - last) / 1000; last = now;
+    x -= SPEED * dt;
+    if (x <= -halfWidth) x += halfWidth; // seamless wrap
+    track.style.transform = `translate3d(${x}px,0,0)`;
+    raf = requestAnimationFrame(step);
   }
 
   build();

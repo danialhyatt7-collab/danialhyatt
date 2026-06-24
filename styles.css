@@ -119,13 +119,13 @@ ul, ol { list-style: none; }
 
 /* ---- scrolling marquee ---- */
 .ticker { overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.07); }
-.ticker__track { display: inline-flex; width: max-content; white-space: nowrap; animation: ticker 30s linear infinite; }
+.ticker__track { display: inline-flex; width: max-content; white-space: nowrap; will-change: transform; }
 .ticker__group { display: inline-flex; align-items: center; padding: 7px 0; }
 .ticker__group > * { margin: 0 16px; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
 .ticker__group b { color: #fff; font-weight: 600; }
 .ticker__group span { color: rgba(255,255,255,.55); font-weight: 400; }
-.ticker__group i { color: rgba(255,255,255,.4); font-style: normal; margin: 0 4px; }
-@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.tsep { display: inline-flex; align-items: center; color: rgba(255,255,255,.5); margin: 0 6px; }
+.tsep svg { width: 9px; height: 9px; animation: playSpin 7s linear infinite; }
 
 /* ---- header bar ---- */
 .nav__bar { display: flex; align-items: center; gap: clamp(14px, 2vw, 26px); padding: 11px clamp(18px, 4vw, 40px); }
