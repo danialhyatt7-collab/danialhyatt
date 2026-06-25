@@ -106,7 +106,7 @@ document.querySelectorAll(".sidenav__arrow").forEach(btn => {
 
 /* ---------- Reveal on scroll -------------------------------- */
 const revealEls = [
-  ...document.querySelectorAll(".section__head, .reel__head, .shop__head, .about__grid, .plan, .pricing__note, .contact__inner"),
+  ...document.querySelectorAll(".section__head, .reel__head, .shop__head, .value__stat, .value__points, .cta, .about__grid, .plan, .pricing__note, .contact__inner"),
   ...document.querySelectorAll(".work-card"),
 ];
 revealEls.forEach(el => { if (!el.classList.contains("work-card")) el.classList.add("reveal"); });
