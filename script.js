@@ -234,11 +234,11 @@ const PAYONEER_LINK = ""; // e.g. "https://pay.payoneer.com/xxxxxxxx"
 
 const PRODUCTS = [
   { id: "spark", name: "Spark", for: "Single 15s spot", price: 250, time: "Delivered in 24 hours",
-    feats: ["One 15s vertical or square ad", "1 platform format", "Licensed music + sound design", "2 revision rounds"] },
+    feats: ["One 15s vertical or square ad", "1 platform format", "Licensed music + sound design", "Storyboard shared before production"] },
   { id: "signature", name: "Signature", for: "Hero + cut-downs", price: 600, time: "Delivered in 3–4 days", featured: true, badge: "Most booked",
-    feats: ["15s hero ad + 2 cut-downs", "3 aspect ratios", "3D render & UI animation", "3 revision rounds"] },
+    feats: ["15s hero ad + 2 cut-downs", "3 aspect ratios", "3D render & UI animation", "Storyboard approved before the shoot"] },
   { id: "studio", name: "Studio", for: "Monthly retainer", price: 1500, unit: "/mo", time: "Rolling delivery, priority",
-    feats: ["6–8 finished spots / month", "Unlimited platform formats", "Dedicated Slack channel", "Unlimited revisions"] },
+    feats: ["6–8 finished spots / month", "Unlimited platform formats", "Dedicated Slack channel", "Storyboard for every spot"] },
 ];
 
 (function shop() {

@@ -14,7 +14,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -99,12 +99,13 @@
       <div class="hero__inner">
         <p class="hero__eyebrow">15&#8209;Second&nbsp;Product&nbsp;Ads</p>
         <h1 class="hero__title">MOTION</h1>
-        <p class="hero__sub">Scroll&#8209;stopping 15&#8209;second product ads &mdash; built to hook in the first frame and sell by the last.</p>
 
-        <button class="hero__play" id="reelBtn" aria-label="Play showreel">
-          <span class="hero__play-icon">&#9658;</span>
-          <span class="hero__play-label">Watch the<br />2024 showreel</span>
-        </button>
+        <div class="hero__cta">
+          <button class="hero__play" id="reelBtn" aria-label="Play showreel">
+            <span class="hero__play-icon">&#9658;</span>
+          </button>
+          <p class="hero__sub">Scroll&#8209;stopping 15&#8209;second product ads &mdash; built to hook in the first frame and sell by the last.</p>
+        </div>
       </div>
 
       <a href="#reel" class="hero__scroll" aria-label="Scroll to reel">
@@ -173,7 +174,7 @@
       <div class="shop__grid" id="shopGrid">
         <!-- product cards injected by script.js (edit PRODUCTS there) -->
       </div>
-      <p class="shop__guarantee">Every package includes scripting support, licensed music, source files &amp; revision rounds. Not happy with the first cut? I reshape it free.</p>
+      <p class="shop__guarantee">You always see &amp; approve the storyboard before a single frame is produced — so you know exactly what you're getting.</p>
     </section>
 
     <!-- ===== Final CTA ===== -->
@@ -189,32 +190,39 @@
 
   </main>
 
-  <!-- ===== Footer (matches header) ===== -->
+  <!-- ===== Footer (high-end) ===== -->
   <footer class="foot" aria-label="Footer">
-    <div class="ticker ticker--foot" aria-hidden="true">
-      <div class="ticker__track">
-        <span class="ticker__group">
-          <b>Let's make your product move</b><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i><span>15-second product ads that convert</span><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i><b>Booking Q3 2024</b><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i><span>hello@danialhyatt.com</span><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i>
-        </span>
+    <div class="foot__main">
+      <div class="foot__lead">
+        <p class="foot__kicker">Have a product to launch?</p>
+        <a href="mailto:hello@danialhyatt.com" class="foot__email">hello@danialhyatt.com</a>
+        <a href="#shop" class="foot__cta">Start your spot &rarr;</a>
+      </div>
+      <div class="foot__cols">
+        <div class="foot__col">
+          <span class="foot__col-h">Menu</span>
+          <a href="#home">Home</a><a href="#reel">Reel</a><a href="#shop">Shop</a><a href="#why">Why motion</a>
+        </div>
+        <div class="foot__col">
+          <span class="foot__col-h">Social</span>
+          <a href="#">Instagram</a><a href="#">Behance</a><a href="#">Vimeo</a><a href="#">LinkedIn</a>
+        </div>
+        <div class="foot__col">
+          <span class="foot__col-h">Say hi</span>
+          <a href="mailto:hello@danialhyatt.com">Email</a>
+          <a href="https://wa.me/923374841818" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
       </div>
     </div>
 
-    <div class="foot__bar">
-      <a href="#home" class="nav__logo foot__logo" aria-label="DanialH home">
-        <span class="nav__logo-lottie js-logo-lottie" aria-hidden="true"></span>
-      </a>
-      <nav class="foot__links" aria-label="Footer navigation">
-        <a href="#home">Home</a><a href="#reel">Reel</a><a href="#shop">Shop</a><a href="mailto:hello@danialhyatt.com">Contact</a>
-      </nav>
-      <div class="foot__social">
-        <a href="#">Instagram</a><a href="#">Behance</a><a href="#">Vimeo</a><a href="#">LinkedIn</a>
-      </div>
-    </div>
+    <a href="#home" class="foot__wordmark" aria-label="DanialH home">
+      <span class="nav__logo-lottie js-logo-lottie" aria-hidden="true"></span>
+      <span class="foot__wordmark-text">DanialH.</span>
+    </a>
 
     <div class="foot__base">
-      <span>© <span id="year"></span> DanialH.</span>
-      <span>Product Motion Design</span>
-      <a href="#home" class="foot__top">Back to top ↑</a>
+      <span>© <span id="year"></span> DanialH. — Product Motion Design</span>
+      <a href="#home" class="foot__top">Back to top &uarr;</a>
     </div>
   </footer>
 
