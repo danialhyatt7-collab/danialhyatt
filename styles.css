@@ -352,29 +352,65 @@ ul, ol { list-style: none; }
 .cart__note { color: var(--muted); font-size: .72rem; text-align: center; margin-top: 12px; }
 
 /* ============================================================
-   Footer — mirrors the header (jet-black frosted bar)
+   Footer — Dopler-style
    ============================================================ */
-.foot {
-  position: relative;
-  background: rgba(0,0,0,.55);
-  -webkit-backdrop-filter: blur(14px) saturate(120%); backdrop-filter: blur(14px) saturate(120%);
-  border-top: 1px solid rgba(255,255,255,.08);
-}
-.ticker--foot { border-bottom: none; border-top: 1px solid rgba(255,255,255,.07); }
-.foot__bar {
-  display: flex; align-items: center; justify-content: space-between; gap: clamp(14px,2vw,26px);
-  max-width: var(--maxw); margin: 0 auto; padding: 16px clamp(18px,4vw,40px);
-}
-.foot__bar .nav__logo-lottie { width: 40px; height: 40px; }
-.foot__nav { display: flex; align-items: center; gap: clamp(14px,1.8vw,28px); }
-.foot__nav a { position: relative; color: rgba(255,255,255,.72); font-size: .85rem; transition: color .25s; }
-.foot__nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 100%; height: 1px; background: #fff; transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
-.foot__nav a:hover { color: #fff; }
-.foot__nav a:hover::after { transform: scaleX(1); }
+.foot { position: relative; background: #060709; border-top: 1px solid rgba(255,255,255,.08); overflow: hidden; }
+.foot > * { max-width: var(--maxw); margin-inline: auto; }
+
+/* hero CTA */
+.foot__hero { position: relative; text-align: center; padding: clamp(56px,10vh,120px) var(--hero-gutter) clamp(10px,4vh,30px); }
+.foot__headline { font-family: 'Syne Extra', sans-serif; font-weight: 400; text-transform: uppercase;
+  font-size: clamp(2.2rem,7vw,4.6rem); line-height: .98; letter-spacing: -.01em; }
+.foot__sub { color: var(--muted); max-width: 420px; margin: 16px auto 26px; font-size: .95rem; }
+.foot__get { display: inline-block; background: #fff; color: #000; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; font-size: .78rem; padding: 13px 26px; border-radius: 6px; transition: transform .2s var(--ease), filter .2s; }
+.foot__get:hover { transform: translateY(-2px); filter: brightness(.92); }
+.foot__glow { position: relative; display: grid; place-items: center; height: clamp(120px,20vh,220px); margin-top: 10px; }
+.foot__glow::before { content: ""; position: absolute; width: clamp(180px,40vw,420px); height: clamp(180px,40vw,420px);
+  background: radial-gradient(circle, rgba(255,255,255,.22), transparent 62%); filter: blur(20px); }
+.foot__glow .nav__logo-lottie { position: relative; width: clamp(80px,14vw,150px); height: clamp(80px,14vw,150px);
+  filter: drop-shadow(0 0 36px rgba(255,255,255,.5)); }
+
+/* social cards */
+.foot__social { display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.foot__social-card { display: flex; align-items: center; gap: 12px; padding: 22px clamp(18px,2.4vw,30px);
+  color: rgba(255,255,255,.85); border-right: 1px solid var(--line); transition: background .3s; }
+.foot__social-card:last-child { border-right: 0; }
+.foot__social-card:hover { background: rgba(255,255,255,.04); }
+.foot__social-card span { font-size: .92rem; flex: 1; }
+.foot__social-mk { width: 18px; text-align: center; font-weight: 700; font-size: .82rem; flex: none !important; }
+.foot__arrow { color: var(--muted); font-style: normal; transition: transform .3s var(--ease), color .3s; }
+.foot__social-card:hover .foot__arrow { transform: translateX(5px); color: #fff; }
+
+/* link columns */
+.foot__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px,3vw,40px);
+  padding: clamp(40px,7vh,80px) var(--hero-gutter) clamp(40px,6vh,60px); }
+.foot__col h4 { font-family: 'Syne', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .18em;
+  font-size: .66rem; color: var(--muted); margin-bottom: 20px; }
+.foot__col a { display: block; width: fit-content; color: rgba(255,255,255,.78); font-size: .92rem; margin-bottom: 12px; transition: color .25s, transform .25s var(--ease); }
+.foot__col a:hover { color: #fff; transform: translateX(3px); }
+
+/* brand + subscribe */
+.foot__bottom { display: flex; align-items: flex-start; justify-content: space-between; gap: 30px; flex-wrap: wrap;
+  padding: clamp(30px,5vh,50px) var(--hero-gutter); border-top: 1px solid var(--line); }
+.foot__brand { max-width: 360px; }
+.foot__brand-logo { display: inline-flex; align-items: center; gap: 10px; }
+.foot__brand-logo .nav__logo-lottie { width: 34px; height: 34px; }
+.foot__brand-name { font-family: 'Syne Extra', sans-serif; font-weight: 400; font-size: 1.3rem; letter-spacing: -.01em; }
+.foot__brand-desc { color: var(--muted); font-size: .85rem; line-height: 1.6; margin-top: 16px; }
+.foot__subscribe { display: flex; align-items: stretch; gap: 0; width: min(380px, 100%);
+  border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.foot__subscribe input { flex: 1; min-width: 0; background: rgba(255,255,255,.03); border: 0; outline: none;
+  color: #fff; font: inherit; font-size: .82rem; letter-spacing: .08em; padding: 14px 16px; }
+.foot__subscribe input::placeholder { color: rgba(255,255,255,.4); }
+.foot__subscribe button { flex: none; background: #fff; color: #000; border: 0; cursor: pointer;
+  font: inherit; font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; padding: 0 22px; transition: filter .2s; }
+.foot__subscribe button:hover { filter: brightness(.9); }
+
 .foot__base {
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  max-width: var(--maxw); margin: 0 auto; padding: 16px clamp(18px,4vw,40px);
-  border-top: 1px solid var(--line);
+  padding: 18px var(--hero-gutter); border-top: 1px solid var(--line);
   font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
 }
 .foot__top { transition: color .25s; }
@@ -875,8 +911,12 @@ ul, ol { list-style: none; }
   .hero__sub { max-width: 100%; }
   .reel__grid { grid-template-columns: 1fr; }
   .value { grid-template-columns: 1fr; }
-  .foot__bar { flex-wrap: wrap; justify-content: center; text-align: center; gap: 16px; }
-  .foot__nav { order: 3; flex-basis: 100%; justify-content: center; }
+  .foot__social { grid-template-columns: repeat(2, 1fr); }
+  .foot__social-card { border-bottom: 1px solid var(--line); }
+  .foot__social-card:nth-child(2n) { border-right: 0; }
+  .foot__cols { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
+  .foot__bottom { flex-direction: column; }
+  .foot__subscribe { width: 100%; }
   .foot__base { justify-content: center; text-align: center; }
   /* hide the centered scroll cue so it can't collide with the play button */
   .hero__scroll { display: none; }

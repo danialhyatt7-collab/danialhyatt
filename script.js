@@ -261,16 +261,19 @@ document.querySelectorAll(".ticker__track").forEach(initTicker);
 /* ============================================================
    Footer wordmark — solid on touch, back to hairline after 2s
    ============================================================ */
-(function footWordmark() {
-  const wm = document.getElementById("footWordmark");
-  if (!wm) return;
-  let timer;
-  function solidify() {
-    wm.classList.add("is-solid");
-    clearTimeout(timer);
-    timer = setTimeout(() => wm.classList.remove("is-solid"), 2000);
-  }
-  wm.addEventListener("pointerdown", solidify);
+/* footer subscribe → email */
+(function footSubscribe() {
+  const form = document.getElementById("footSubscribe");
+  if (!form) return;
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const email = (form.email.value || "").trim();
+    if (!email) return;
+    window.location.href =
+      `mailto:hello@danialhyatt.com?subject=${encodeURIComponent("Newsletter signup")}` +
+      `&body=${encodeURIComponent("Please add me to updates: " + email)}`;
+    form.reset();
+  });
 })();
 
 /* ============================================================
