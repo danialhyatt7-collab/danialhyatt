@@ -307,13 +307,13 @@ const PRODUCTS = [
   grid.innerHTML = PRODUCTS.map(p => `
     <article class="product${p.featured ? " product--featured" : ""}">
       <div class="product__card">
+        ${p.badge ? `<span class="product__badge">${p.badge}</span>` : ""}
         <div class="product__head">
           <span class="product__icon">${p.icon}</span>
           <div class="product__headtext">
             <h3 class="product__name">${p.name}</h3>
             <p class="product__sub">${p.sub}</p>
           </div>
-          ${p.badge ? `<span class="product__badge">${p.badge}</span>` : ""}
         </div>
         <div class="product__rule"></div>
         <ul class="product__list">${p.feats.map(f => `<li>${bullet}${f}</li>`).join("")}</ul>

@@ -144,16 +144,17 @@ ul, ol { list-style: none; }
 .tsep { display: inline-flex; align-items: center; color: rgba(255,255,255,.5); margin: 0 6px; }
 .tsep svg { width: 9px; height: 9px; animation: playSpin 7s linear infinite; }
 
-/* ---- reviews: proper transparent slides, smoothly synced to scroll ---- */
-.reviews { overflow: hidden; border-top: 1px solid rgba(255,255,255,.06); }
+/* ---- reviews: proper transparent glass slides, smoothly synced to scroll ---- */
+.reviews { overflow: hidden; padding: 8px 0; border-top: 1px solid rgba(255,255,255,.06); }
 .reviews__track { display: inline-flex; width: max-content; white-space: nowrap; will-change: transform; }
-.reviews__group { display: inline-flex; align-items: stretch; }
+.reviews__group { display: inline-flex; align-items: center; }
 .review {
-  display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
-  padding: 9px 30px; font-size: .78rem; letter-spacing: .02em; color: rgba(255,255,255,.5);
-  border-right: 1px solid rgba(255,255,255,.07);
+  display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; margin: 0 8px;
+  padding: 8px 18px; font-size: .8rem; letter-spacing: .02em; color: rgba(255,255,255,.72);
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 100px;
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
 }
-.review i { font-style: normal; color: rgba(255,255,255,.72); letter-spacing: .05em; }
+.review i { font-style: normal; color: #fff; letter-spacing: .05em; }
 
 /* ---- header bar ---- */
 .nav__bar { display: flex; align-items: center; gap: clamp(14px, 2vw, 26px); padding: 11px clamp(18px, 4vw, 40px); }
@@ -238,11 +239,12 @@ ul, ol { list-style: none; }
   transition: transform .4s var(--ease);
 }
 .product:hover .product__card { transform: translateY(-12px); }
+.product__badge { display: inline-block; align-self: flex-start; margin-bottom: 14px;
+  font-size: .58rem; letter-spacing: .14em; text-transform: uppercase;
+  background: #14171c; color: #fff; font-weight: 700; padding: 5px 11px; border-radius: 100px; white-space: nowrap; }
+.product--featured .product__badge { background: #14171c; color: #f3f2ee; }
 .product__head { display: flex; align-items: center; gap: 13px; margin-bottom: 18px; }
 .product__headtext { flex: 1; min-width: 0; }
-.product__badge { flex: none; align-self: flex-start; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
-  background: #14171c; color: #fff; font-weight: 700; padding: 5px 10px; border-radius: 100px; white-space: nowrap; }
-.product--featured .product__badge { background: #14171c; color: #f3f2ee; }
 .product__icon { flex: none; width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; color: #fff;
   background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
 .product__name { font-family: 'Syne Extra', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 1.4rem; line-height: 1; }
@@ -354,11 +356,11 @@ ul, ol { list-style: none; }
    ============================================================ */
 .foot { position: relative; overflow: hidden; background: #06080c; border-top: 1px solid rgba(255,255,255,.08); }
 .foot__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
-  filter: blur(36px) brightness(.4) saturate(1.2); transform: scale(1.3); pointer-events: none; }
+  filter: blur(30px) brightness(.6) saturate(1.35); transform: scale(1.3); pointer-events: none; }
 /* dark, transparent, frosted glass over the video */
 .foot__veil { position: absolute; inset: 0; z-index: 1;
-  background: rgba(8,10,14,.55);
-  -webkit-backdrop-filter: blur(22px) saturate(130%); backdrop-filter: blur(22px) saturate(130%); }
+  background: linear-gradient(180deg, rgba(8,10,14,.42), rgba(6,8,12,.62));
+  -webkit-backdrop-filter: blur(20px) saturate(135%); backdrop-filter: blur(20px) saturate(135%); }
 .foot__main, .foot__wordmark, .foot__base { position: relative; z-index: 2; }
 .foot__main {
   max-width: var(--maxw); margin: 0 auto;
