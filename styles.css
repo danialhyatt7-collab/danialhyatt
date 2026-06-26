@@ -354,7 +354,7 @@ ul, ol { list-style: none; }
 /* ============================================================
    Footer — Dopler-style
    ============================================================ */
-.foot { position: relative; background: #060709; border-top: 1px solid rgba(255,255,255,.08); overflow: hidden; }
+.foot { position: relative; background: var(--bg); border-top: 1px solid rgba(255,255,255,.08); overflow: hidden; }
 .foot > * { max-width: var(--maxw); margin-inline: auto; }
 
 /* hero CTA */
