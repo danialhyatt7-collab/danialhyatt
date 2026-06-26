@@ -352,58 +352,28 @@ ul, ol { list-style: none; }
 .cart__note { color: var(--muted); font-size: .72rem; text-align: center; margin-top: 12px; }
 
 /* ============================================================
-   Footer — high-end / cutting-edge
+   Footer — mirrors the header (jet-black frosted bar)
    ============================================================ */
-.foot { position: relative; overflow: hidden; background: #06080c; border-top: 1px solid rgba(255,255,255,.08); }
-.foot__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
-  filter: blur(30px) brightness(.6) saturate(1.35); transform: scale(1.3); pointer-events: none; }
-/* dark, transparent, frosted glass over the video */
-.foot__veil { position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(180deg, rgba(8,10,14,.42), rgba(6,8,12,.62));
-  -webkit-backdrop-filter: blur(20px) saturate(135%); backdrop-filter: blur(20px) saturate(135%); }
-.foot__main, .foot__wordmark, .foot__base { position: relative; z-index: 2; }
-.foot__main {
-  max-width: var(--maxw); margin: 0 auto;
-  padding: clamp(54px,9vh,110px) var(--hero-gutter) clamp(28px,5vh,48px);
+.foot {
+  position: relative;
+  background: rgba(0,0,0,.55);
+  -webkit-backdrop-filter: blur(14px) saturate(120%); backdrop-filter: blur(14px) saturate(120%);
+  border-top: 1px solid rgba(255,255,255,.08);
 }
-.foot__lead { display: flex; flex-direction: column; align-items: flex-start; }
-.foot__kicker { font-family: 'Syne', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; font-size: .78rem; color: var(--muted); margin-bottom: 14px; }
-.foot__email {
-  display: inline-block; max-width: 100%; font-family: 'Syne Extra', sans-serif; font-weight: 400;
-  font-size: clamp(1.15rem, 6vw, 3.1rem); line-height: 1.08; color: #fff;
-  overflow-wrap: anywhere; word-break: break-word;
-  border-bottom: 2px solid transparent; transition: border-color .3s var(--ease);
+.ticker--foot { border-bottom: none; border-top: 1px solid rgba(255,255,255,.07); }
+.foot__bar {
+  display: flex; align-items: center; justify-content: space-between; gap: clamp(14px,2vw,26px);
+  max-width: var(--maxw); margin: 0 auto; padding: 16px clamp(18px,4vw,40px);
 }
-.foot__email:hover { border-color: #fff; }
-.foot__cta { display: inline-block; margin-top: 22px; font-family: 'Syne', sans-serif; font-weight: 600;
-  text-transform: uppercase; letter-spacing: .12em; font-size: .82rem; color: #fff; transition: transform .25s var(--ease); }
-.foot__cta:hover { transform: translateX(5px); }
-.foot__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.foot__col { display: flex; flex-direction: column; gap: 12px; }
-.foot__col-h { font-family: 'Syne', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .16em; font-size: .68rem; color: var(--muted); margin-bottom: 4px; }
-.foot__col a { position: relative; width: fit-content; color: rgba(255,255,255,.7); font-size: .9rem; transition: color .25s; }
-.foot__col a::after { content: ""; position: absolute; left: 0; bottom: -3px; width: 100%; height: 1px; background: #fff; transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
-.foot__col a:hover { color: #fff; }
-.foot__col a:hover::after { transform: scaleX(1); }
-
-/* giant outlined brand line with the animated mark */
-.foot__wordmark {
-  display: flex; align-items: center; gap: clamp(8px,2vw,34px); justify-content: center;
-  padding: clamp(6px,2vw,26px) var(--hero-gutter); line-height: 1; max-width: 100%;
-}
-.foot__wordmark .nav__logo-lottie { width: clamp(30px,7vw,104px); height: clamp(30px,7vw,104px); flex: none; }
-.foot__wordmark-text {
-  font-family: 'Syne Extra', sans-serif; font-weight: 400; text-transform: uppercase;
-  font-size: clamp(2rem,11.5vw,13rem); white-space: nowrap; letter-spacing: -.01em;
-  color: transparent; -webkit-text-stroke: 1.2px rgba(255,255,255,.45);
-  transition: color .4s var(--ease), -webkit-text-stroke-color .4s var(--ease);
-}
-.foot__wordmark { cursor: pointer; }
-.foot__wordmark:hover .foot__wordmark-text,
-.foot__wordmark.is-solid .foot__wordmark-text { color: #fff; -webkit-text-stroke-color: #fff; }
+.foot__bar .nav__logo-lottie { width: 40px; height: 40px; }
+.foot__nav { display: flex; align-items: center; gap: clamp(14px,1.8vw,28px); }
+.foot__nav a { position: relative; color: rgba(255,255,255,.72); font-size: .85rem; transition: color .25s; }
+.foot__nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 100%; height: 1px; background: #fff; transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
+.foot__nav a:hover { color: #fff; }
+.foot__nav a:hover::after { transform: scaleX(1); }
 .foot__base {
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  max-width: var(--maxw); margin: 0 auto; padding: 18px var(--hero-gutter);
+  max-width: var(--maxw); margin: 0 auto; padding: 16px clamp(18px,4vw,40px);
   border-top: 1px solid var(--line);
   font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
 }
@@ -905,7 +875,9 @@ ul, ol { list-style: none; }
   .hero__sub { max-width: 100%; }
   .reel__grid { grid-template-columns: 1fr; }
   .value { grid-template-columns: 1fr; }
-  .foot__main { grid-template-columns: 1fr; gap: 30px; }
+  .foot__bar { flex-wrap: wrap; justify-content: center; text-align: center; gap: 16px; }
+  .foot__nav { order: 3; flex-basis: 100%; justify-content: center; }
+  .foot__base { justify-content: center; text-align: center; }
   /* hide the centered scroll cue so it can't collide with the play button */
   .hero__scroll { display: none; }
   .hero__play { gap: 12px; }

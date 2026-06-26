@@ -202,24 +202,26 @@
 
   </main>
 
-  <!-- ===== Footer (high-end) ===== -->
+  <!-- ===== Footer (mirrors the header) ===== -->
   <footer class="foot" aria-label="Footer">
-    <video class="foot__video" autoplay muted loop playsinline aria-hidden="true">
-      <source src="assets/video/hero.mp4" type="video/mp4" />
-    </video>
-    <div class="foot__veil"></div>
-
-    <div class="foot__main">
-      <div class="foot__lead">
-        <p class="foot__kicker">Have a product to launch?</p>
-        <a href="mailto:hello@danialhyatt.com" class="foot__email">hello@danialhyatt.com</a>
-        <a href="#shop" class="foot__cta">Start your spot &rarr;</a>
+    <!-- marquee, like the header -->
+    <div class="ticker ticker--foot" aria-hidden="true">
+      <div class="ticker__track">
+        <span class="ticker__group">
+          <b>Let's make your product move</b><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i><span>15-second product ads that convert</span><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i><b>Booking Q3 2024</b><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i><span>hello@danialhyatt.com</span><i class="tsep"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true"><path d="M12 1l2.4 7.6L22 11l-7.6 2.4L12 21l-2.4-7.6L2 11l7.6-2.4z" fill="currentColor"/></svg></i>
+        </span>
       </div>
     </div>
 
-    <div class="foot__wordmark" id="footWordmark">
-      <span class="nav__logo-lottie js-logo-lottie" aria-hidden="true"></span>
-      <span class="foot__wordmark-text">DanialH.</span>
+    <!-- bar, like the header -->
+    <div class="foot__bar">
+      <a href="#home" class="nav__logo" aria-label="DanialH home">
+        <span class="nav__logo-lottie js-logo-lottie" aria-hidden="true"></span>
+      </a>
+      <nav class="foot__nav" aria-label="Footer navigation">
+        <a href="#home">Home</a><a href="#reel">Reel</a><a href="#shop">Shop</a><a href="mailto:hello@danialhyatt.com">Contact</a>
+      </nav>
+      <a href="#shop" class="btn btn--play">Start your spot</a>
     </div>
 
     <div class="foot__base">
