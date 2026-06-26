@@ -224,6 +224,53 @@ function initTicker(track) {
 document.querySelectorAll(".ticker__track").forEach(initTicker);
 
 /* ============================================================
+   Header reviews — position driven by scroll (slides as you scroll)
+   ============================================================ */
+(function scrollReviews() {
+  const track = document.getElementById("reviewsTrack");
+  if (!track) return;
+  const base = track.querySelector(".reviews__group");
+  if (!base) return;
+  const baseHTML = base.outerHTML;
+  let half = 0;
+
+  function build() {
+    track.innerHTML = baseHTML;
+    const w = track.firstElementChild.offsetWidth;
+    if (!w) return;
+    const perHalf = Math.ceil(window.innerWidth / w) + 1;
+    track.innerHTML = baseHTML.repeat(perHalf * 2);
+    half = w * perHalf;
+    place();
+  }
+  function place() {
+    if (!half) return;
+    let x = -(window.scrollY * 0.45) % half;   // scroll-linked, wrapped
+    if (x > 0) x -= half;
+    track.style.transform = `translate3d(${x}px,0,0)`;
+  }
+  build();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+  window.addEventListener("scroll", place, { passive: true });
+  let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(build, 200); });
+})();
+
+/* ============================================================
+   Footer wordmark — solid on touch, back to hairline after 2s
+   ============================================================ */
+(function footWordmark() {
+  const wm = document.getElementById("footWordmark");
+  if (!wm) return;
+  let timer;
+  function solidify() {
+    wm.classList.add("is-solid");
+    clearTimeout(timer);
+    timer = setTimeout(() => wm.classList.remove("is-solid"), 2000);
+  }
+  wm.addEventListener("pointerdown", solidify);
+})();
+
+/* ============================================================
    Shop + cart  →  checkout with Payoneer
    ------------------------------------------------------------
    Paste your Payoneer payment link below (Payoneer dashboard →
@@ -232,12 +279,17 @@ document.querySelectorAll(".ticker__track").forEach(initTicker);
    ============================================================ */
 const PAYONEER_LINK = ""; // e.g. "https://pay.payoneer.com/xxxxxxxx"
 
+const ICONS = {
+  bolt: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg>',
+  star: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z" fill="currentColor"/></svg>',
+  loop: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 8a4 4 0 1 0 0 8c2.2 0 3.3-1.7 5-4s2.8-4 5-4a4 4 0 1 1 0 8c-2.2 0-3.3-1.7-5-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+};
 const PRODUCTS = [
-  { id: "spark", name: "Spark", for: "Single 15s spot", price: 250, time: "Delivered in 24 hours",
-    feats: ["One 15s vertical or square ad", "1 platform format", "Licensed music + sound design", "Storyboard shared before production"] },
-  { id: "signature", name: "Signature", for: "Hero + cut-downs", price: 600, time: "Delivered in 3–4 days", featured: true, badge: "Most booked",
-    feats: ["15s hero ad + 2 cut-downs", "3 aspect ratios", "3D render & UI animation", "Storyboard approved before the shoot"] },
-  { id: "studio", name: "Studio", for: "Monthly retainer", price: 1500, unit: "/mo", time: "Rolling delivery, priority",
+  { id: "spark", name: "Spark", sub: "Your ad, live in 24 hours", price: 250, billed: "Billed one time", tag: "15s reel", icon: ICONS.bolt,
+    feats: ["One 15s vertical or square ad", "1 platform format", "Licensed music + sound design", "Storyboard before production"] },
+  { id: "signature", name: "Signature", sub: "Hero film + cut-downs", price: 600, billed: "Billed one time", tag: "3 spots", icon: ICONS.star, featured: true, badge: "Most booked",
+    feats: ["15s hero ad + 2 cut-downs", "3 aspect ratios delivered", "3D render & UI animation", "Storyboard approved first"] },
+  { id: "studio", name: "Studio", sub: "Always-on content engine", price: 1500, unit: "/mo", billed: "Billed monthly", tag: "6–8 / mo", icon: ICONS.loop,
     feats: ["6–8 finished spots / month", "Unlimited platform formats", "Dedicated Slack channel", "Storyboard for every spot"] },
 ];
 
@@ -248,15 +300,29 @@ const PRODUCTS = [
   const byId = id => PRODUCTS.find(p => p.id === id);
 
   /* ---- render products ---- */
+  const bullet = '<svg class="product__bullet" viewBox="0 0 10 10" width="9" height="9" aria-hidden="true"><path d="M0 0 L9 5 L0 10 Z" fill="currentColor"/></svg>';
   grid.innerHTML = PRODUCTS.map(p => `
     <article class="product${p.featured ? " product--featured" : ""}">
-      ${p.badge ? `<span class="product__badge">${p.badge}</span>` : ""}
-      <h3 class="product__name">${p.name}</h3>
-      <p class="product__for">${p.for}</p>
-      <p class="product__price">${money(p.price)}${p.unit ? `<small>${p.unit}</small>` : ""}</p>
-      <p class="product__time">${p.time}</p>
-      <ul class="product__list">${p.feats.map(f => `<li>${f}</li>`).join("")}</ul>
-      <button class="product__add" data-id="${p.id}">Add to cart</button>
+      <div class="product__card">
+        ${p.badge ? `<span class="product__badge">${p.badge}</span>` : ""}
+        <div class="product__head">
+          <span class="product__icon">${p.icon}</span>
+          <div>
+            <h3 class="product__name">${p.name}</h3>
+            <p class="product__sub">${p.sub}</p>
+          </div>
+        </div>
+        <div class="product__rule"></div>
+        <ul class="product__list">${p.feats.map(f => `<li>${bullet}${f}</li>`).join("")}</ul>
+        <div class="product__foot">
+          <div>
+            <p class="product__price">${money(p.price)}${p.unit ? `<small>${p.unit}</small>` : ""}</p>
+            <p class="product__billed">${p.billed}</p>
+          </div>
+          <span class="product__tag">&#9658; ${p.tag}</span>
+        </div>
+      </div>
+      <button class="product__choose" data-id="${p.id}">Choose ${p.name}</button>
     </article>`).join("");
 
   /* micro-animation: products reveal + stagger on scroll */
@@ -310,7 +376,7 @@ const PRODUCTS = [
   }
   function change(id, d) { cart[id] = (cart[id] || 0) + d; if (cart[id] <= 0) delete cart[id]; render(); }
 
-  grid.addEventListener("click", e => { const b = e.target.closest(".product__add"); if (b) add(b.dataset.id); });
+  grid.addEventListener("click", e => { const b = e.target.closest(".product__choose"); if (b) add(b.dataset.id); });
   itemsEl.addEventListener("click", e => {
     const inc = e.target.closest("[data-inc]"), dec = e.target.closest("[data-dec]");
     if (inc) change(inc.dataset.inc, 1);

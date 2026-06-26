@@ -59,6 +59,18 @@
         <span class="nav__menu-label">Menu</span>
       </button>
     </div>
+
+    <!-- reviews strip — slides with scroll -->
+    <div class="reviews" aria-label="Client reviews">
+      <div class="reviews__track" id="reviewsTrack">
+        <span class="reviews__group">
+          <span class="review"><i>★★★★★</i> “Our Reels CTR doubled.” — Skincare brand</span>
+          <span class="review"><i>★★★★★</i> “Sold out the first drop in 3 days.” — DTC founder</span>
+          <span class="review"><i>★★★★★</i> “Fast, on-brief, on-time.” — Agency lead</span>
+          <span class="review"><i>★★★★★</i> “The 15s spot paid for itself in a week.” — App startup</span>
+        </span>
+      </div>
+    </div>
   </header>
 
   <!-- ===== Full menu overlay ===== -->
@@ -192,6 +204,11 @@
 
   <!-- ===== Footer (high-end) ===== -->
   <footer class="foot" aria-label="Footer">
+    <video class="foot__video" autoplay muted loop playsinline aria-hidden="true">
+      <source src="assets/video/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="foot__veil"></div>
+
     <div class="foot__main">
       <div class="foot__lead">
         <p class="foot__kicker">Have a product to launch?</p>
@@ -200,10 +217,10 @@
       </div>
     </div>
 
-    <a href="#home" class="foot__wordmark" aria-label="DanialH home">
+    <div class="foot__wordmark" id="footWordmark">
       <span class="nav__logo-lottie js-logo-lottie" aria-hidden="true"></span>
       <span class="foot__wordmark-text">DanialH.</span>
-    </a>
+    </div>
 
     <div class="foot__base">
       <span>© <span id="year"></span> DanialH. — Product Motion Design</span>
