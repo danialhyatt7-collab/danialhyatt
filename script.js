@@ -232,26 +232,29 @@ document.querySelectorAll(".ticker__track").forEach(initTicker);
   const base = track.querySelector(".reviews__group");
   if (!base) return;
   const baseHTML = base.outerHTML;
-  let half = 0;
+  const FACTOR = 0.55;        // how far slides travel per pixel scrolled
+  let half = 0, cur = 0, raf = 0;
 
   function build() {
+    cancelAnimationFrame(raf);
     track.innerHTML = baseHTML;
     const w = track.firstElementChild.offsetWidth;
     if (!w) return;
     const perHalf = Math.ceil(window.innerWidth / w) + 1;
     track.innerHTML = baseHTML.repeat(perHalf * 2);
     half = w * perHalf;
-    place();
+    cur = -(window.scrollY * FACTOR);
+    raf = requestAnimationFrame(frame);
   }
-  function place() {
-    if (!half) return;
-    let x = -(window.scrollY * 0.45) % half;   // scroll-linked, wrapped
-    if (x > 0) x -= half;
+  function frame() {
+    const target = -(window.scrollY * FACTOR);      // scroll-driven target
+    cur += (target - cur) * 0.09;                    // smooth glide toward it
+    let x = cur % half; if (x > 0) x -= half;        // seamless wrap
     track.style.transform = `translate3d(${x}px,0,0)`;
+    raf = requestAnimationFrame(frame);
   }
   build();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
-  window.addEventListener("scroll", place, { passive: true });
   let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(build, 200); });
 })();
 
@@ -304,13 +307,13 @@ const PRODUCTS = [
   grid.innerHTML = PRODUCTS.map(p => `
     <article class="product${p.featured ? " product--featured" : ""}">
       <div class="product__card">
-        ${p.badge ? `<span class="product__badge">${p.badge}</span>` : ""}
         <div class="product__head">
           <span class="product__icon">${p.icon}</span>
-          <div>
+          <div class="product__headtext">
             <h3 class="product__name">${p.name}</h3>
             <p class="product__sub">${p.sub}</p>
           </div>
+          ${p.badge ? `<span class="product__badge">${p.badge}</span>` : ""}
         </div>
         <div class="product__rule"></div>
         <ul class="product__list">${p.feats.map(f => `<li>${bullet}${f}</li>`).join("")}</ul>
