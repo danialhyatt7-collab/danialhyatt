@@ -72,7 +72,8 @@ function setMenu(open) {
   menu?.setAttribute("aria-hidden", String(!open));
   menuBtn?.setAttribute("aria-expanded", String(open));
   menuBtn?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-  document.body.classList.toggle("menu-open", open);
+  // start menu links below the full header (marquee + bar + reviews)
+  if (open && menu && nav) menu.style.paddingTop = (nav.offsetHeight + 26) + "px";
   document.body.style.overflow = open ? "hidden" : "";
 }
 menuBtn?.addEventListener("click", () => setMenu(!menu.classList.contains("is-open")));
