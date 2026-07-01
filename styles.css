@@ -144,6 +144,9 @@ ul, ol { list-style: none; }
 .tsep { display: inline-flex; align-items: center; color: rgba(255,255,255,.5); margin: 0 6px; }
 .tsep svg { width: 9px; height: 9px; animation: playSpin 7s linear infinite; }
 
+/* while the menu overlay is open, hide header strips so they don't overlap links */
+body.menu-open .reviews, body.menu-open .ticker { opacity: 0; pointer-events: none; transition: opacity .2s var(--ease); }
+
 /* ---- reviews: proper transparent glass slides, smoothly synced to scroll ---- */
 .reviews { overflow: hidden; padding: 8px 0; border-top: 1px solid rgba(255,255,255,.06); }
 .reviews__track { display: inline-flex; width: max-content; white-space: nowrap; will-change: transform; }

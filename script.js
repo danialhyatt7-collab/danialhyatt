@@ -72,6 +72,7 @@ function setMenu(open) {
   menu?.setAttribute("aria-hidden", String(!open));
   menuBtn?.setAttribute("aria-expanded", String(open));
   menuBtn?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  document.body.classList.toggle("menu-open", open);
   document.body.style.overflow = open ? "hidden" : "";
 }
 menuBtn?.addEventListener("click", () => setMenu(!menu.classList.contains("is-open")));
