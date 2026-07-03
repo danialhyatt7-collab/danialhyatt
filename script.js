@@ -96,7 +96,12 @@ const GRADIENTS = [
         line.style.opacity = Math.max(op, .06).toFixed(2);
       }
     });
-    if (pctEl) pctEl.textContent = Math.round(pct) + "%";
+    if (pctEl) {
+      const str = String(Math.round(pct)).padStart(3, " ") + "%";
+      pctEl.innerHTML = [...str].map(ch =>
+        `<span class="${ch === "%" ? "sign" : "digit"}">${ch}</span>`
+      ).join("");
+    }
   }
 
   paint(0);
