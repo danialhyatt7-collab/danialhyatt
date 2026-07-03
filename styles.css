@@ -21,6 +21,7 @@
   --line:      rgba(255,255,255,.10);
   --accent:    #ffffff;   /* neutral accent (no yellow) */
   --accent-ink:#0a0e14;
+  --orange:    #ff5a2c;
   --maxw:      1320px;
   --hero-gutter: clamp(22px, 5vw, 64px); /* shared inset for all hero edges */
   --ease:      cubic-bezier(.22,.61,.36,1);
@@ -102,22 +103,24 @@ ul, ol { list-style: none; }
   transition: opacity .6s var(--ease), visibility .6s;
 }
 .loader.is-done { opacity: 0; visibility: hidden; }
-.loader__text {
+.loader__dial {
+  position: relative; width: clamp(150px, 22vw, 220px); aspect-ratio: 1;
+  display: grid; place-items: center;
+}
+.loader__spokes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.loader__spokes line { stroke-linecap: round; transition: stroke .25s linear, opacity .25s linear; }
+.loader__center {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.loader__pct {
   font-family: 'Syne Extra', sans-serif; font-weight: 400;
-  font-size: clamp(1.8rem, 6vw, 3.6rem);
-  letter-spacing: .1em; display: flex;
+  font-size: clamp(1.9rem, 4vw, 2.6rem); color: var(--ink); line-height: 1;
+  letter-spacing: -.01em; font-variant-numeric: tabular-nums;
 }
-.loader__text span {
-  opacity: 0; transform: translateY(40%);
-  animation: loadIn .6s var(--ease) forwards;
+.loader__label {
+  font-family: 'Inter', sans-serif; font-weight: 500; font-size: .8rem;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--muted);
 }
-.loader__text span:nth-child(1){ animation-delay:.05s }
-.loader__text span:nth-child(2){ animation-delay:.12s }
-.loader__text span:nth-child(3){ animation-delay:.19s }
-.loader__text span:nth-child(4){ animation-delay:.26s }
-.loader__text span:nth-child(5){ animation-delay:.33s }
-.loader__text span:nth-child(6){ animation-delay:.40s }
-@keyframes loadIn { to { opacity:1; transform:translateY(0); } }
 
 /* ============================================================
    Top nav
