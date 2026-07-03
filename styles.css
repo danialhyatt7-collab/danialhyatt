@@ -116,6 +116,7 @@ ul, ol { list-style: none; }
   font-family: 'Syne Extra', sans-serif; font-weight: 400;
   font-size: clamp(1.9rem, 4vw, 2.6rem); color: var(--ink); line-height: 1;
   letter-spacing: -.01em; font-variant-numeric: tabular-nums;
+  display: inline-block; min-width: 3.6ch; text-align: center;
 }
 .loader__label {
   font-family: 'Inter', sans-serif; font-weight: 500; font-size: .8rem;

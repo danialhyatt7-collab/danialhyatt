@@ -84,7 +84,7 @@ const GRADIENTS = [
         // active arc: fade in brightness toward the leading edge
         const t = lit <= 1 ? 1 : i / (lit - 1);
         const op = .35 + t * .65;
-        line.setAttribute("stroke", "var(--orange)");
+        line.setAttribute("stroke", "var(--ink)");
         line.style.opacity = op.toFixed(2);
       } else {
         // idle spokes: soft fade around the remaining ring
