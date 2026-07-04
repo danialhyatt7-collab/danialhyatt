@@ -103,33 +103,11 @@ ul, ol { list-style: none; }
   transition: opacity .6s var(--ease), visibility .6s;
 }
 .loader.is-done { opacity: 0; visibility: hidden; }
-.loader__dial {
-  position: relative; width: clamp(150px, 22vw, 220px); aspect-ratio: 1;
-  display: grid; place-items: center;
+.loader__logo {
+  width: clamp(56px, 10vw, 84px); height: clamp(56px, 10vw, 84px);
+  display: block; line-height: 0;
 }
-.loader__spokes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.loader__spokes line { stroke-linecap: round; transition: stroke .25s linear, opacity .25s linear; }
-.loader__center {
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  max-width: 70%;
-}
-.loader__logo { width: clamp(30px, 6vw, 42px); height: clamp(30px, 6vw, 42px); display: block; line-height: 0; }
 .loader__logo svg { display: block; }
-.loader__pct {
-  font-family: 'Syne Extra', sans-serif; font-weight: 400;
-  font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--ink); line-height: 1;
-  display: flex; justify-content: center;
-}
-.loader__pct .digit {
-  display: inline-block; width: .62em; text-align: center;
-}
-.loader__pct .sign {
-  display: inline-block; width: .56em; text-align: center;
-}
-.loader__label {
-  font-family: 'Inter', sans-serif; font-weight: 500; font-size: .8rem;
-  letter-spacing: .18em; text-transform: uppercase; color: var(--muted);
-}
 
 /* ============================================================
    Top nav

@@ -53,74 +53,9 @@ const GRADIENTS = [
   });
 })();
 
-/* ---------- Loader (radial spoke dial) ------------------------ */
-(function loaderDial() {
-  const svg = document.getElementById("loaderSpokes");
-  const pctEl = document.getElementById("loaderPct");
-  if (!svg) return;
-
-  const NS = "http://www.w3.org/2000/svg";
-  const TOTAL = 60;
-  const CX = 100, CY = 100, R_OUT = 96, R_IN = 78;
-  const spokes = [];
-
-  for (let i = 0; i < TOTAL; i++) {
-    const angle = (i / TOTAL) * 360 - 90; // start at top, clockwise
-    const rad = (angle * Math.PI) / 180;
-    const x1 = CX + R_IN * Math.cos(rad), y1 = CY + R_IN * Math.sin(rad);
-    const x2 = CX + R_OUT * Math.cos(rad), y2 = CY + R_OUT * Math.sin(rad);
-    const line = document.createElementNS(NS, "line");
-    line.setAttribute("x1", x1); line.setAttribute("y1", y1);
-    line.setAttribute("x2", x2); line.setAttribute("y2", y2);
-    line.setAttribute("stroke-width", "4");
-    svg.appendChild(line);
-    spokes.push(line);
-  }
-
-  function paint(pct) {
-    const lit = Math.round((pct / 100) * TOTAL);
-    spokes.forEach((line, i) => {
-      if (i < lit) {
-        // active arc: fade in brightness toward the leading edge
-        const t = lit <= 1 ? 1 : i / (lit - 1);
-        const op = .35 + t * .65;
-        line.setAttribute("stroke", "var(--ink)");
-        line.style.opacity = op.toFixed(2);
-      } else {
-        // idle spokes: soft fade around the remaining ring
-        const rem = TOTAL - lit;
-        const j = i - lit;
-        const t = rem <= 1 ? 0 : j / (rem - 1);
-        const op = .38 - t * .30;
-        line.setAttribute("stroke", "var(--muted)");
-        line.style.opacity = Math.max(op, .06).toFixed(2);
-      }
-    });
-    if (pctEl) {
-      const str = String(Math.round(pct)).padStart(3, " ") + "%";
-      pctEl.innerHTML = [...str].map(ch =>
-        `<span class="${ch === "%" ? "sign" : "digit"}">${ch}</span>`
-      ).join("");
-    }
-  }
-
-  paint(0);
-
-  let start = null;
-  const DURATION = 1400;
-  function tick(ts) {
-    if (start === null) start = ts;
-    const elapsed = ts - start;
-    const raw = Math.min(elapsed / DURATION, 1);
-    const eased = 1 - Math.pow(1 - raw, 3); // ease-out cubic
-    paint(eased * 100);
-    if (raw < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
-
+/* ---------- Loader ------------------------------------------ */
 window.addEventListener("load", () => {
-  setTimeout(() => document.getElementById("loader")?.classList.add("is-done"), 1500);
+  setTimeout(() => document.getElementById("loader")?.classList.add("is-done"), 900);
 });
 
 /* ---------- Nav scroll state -------------------------------- */
