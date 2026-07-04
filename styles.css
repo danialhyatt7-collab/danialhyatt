@@ -125,7 +125,7 @@ ul, ol { list-style: none; }
 .nav.is-scrolled { background: rgba(0, 0, 0, .72); }
 
 /* ---- scrolling marquee ---- */
-.ticker { overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.07); }
+.ticker { overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.07); padding-top: 6px; }
 .ticker__track { display: inline-flex; width: max-content; white-space: nowrap; will-change: transform; }
 .ticker__group { display: inline-flex; align-items: center; padding: 7px 0; }
 .ticker__group > * { margin: 0 16px; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
