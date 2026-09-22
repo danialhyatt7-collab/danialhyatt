@@ -599,8 +599,13 @@ ul, ol { list-style: none; }
   transition: opacity .9s var(--ease), transform .9s var(--ease), border-color .3s;
 }
 .reel__stage--featured { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
-.reel__stage:nth-child(2) { transition-delay: .08s; }
-.reel__stage:nth-child(3) { transition-delay: .16s; }
+.reel__stage:nth-child(2) { transition-delay: .06s; }
+.reel__stage:nth-child(3) { transition-delay: .12s; }
+.reel__stage:nth-child(4) { transition-delay: .18s; }
+.reel__stage:nth-child(5) { transition-delay: .24s; }
+.reel__stage:nth-child(6) { transition-delay: .30s; }
+.reel__stage:nth-child(7) { transition-delay: .36s; }
+.reel__stage:nth-child(8) { transition-delay: .42s; }
 .reel__stage.is-in { opacity: 1; transform: translateY(0) scale(1); }
 .reel__stage:hover { border-color: rgba(255,255,255,.4); }
 
