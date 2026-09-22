@@ -132,6 +132,8 @@ const closeBtn = document.getElementById("lightboxClose");
 
 function openLightbox(item) {
   if (!lightbox) return;
+  /* portrait spots open in a 9:16 frame instead of being letterboxed into 16:9 */
+  frame.classList.toggle("is-portrait", item.ratio === "9/16");
   if (item.video) {
     const isEmbed = /youtube|youtu\.be|vimeo/.test(item.video);
     frame.innerHTML = isEmbed
@@ -165,7 +167,7 @@ document.getElementById("reelBtn")?.addEventListener("click", () =>
 /* Reel cards → open each spot in the lightbox */
 document.querySelectorAll(".reel__stage").forEach(card =>
   card.addEventListener("click", () =>
-    openLightbox({ title: card.dataset.title, video: card.dataset.video || "" })
+    openLightbox({ title: card.dataset.title, video: card.dataset.video || "", ratio: card.dataset.ratio })
   )
 );
 

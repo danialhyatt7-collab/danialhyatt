@@ -48,6 +48,9 @@ body {
 @supports not (aspect-ratio: 1 / 1) {
   .reel__stage { height: 0; padding-bottom: 62.5%; }            /* 16:10 */
   .reel__stage--featured { padding-bottom: 50%; }               /* 16:8  */
+  .reel__stage--banner { padding-bottom: 50%; }                 /* 16:8  */
+  .reel__stage--vertical { padding-bottom: 177.78%; }           /* 9:16  */
+  .reel__stage--wide { padding-bottom: 56.25%; }                /* 16:9  */
   .lightbox__frame { height: 0; padding-bottom: 56.25%; }       /* 16:9  */
 }
 
@@ -588,17 +591,22 @@ ul, ol { list-style: none; }
 }
 .reel__head { display: flex; flex-direction: column; gap: 8px; margin-bottom: clamp(26px, 4vw, 48px); }
 
-.reel__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 1.8vw, 24px); }
+.reel__grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(14px, 1.8vw, 24px); }
 
 /* slide-in on scroll */
 .reel__stage {
   position: relative; display: block; width: 100%; cursor: pointer;
-  aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden;
+  grid-column: span 6; aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden;
   border: 1px solid var(--line); background: #000000; padding: 0;
   opacity: 0; transform: translateY(60px) scale(.97);
   transition: opacity .9s var(--ease), transform .9s var(--ease), border-color .3s;
 }
 .reel__stage--featured { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
+/* 9:16 spots keep their true portrait frame instead of being cropped to 16:10 */
+.reel__stage--vertical { grid-column: span 3; aspect-ratio: 9 / 16; }
+/* landscape tile sharing a row with a portrait one: stretch to that row's height */
+.reel__stage--wide { grid-column: span 9; aspect-ratio: auto; }
+.reel__stage--banner { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
 .reel__stage:nth-child(2) { transition-delay: .06s; }
 .reel__stage:nth-child(3) { transition-delay: .12s; }
 .reel__stage:nth-child(4) { transition-delay: .18s; }
@@ -861,9 +869,17 @@ ul, ol { list-style: none; }
   opacity: 0; visibility: hidden; transition: opacity .35s var(--ease), visibility .35s;
 }
 .lightbox.is-open { opacity: 1; visibility: visible; }
+.lightbox__frame.is-portrait { width: min(430px, 82vw); aspect-ratio: 9/16; }
 .lightbox__frame { width: min(960px, 92vw); aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; }
 .lightbox__frame iframe, .lightbox__frame video { width: 100%; height: 100%; border: 0; }
 .lightbox__close { position: absolute; top: 26px; right: 32px; background: none; border: 0; color: #fff; font-size: 2.4rem; cursor: pointer; line-height: 1; }
+
+/* portrait tiles: narrower box, so scale the caption and free the bottom edge */
+.reel__stage--vertical .reel__meta { right: clamp(18px, 2.4vw, 30px); gap: 4px; }
+.reel__stage--vertical .reel__meta-cat { font-size: .6rem; letter-spacing: .18em; }
+.reel__stage--vertical .reel__meta-title { font-size: clamp(.88rem, 1.25vw, 1.12rem); line-height: 1.05; overflow-wrap: break-word; }
+/* runtime moves to the top corner so it never collides with a wrapped title */
+.reel__stage--vertical .reel__time { top: clamp(16px, 2.4vw, 22px); bottom: auto; font-size: .72rem; }
 
 /* ============================================================
    Reveal-on-scroll helper
@@ -875,6 +891,9 @@ ul, ol { list-style: none; }
    Responsive
    ============================================================ */
 @media (max-width: 900px) {
+  .reel__stage { grid-column: 1 / -1; }
+  .reel__stage--vertical { grid-column: span 6; }
+  .reel__stage--wide { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
   .sidenav { display: none; }
   .social { display: none; }
   /* collapse header: logo + cart + menu */
@@ -904,7 +923,7 @@ ul, ol { list-style: none; }
   /* keep the wide-tracked eyebrow from forcing horizontal scroll */
   .hero__eyebrow { letter-spacing: .22em; font-size: .68rem; }
   .hero__sub { max-width: 100%; }
-  .reel__grid { grid-template-columns: 1fr; }
+  .reel__stage, .reel__stage--vertical, .reel__stage--wide { grid-column: 1 / -1; }
   .value { grid-template-columns: 1fr; }
   .foot__social { grid-template-columns: repeat(2, 1fr); }
   .foot__social-card { border-bottom: 1px solid var(--line); }
