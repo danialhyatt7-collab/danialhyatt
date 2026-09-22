@@ -213,6 +213,7 @@ function initTicker(track) {
     if (!reduce) raf = requestAnimationFrame(step);
   }
   function step(now) {
+    if (document.hidden) { raf = 0; return; }   // no point animating an unseen tab
     if (!last) last = now;
     const dt = (now - last) / 1000; last = now;
     x -= SPEED * dt;
@@ -220,6 +221,9 @@ function initTicker(track) {
     track.style.transform = `translate3d(${x}px,0,0)`;
     raf = requestAnimationFrame(step);
   }
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && !raf && !reduce) { last = 0; raf = requestAnimationFrame(step); }
+  });
   build();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
   let t;
@@ -248,15 +252,27 @@ document.querySelectorAll(".ticker__track").forEach(initTicker);
     track.innerHTML = baseHTML.repeat(perHalf * 2);
     half = w * perHalf;
     cur = -(window.scrollY * FACTOR);
-    raf = requestAnimationFrame(frame);
+    draw();
   }
-  function frame() {
-    const target = -(window.scrollY * FACTOR);      // scroll-driven target
-    cur += (target - cur) * 0.09;                    // smooth glide toward it
+  function draw() {
     let x = cur % half; if (x > 0) x -= half;        // seamless wrap
     track.style.transform = `translate3d(${x}px,0,0)`;
+  }
+  /* Glide toward the scroll position, then stop. Running this every frame for
+     the life of the page kept the compositor busy even while nothing moved. */
+  function frame() {
+    const target = -(window.scrollY * FACTOR);
+    const gap = target - cur;
+    if (Math.abs(gap) < 0.05 || document.hidden) {   // settled: park the loop
+      cur = target; draw(); raf = 0; return;
+    }
+    cur += gap * 0.09;
+    draw();
     raf = requestAnimationFrame(frame);
   }
+  function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+  window.addEventListener("scroll", kick, { passive: true });
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) kick(); });
   build();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
   let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(build, 200); });
