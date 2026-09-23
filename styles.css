@@ -606,6 +606,10 @@ ul, ol { list-style: none; }
 /* landscape tile sharing a row with a portrait one: stretch to that row's height */
 .reel__stage--wide { grid-column: span 9; aspect-ratio: auto; }
 .reel__stage--banner { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
+/* closing pair: two portrait tiles centred in the 12-column grid, so the last
+   row reads as deliberate rather than a half-empty one */
+.reel__stage--pair-a { grid-column: 4 / span 3; }
+.reel__stage--pair-b { grid-column: 7 / span 3; }
 .reel__stage:nth-child(2) { transition-delay: .06s; }
 .reel__stage:nth-child(3) { transition-delay: .12s; }
 .reel__stage:nth-child(4) { transition-delay: .18s; }
