@@ -312,7 +312,7 @@ const ICONS = {
 };
 const PRODUCTS = [
   { id: "spark", name: "Spark", sub: "Your ad, live in 24 hours", price: 600, billed: "Billed one time", tag: "1 spot", icon: ICONS.bolt,
-    feats: ["One 15s vertical ad", "Delivered in 9:16", "Licensed music + sound design", "Storyboard before production"] },
+    feats: ["One 15s vertical ad", "Delivered in 9:16", "Storyboard before production"] },
   { id: "signature", name: "Signature", sub: "Hero film + cut-downs", price: 1500, billed: "Billed one time", tag: "3 spots", icon: ICONS.star, featured: true, badge: "Most booked",
     feats: ["15s hero ad + 2 cut-downs", "Delivered in 9:16, 1:1 and 16:9", "3D product render", "Storyboard approved first"] },
   { id: "studio", name: "Studio", sub: "Always-on content engine", price: 2800, unit: "/mo", billed: "Billed monthly", tag: "4 / mo", icon: ICONS.loop,
