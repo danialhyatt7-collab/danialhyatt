@@ -367,7 +367,16 @@ const PRODUCTS = [
   const itemsEl = document.getElementById("cartItems");
   const totalEl = document.getElementById("cartTotal");
   const checkoutBtn = document.getElementById("cartCheckout");
+  const noteEl = document.getElementById("cartNote");
   const cartEl = document.getElementById("cart");
+  const NOTE_DEFAULT = noteEl ? noteEl.textContent : "";
+
+  /* The markup says "Request an invoice" because that is what this does today.
+     Fill in PAYONEER_LINK and it becomes a real checkout, label and all. */
+  if (PAYONEER_LINK && checkoutBtn) {
+    checkoutBtn.textContent = "Checkout with Payoneer";
+    if (noteEl) noteEl.textContent = "Secure payment via Payoneer. You'll get a confirmation by email.";
+  }
 
   const totalQty = () => Object.values(cart).reduce((a, b) => a + b, 0);
   const totalSum = () => Object.entries(cart).reduce((s, [id, q]) => s + (byId(id) ? byId(id).price * q : 0), 0);
@@ -427,10 +436,18 @@ const PRODUCTS = [
       const sep = PAYONEER_LINK.includes("?") ? "&" : "?";
       window.open(`${PAYONEER_LINK}${sep}amount=${total}&description=${encodeURIComponent(summary)}`, "_blank", "noopener");
     } else {
-      // fallback until the Payoneer link is added: email the order
+      // no payment link yet, so this raises an invoice request by email
       window.location.href =
-        `mailto:hello@danialhyatt.com?subject=${encodeURIComponent("New order — " + money(total))}` +
-        `&body=${encodeURIComponent("I'd like to order:\n" + summary + "\n\nTotal: " + money(total) + "\n\nPlease send a Payoneer payment request.")}`;
+        `mailto:hello@danialhyatt.com?subject=${encodeURIComponent("Invoice request — " + money(total))}` +
+        `&body=${encodeURIComponent("I'd like to book:\n" + summary + "\n\nTotal: " + money(total) + "\n\nPlease send a payment link.")}`;
+      /* mailto: does nothing visible for anyone on webmail with no handler
+         registered, so always leave the address and the order on screen. */
+      if (noteEl) {
+        noteEl.innerHTML = `Opening your email app&hellip; if nothing happens, email ` +
+          `<a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a> with: ` +
+          `${summary} &mdash; ${money(total)}`;
+        setTimeout(() => { if (totalQty() === 0) noteEl.textContent = NOTE_DEFAULT; }, 30000);
+      }
     }
   });
 
