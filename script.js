@@ -172,6 +172,12 @@ document.querySelectorAll(".ticker__track").forEach(initTicker);
    ============================================================ */
 const PAYONEER_LINK = ""; // e.g. "https://pay.payoneer.com/xxxxxxxx"
 
+/* WhatsApp, international format, no + or spaces. wa.me opens the app on
+   mobile and WhatsApp Web on desktop, so unlike mailto it always lands
+   somewhere the visitor can see. */
+const WHATSAPP = "923374841818";
+const waLink = text => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+
 const ICONS = {
   bolt: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg>',
   star: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z" fill="currentColor"/></svg>',
@@ -301,9 +307,23 @@ const PRODUCTS = [
   ---------------------------------------------------------------- */
   const enquiryForm = document.getElementById("enquiryForm");
   const enquiryNote = document.getElementById("enquiryNote");
+  const enquiryWa = document.getElementById("enquiryWhatsapp");
 
   const orderSummary = () =>
     Object.entries(cart).map(([id, q]) => `${byId(id).name} \u00d7${q}`).join(", ");
+
+  /* One message, whichever route it leaves by. Fields are read at click
+     time so a half-filled form still carries whatever is there. */
+  function enquiryText() {
+    const f = enquiryForm;
+    const name  = f?.name.value.trim();
+    const email = f?.email.value.trim();
+    const brief = f?.brief.value.trim();
+    let out = `${orderSummary()}\nTotal: ${money(totalSum())}`;
+    if (brief) out += `\n\n${brief}`;
+    if (name || email) out += `\n\n\u2014 ${name}${email ? ` (${email})` : ""}`;
+    return out;
+  }
 
   checkoutBtn?.addEventListener("click", () => {
     if (totalQty() === 0) return;
@@ -324,27 +344,28 @@ const PRODUCTS = [
     }
   });
 
+  enquiryWa?.addEventListener("click", () => {
+    if (totalQty() === 0) return;
+    window.open(waLink(enquiryText()), "_blank", "noopener");
+  });
+
   enquiryForm?.addEventListener("submit", e => {
     e.preventDefault();
     if (!enquiryForm.checkValidity()) { enquiryForm.reportValidity(); return; }
-    const name  = enquiryForm.name.value.trim();
-    const email = enquiryForm.email.value.trim();
-    const brief = enquiryForm.brief.value.trim();
-    const summary = orderSummary();
-    const total = totalSum();
-    const body =
-      `${summary}\nTotal: ${money(total)}\n\n${brief}\n\n\u2014 ${name} (${email})`;
+    const body = enquiryText();
 
     window.location.href =
-      `mailto:hello@danialhyatt.com?subject=${encodeURIComponent("Enquiry \u2014 " + summary)}` +
+      `mailto:hello@danialhyatt.com?subject=${encodeURIComponent("Enquiry \u2014 " + orderSummary())}` +
       `&body=${encodeURIComponent(body)}`;
 
     /* mailto opens nothing for anyone on webmail with no handler
-       registered, so the enquiry stays on screen to be copied. */
+       registered, so offer a route that always works and leave the
+       message on screen to be copied. */
     if (enquiryNote) {
       enquiryNote.innerHTML =
-        `Opening your email app&hellip; if nothing happens, send this to ` +
-        `<a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>:` +
+        `Opening your email app&hellip; if nothing happens, ` +
+        `<a href="${waLink(body)}" target="_blank" rel="noopener noreferrer">send it on WhatsApp</a> ` +
+        `or email <a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>:` +
         `<span class="enquiry__copy">${body.replace(/</g, "&lt;").replace(/\n/g, "<br>")}</span>`;
     }
   });
