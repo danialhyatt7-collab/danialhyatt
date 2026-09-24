@@ -432,14 +432,6 @@ ul, ol { list-style: none; }
 .foot__brand-logo .nav__logo-lottie { width: 34px; height: 34px; }
 .foot__brand-name { font-family: 'Syne Extra', sans-serif; font-weight: 400; font-size: 1.3rem; letter-spacing: -.01em; }
 .foot__brand-desc { color: var(--muted); font-size: .85rem; line-height: 1.6; margin-top: 16px; }
-.foot__subscribe { display: flex; align-items: stretch; gap: 0; width: min(380px, 100%);
-  border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-.foot__subscribe input { flex: 1; min-width: 0; background: rgba(255,255,255,.03); border: 0; outline: none;
-  color: #fff; font: inherit; font-size: .82rem; letter-spacing: .08em; padding: 14px 16px; }
-.foot__subscribe input::placeholder { color: rgba(255,255,255,.4); }
-.foot__subscribe button { flex: none; background: #fff; color: #000; border: 0; cursor: pointer;
-  font: inherit; font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; padding: 0 22px; transition: filter .2s; }
-.foot__subscribe button:hover { filter: brightness(.9); }
 
 .foot__base {
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
@@ -971,7 +963,6 @@ ul, ol { list-style: none; }
   .value { grid-template-columns: 1fr; }
   .foot__cols { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
   .foot__bottom { flex-direction: column; }
-  .foot__subscribe { width: 100%; }
   .foot__base { justify-content: center; text-align: center; }
   /* hide the centered scroll cue so it can't collide with the play button */
   .hero__scroll { display: none; }
