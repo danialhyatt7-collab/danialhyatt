@@ -310,7 +310,7 @@ const PRODUCTS = [
   const enquiryWa = document.getElementById("enquiryWhatsapp");
 
   const orderSummary = () =>
-    Object.entries(cart).map(([id, q]) => `${byId(id).name} \u00d7${q}`).join(", ");
+    Object.entries(cart).map(([id, q]) => `${byId(id).name} x${q}`).join(", ");
 
   /* One message, whichever route it leaves by. Fields are read at click
      time so a half-filled form still carries whatever is there. */
@@ -319,7 +319,7 @@ const PRODUCTS = [
     const name  = f?.name.value.trim();
     const email = f?.email.value.trim();
     const brief = f?.brief.value.trim();
-    let out = `${orderSummary()}\nTotal: ${money(totalSum())}`;
+    let out = `Hi Danial, I'd like to book:\n\n${orderSummary()}\nTotal: ${money(totalSum())}`;
     if (brief) out += `\n\n${brief}`;
     if (name || email) out += `\n\n\u2014 ${name}${email ? ` (${email})` : ""}`;
     return out;
