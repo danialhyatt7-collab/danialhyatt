@@ -171,19 +171,6 @@ document.querySelectorAll(".reel__stage").forEach(card =>
   )
 );
 
-/* ---------- Contact form (front-end only) ------------------- */
-const form = document.getElementById("contactForm");
-const status = document.getElementById("formStatus");
-form?.addEventListener("submit", e => {
-  e.preventDefault();
-  if (!form.checkValidity()) { status.textContent = "Please fill in all fields."; return; }
-  const name = encodeURIComponent(form.name.value);
-  const msg = encodeURIComponent(form.message.value + "\n\n— " + form.name.value + " (" + form.email.value + ")");
-  status.textContent = "Opening your email client…";
-  window.location.href = `mailto:hello@danialhyatt.com?subject=New project brief from ${name}&body=${msg}`;
-  setTimeout(() => { form.reset(); status.textContent = "Thanks! I'll reply within one business day."; }, 800);
-});
-
 /* ---------- Year ------------------------------------------- */
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
