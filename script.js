@@ -2,57 +2,6 @@
    Danial Hyatt — Product Motion Design  ·  interactions
    ============================================================ */
 
-/* ---------- Portfolio data ----------------------------------
-   Edit this array to manage video placements.
-   - `video` accepts a YouTube/Vimeo embed URL OR a local mp4 path.
-   - `poster` is the thumbnail (drop files in assets/img/).
-   Leave poster empty to use the generated gradient fallback.
-------------------------------------------------------------- */
-const WORK = [
-  { cat: "Tech · 15s",       title: "Pulse App Launch",   poster: "assets/img/work-1.jpg", video: "" },
-  { cat: "Beauty · 15s",     title: "Lumé Serum",         poster: "assets/img/work-2.jpg", video: "" },
-  { cat: "Beverage · 15s",   title: "Hydra Can Drop",     poster: "assets/img/work-3.jpg", video: "" },
-  { cat: "Fashion · 15s",    title: "Nordic Sneaker",     poster: "assets/img/work-4.jpg", video: "" },
-  { cat: "SaaS · 15s",       title: "Flowstack Promo",    poster: "assets/img/work-5.jpg", video: "" },
-  { cat: "Gadget · 15s",     title: "Aero Earbuds",       poster: "assets/img/work-6.jpg", video: "" },
-];
-
-const GRADIENTS = [
-  "linear-gradient(135deg,#1f3b57,#0c1622)",
-  "linear-gradient(135deg,#3a2540,#120c1a)",
-  "linear-gradient(135deg,#143b3a,#0a1716)",
-  "linear-gradient(135deg,#43321a,#1a120a)",
-  "linear-gradient(135deg,#1a2a4d,#0a0f1c)",
-  "linear-gradient(135deg,#2d1f3f,#100b18)",
-];
-
-/* ---------- Build work cards -------------------------------- */
-(function buildWork() {
-  const grid = document.getElementById("workGrid");
-  if (!grid) return;
-  WORK.forEach((item, i) => {
-    const card = document.createElement("article");
-    card.className = "work-card";
-    card.dataset.video = item.video || "";
-    card.dataset.title = item.title;
-    const bg = item.poster
-      ? `background-image:url('${item.poster}')`
-      : `background-image:${GRADIENTS[i % GRADIENTS.length]}`;
-    card.innerHTML = `
-      <div class="work-card__bg" style="${bg}"></div>
-      <div class="work-card__grad"></div>
-      <div class="work-card__meta">
-        <div>
-          <p class="work-card__cat">${item.cat}</p>
-          <h3 class="work-card__title">${item.title}</h3>
-        </div>
-        <span class="work-card__play" aria-hidden="true">&#9658;</span>
-      </div>`;
-    card.addEventListener("click", () => openLightbox(item));
-    grid.appendChild(card);
-  });
-})();
-
 /* ---------- Loader ------------------------------------------ */
 window.addEventListener("load", () => {
   setTimeout(() => document.getElementById("loader")?.classList.add("is-done"), 900);
@@ -171,10 +120,6 @@ document.querySelectorAll(".reel__stage").forEach(card =>
   )
 );
 
-/* ---------- Year ------------------------------------------- */
-const yearEl = document.getElementById("year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
-
 /* ============================================================
    Marquee ticker — rAF loop with modulo wrap. Two identical
    halves; shifting by exactly one half is always seamless, so
@@ -217,53 +162,6 @@ function initTicker(track) {
   window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(build, 200); });
 }
 document.querySelectorAll(".ticker__track").forEach(initTicker);
-
-/* ============================================================
-   Header reviews — position driven by scroll (slides as you scroll)
-   ============================================================ */
-(function scrollReviews() {
-  const track = document.getElementById("reviewsTrack");
-  if (!track) return;
-  const base = track.querySelector(".reviews__group");
-  if (!base) return;
-  const baseHTML = base.outerHTML;
-  const FACTOR = 0.55;        // how far slides travel per pixel scrolled
-  let half = 0, cur = 0, raf = 0;
-
-  function build() {
-    cancelAnimationFrame(raf);
-    track.innerHTML = baseHTML;
-    const w = track.firstElementChild.offsetWidth;
-    if (!w) return;
-    const perHalf = Math.ceil(window.innerWidth / w) + 1;
-    track.innerHTML = baseHTML.repeat(perHalf * 2);
-    half = w * perHalf;
-    cur = -(window.scrollY * FACTOR);
-    draw();
-  }
-  function draw() {
-    let x = cur % half; if (x > 0) x -= half;        // seamless wrap
-    track.style.transform = `translate3d(${x}px,0,0)`;
-  }
-  /* Glide toward the scroll position, then stop. Running this every frame for
-     the life of the page kept the compositor busy even while nothing moved. */
-  function frame() {
-    const target = -(window.scrollY * FACTOR);
-    const gap = target - cur;
-    if (Math.abs(gap) < 0.05 || document.hidden) {   // settled: park the loop
-      cur = target; draw(); raf = 0; return;
-    }
-    cur += gap * 0.09;
-    draw();
-    raf = requestAnimationFrame(frame);
-  }
-  function kick() { if (!raf) raf = requestAnimationFrame(frame); }
-  window.addEventListener("scroll", kick, { passive: true });
-  document.addEventListener("visibilitychange", () => { if (!document.hidden) kick(); });
-  build();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
-  let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(build, 200); });
-})();
 
 /* ============================================================
    Footer wordmark — solid on touch, back to hairline after 2s
@@ -470,47 +368,4 @@ const PRODUCTS = [
   });
 
   render();
-})();
-
-/* ============================================================
-   Studio status panel — playback toggle, progress, live clocks
-   ============================================================ */
-(function studioPanel() {
-  const play = document.getElementById("studioPlay");
-  if (!play) return;
-  const fill = document.getElementById("studioFill");
-  const timeEl = document.getElementById("studioTime");
-  const sound = document.getElementById("studioSound");
-  const clocks = [...document.querySelectorAll(".studio__clock")];
-
-  let playing = true, sec = 54;
-  const dur = 180; // 3:00 loop
-  const fmt = s => String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
-  const render = () => { fill.style.width = (sec / dur * 100).toFixed(1) + "%"; timeEl.textContent = fmt(sec); };
-  render();
-  setInterval(() => { if (playing) { sec = (sec + 1) % dur; render(); } }, 1000);
-
-  play.addEventListener("click", () => {
-    playing = !playing;
-    play.classList.toggle("is-paused", !playing);
-    play.querySelector(".studio__play-label").textContent = playing ? "Pause" : "Play";
-  });
-
-  sound?.addEventListener("click", () => {
-    const off = sound.classList.toggle("is-off");
-    sound.querySelector("b").textContent = off ? "Off" : "On";
-  });
-
-  function tick() {
-    const now = new Date();
-    clocks.forEach(c => {
-      try {
-        c.textContent = new Intl.DateTimeFormat("en-GB", {
-          timeZone: c.dataset.tz, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
-        }).format(now);
-      } catch (e) { /* timezone unsupported */ }
-    });
-  }
-  tick();
-  setInterval(tick, 1000);
 })();
