@@ -367,7 +367,7 @@ ul, ol { list-style: none; }
 .foot > * { max-width: var(--maxw); margin-inline: auto; }
 
 /* hero CTA */
-.foot__hero { position: relative; text-align: center; padding: clamp(56px,10vh,120px) var(--hero-gutter) clamp(10px,4vh,30px); }
+.foot__hero { position: relative; text-align: center; padding: clamp(18px,3vh,36px) var(--hero-gutter) clamp(10px,3vh,24px); }
 .foot__headline { font-family: 'Syne Extra', sans-serif; font-weight: 400; text-transform: uppercase;
   font-size: clamp(2.2rem,7vw,4.6rem); line-height: .98; letter-spacing: -.01em; }
 .foot__sub { color: var(--muted); max-width: 420px; margin: 16px auto 26px; font-size: .95rem; }
@@ -388,7 +388,7 @@ ul, ol { list-style: none; }
 .foot__social-card { position: relative; overflow: hidden; flex: none;
   display: inline-flex; align-items: center; justify-content: center; gap: 12px;
   padding: 15px clamp(26px, 3vw, 38px); color: rgba(255,255,255,.85);
-  border: 1px solid var(--line); border-radius: 100px; }
+  border: 1px solid var(--line); }
 .foot__social-card::before { content: ""; position: absolute; inset: 0;
   background: rgba(255,255,255,.06); transform: scaleX(0); transform-origin: right center;
   transition: transform .5s var(--ease); }
