@@ -248,6 +248,17 @@
         <div class="cart__total"><span>Total</span><strong id="cartTotal">$0</strong></div>
         <button class="cart__checkout" id="cartCheckout">Request an invoice</button>
         <p class="cart__note" id="cartNote">No payment is taken here. I'll reply with a payment link and a storyboard slot.</p>
+
+        <form class="enquiry" id="enquiryForm" hidden>
+          <label class="enquiry__field"><span>Your name</span>
+            <input type="text" name="name" autocomplete="name" required /></label>
+          <label class="enquiry__field"><span>Email</span>
+            <input type="email" name="email" autocomplete="email" required /></label>
+          <label class="enquiry__field"><span>What are we filming?</span>
+            <textarea name="brief" rows="3" placeholder="Product, brand, deadline" required></textarea></label>
+          <button type="submit" class="cart__checkout" id="enquirySend">Send enquiry</button>
+          <p class="cart__note" id="enquiryNote"></p>
+        </form>
       </div>
     </aside>
   </div>

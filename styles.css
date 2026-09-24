@@ -358,6 +358,23 @@ ul, ol { list-style: none; }
   background: #fff; color: #000; font: inherit; font-weight: 600; letter-spacing: .02em; transition: filter .2s; }
 .cart__checkout:hover { filter: brightness(.9); }
 .cart__checkout:disabled { opacity: .4; cursor: not-allowed; }
+
+/* enquiry step — replaces the checkout button when there is no payment link */
+.enquiry { display: flex; flex-direction: column; gap: 14px; }
+.enquiry__field { display: flex; flex-direction: column; gap: 7px; }
+.enquiry__field > span { font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.enquiry__field input, .enquiry__field textarea {
+  background: rgba(255,255,255,.04); border: 1px solid var(--line); color: var(--ink);
+  font: inherit; font-size: .92rem; padding: 12px 14px; outline: none; resize: vertical;
+  transition: border-color .25s, background .25s;
+}
+.enquiry__field input:focus, .enquiry__field textarea:focus {
+  border-color: rgba(255,255,255,.45); background: rgba(255,255,255,.07);
+}
+.enquiry__field ::placeholder { color: rgba(255,255,255,.32); }
+.enquiry__copy { display: block; margin-top: 10px; padding: 12px 14px; text-align: left;
+  border: 1px solid var(--line); background: rgba(255,255,255,.03); color: rgba(255,255,255,.72);
+  font-size: .8rem; line-height: 1.5; user-select: all; }
 .cart__note { color: var(--muted); font-size: .72rem; text-align: center; margin-top: 12px; }
 
 /* ============================================================

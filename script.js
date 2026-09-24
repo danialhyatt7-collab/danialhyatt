@@ -426,28 +426,59 @@ const PRODUCTS = [
   document.getElementById("cartBackdrop")?.addEventListener("click", closeCart);
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeCart(); });
 
-  /* ---- checkout → Payoneer ---- */
+  /* ---- checkout ------------------------------------------------
+     With a payment link set, this is a real checkout. Without one it
+     opens an enquiry step in the drawer rather than firing a bare
+     mailto, so the order and the brief travel together and the
+     visitor can see what is happening.
+  ---------------------------------------------------------------- */
+  const enquiryForm = document.getElementById("enquiryForm");
+  const enquiryNote = document.getElementById("enquiryNote");
+
+  const orderSummary = () =>
+    Object.entries(cart).map(([id, q]) => `${byId(id).name} \u00d7${q}`).join(", ");
+
   checkoutBtn?.addEventListener("click", () => {
     if (totalQty() === 0) return;
-    const summary = Object.entries(cart).map(([id, q]) => `${byId(id).name} ×${q}`).join(", ");
+    const summary = orderSummary();
     const total = totalSum();
+
     if (PAYONEER_LINK) {
-      // append amount/reference where the Payoneer link supports query params
       const sep = PAYONEER_LINK.includes("?") ? "&" : "?";
-      window.open(`${PAYONEER_LINK}${sep}amount=${total}&description=${encodeURIComponent(summary)}`, "_blank", "noopener");
-    } else {
-      // no payment link yet, so this raises an invoice request by email
-      window.location.href =
-        `mailto:hello@danialhyatt.com?subject=${encodeURIComponent("Invoice request — " + money(total))}` +
-        `&body=${encodeURIComponent("I'd like to book:\n" + summary + "\n\nTotal: " + money(total) + "\n\nPlease send a payment link.")}`;
-      /* mailto: does nothing visible for anyone on webmail with no handler
-         registered, so always leave the address and the order on screen. */
-      if (noteEl) {
-        noteEl.innerHTML = `Opening your email app&hellip; if nothing happens, email ` +
-          `<a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a> with: ` +
-          `${summary} &mdash; ${money(total)}`;
-        setTimeout(() => { if (totalQty() === 0) noteEl.textContent = NOTE_DEFAULT; }, 30000);
-      }
+      window.open(`${PAYONEER_LINK}${sep}amount=${total}&description=${encodeURIComponent(summary)}`,
+                  "_blank", "noopener");
+      return;
+    }
+    checkoutBtn.hidden = true;
+    if (noteEl) noteEl.hidden = true;
+    if (enquiryForm) {
+      enquiryForm.hidden = false;
+      enquiryForm.querySelector("input")?.focus();
+    }
+  });
+
+  enquiryForm?.addEventListener("submit", e => {
+    e.preventDefault();
+    if (!enquiryForm.checkValidity()) { enquiryForm.reportValidity(); return; }
+    const name  = enquiryForm.name.value.trim();
+    const email = enquiryForm.email.value.trim();
+    const brief = enquiryForm.brief.value.trim();
+    const summary = orderSummary();
+    const total = totalSum();
+    const body =
+      `${summary}\nTotal: ${money(total)}\n\n${brief}\n\n\u2014 ${name} (${email})`;
+
+    window.location.href =
+      `mailto:hello@danialhyatt.com?subject=${encodeURIComponent("Enquiry \u2014 " + summary)}` +
+      `&body=${encodeURIComponent(body)}`;
+
+    /* mailto opens nothing for anyone on webmail with no handler
+       registered, so the enquiry stays on screen to be copied. */
+    if (enquiryNote) {
+      enquiryNote.innerHTML =
+        `Opening your email app&hellip; if nothing happens, send this to ` +
+        `<a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>:` +
+        `<span class="enquiry__copy">${body.replace(/</g, "&lt;").replace(/\n/g, "<br>")}</span>`;
     }
   });
 
