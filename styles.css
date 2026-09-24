@@ -317,7 +317,7 @@ ul, ol { list-style: none; }
 .cta__title { font-family: 'Syne Extra', sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(2.2rem,8vw,5.5rem); line-height: .96; letter-spacing: -.01em; margin: 10px 0 16px; }
 .cta__lead { color: var(--muted); max-width: 520px; margin: 0 auto 32px; }
 .cta__actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-.cta__btn { padding: 15px 30px; border-radius: 100px; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+.cta__btn { padding: 15px 30px; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
   transition: transform .2s var(--ease), filter .2s, background .25s, color .25s, border-color .25s; }
 .cta__btn:hover { transform: translateY(-2px); }
 .cta__btn--solid { background: #fff; color: #000; font-weight: 600; }
