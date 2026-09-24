@@ -354,7 +354,7 @@ ul, ol { list-style: none; }
 .cart__total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
 .cart__total span { color: var(--muted); letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; }
 .cart__total strong { font-family: 'Syne Extra', sans-serif; font-weight: 400; font-size: 1.8rem; }
-.cart__checkout { width: 100%; padding: 15px; border-radius: 100px; border: 0; cursor: pointer;
+.cart__checkout { width: 100%; padding: 15px; border: 0; cursor: pointer;
   background: #fff; color: #000; font: inherit; font-weight: 600; letter-spacing: .02em; transition: filter .2s; }
 .cart__checkout:hover { filter: brightness(.9); }
 .cart__checkout:disabled { opacity: .4; cursor: not-allowed; }
