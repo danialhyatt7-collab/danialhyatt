@@ -364,13 +364,18 @@ ul, ol { list-style: none; }
   filter: drop-shadow(0 0 36px rgba(255,255,255,.5)); }
 
 /* social cards */
-.foot__social { display: grid; grid-template-columns: repeat(4, 1fr);
+.foot__social { display: grid; grid-template-columns: 1fr;
   border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.foot__social-card { display: flex; align-items: center; gap: 12px; padding: 22px clamp(18px,2.4vw,30px);
-  color: rgba(255,255,255,.85); border-right: 1px solid var(--line); transition: background .3s; }
-.foot__social-card:last-child { border-right: 0; }
-.foot__social-card:hover { background: rgba(255,255,255,.04); }
-.foot__social-card span { font-size: .92rem; flex: 1; }
+/* single full-width button; the fill sweeps in from the right edge */
+.foot__social-card { position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  padding: 26px clamp(18px,2.4vw,30px); color: rgba(255,255,255,.85); }
+.foot__social-card::before { content: ""; position: absolute; inset: 0;
+  background: rgba(255,255,255,.06); transform: scaleX(0); transform-origin: right center;
+  transition: transform .5s var(--ease); }
+.foot__social-card:hover::before { transform: scaleX(1); }
+.foot__social-card > * { position: relative; }
+.foot__social-card span { font-size: .95rem; letter-spacing: .06em; }
 .foot__social-mk { width: 18px; text-align: center; font-weight: 700; font-size: .82rem; flex: none !important; }
 .foot__arrow { color: var(--muted); font-style: normal; transition: transform .3s var(--ease), color .3s; }
 .foot__social-card:hover .foot__arrow { transform: translateX(5px); color: #fff; }
@@ -928,9 +933,6 @@ ul, ol { list-style: none; }
   .hero__sub { max-width: 100%; }
   .reel__stage, .reel__stage--vertical, .reel__stage--wide { grid-column: 1 / -1; }
   .value { grid-template-columns: 1fr; }
-  .foot__social { grid-template-columns: repeat(2, 1fr); }
-  .foot__social-card { border-bottom: 1px solid var(--line); }
-  .foot__social-card:nth-child(2n) { border-right: 0; }
   .foot__cols { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
   .foot__bottom { flex-direction: column; }
   .foot__subscribe { width: 100%; }
