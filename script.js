@@ -94,6 +94,7 @@ function openLightbox(item) {
       ${item.title.toUpperCase()}<br><span style="font-family:Inter;font-size:.85rem;letter-spacing:.1em;">
       Preview coming soon</span></div>`;
   }
+  window.__reelStop?.();
   lightbox.classList.add("is-open");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -112,6 +113,52 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbo
 document.getElementById("reelBtn")?.addEventListener("click", () =>
   openLightbox({ title: "2024 Showreel", video: "assets/video/hero.mp4" })
 );
+
+/* ============================================================
+   Reel previews — the tiles play their own spot rather than sitting
+   as stills. Sources attach on first use, so nothing is fetched
+   until a visitor actually reaches for a tile.
+   ============================================================ */
+(function reelPreviews() {
+  const stages = [...document.querySelectorAll(".reel__stage")];
+  if (!stages.length) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const coarse = matchMedia("(hover: none)").matches;
+
+  function play(stage) {
+    const v = stage.querySelector(".reel__vid");
+    if (!v || reduce) return;
+    if (!v.src) v.src = stage.dataset.video;          // first touch only
+    v.play().then(() => stage.classList.add("is-previewing")).catch(() => {});
+  }
+  function stop(stage) {
+    const v = stage.querySelector(".reel__vid");
+    if (!v) return;
+    stage.classList.remove("is-previewing");
+    v.pause();
+    v.currentTime = 0;
+  }
+
+  if (coarse) {
+    /* touch: the tile filling the screen plays, the rest stay still */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting ? play(e.target) : stop(e.target));
+    }, { threshold: 0.6 });
+    stages.forEach(s => io.observe(s));
+  } else {
+    stages.forEach(s => {
+      s.addEventListener("mouseenter", () => play(s));
+      s.addEventListener("mouseleave", () => stop(s));
+      s.addEventListener("focus", () => play(s));
+      s.addEventListener("blur", () => stop(s));
+    });
+  }
+  /* never leave one running behind a lightbox or a hidden tab */
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stages.forEach(stop);
+  });
+  window.__reelStop = () => stages.forEach(stop);
+})();
 
 /* Reel cards → open each spot in the lightbox */
 document.querySelectorAll(".reel__stage").forEach(card =>
