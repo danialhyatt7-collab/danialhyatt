@@ -568,7 +568,7 @@ ul, ol { list-style: none; }
 }
 .hero__title {
   font-family: 'Syne Extra', sans-serif; font-weight: 400;
-  font-size: clamp(2rem, 7vw, 5.2rem); line-height: .96;
+  font-size: clamp(2.4rem, 9vw, 7rem); line-height: .94;
   letter-spacing: 0; text-transform: uppercase;
   color: #fff; margin: 0;
   /* compensate Syne Extra's left side-bearing so the M aligns with the eyebrow */
