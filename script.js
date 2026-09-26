@@ -186,10 +186,10 @@ const ICONS = {
 const PRODUCTS = [
   { id: "spark", name: "Spark", sub: "Your ad, live in 24 hours", price: 600, billed: "Billed one time", tag: "1 spot", icon: ICONS.bolt,
     feats: ["One 15s vertical ad", "Delivered in 9:16", "Storyboard before production"] },
-  { id: "signature", name: "Signature", sub: "Hero film + cut-downs", price: 1500, billed: "Billed one time", tag: "3 spots", icon: ICONS.star, featured: true, badge: "Most booked",
-    feats: ["15s hero ad + 2 cut-downs", "Delivered in 9:16, 1:1 and 16:9", "3D product render", "Storyboard approved first"] },
+  { id: "signature", name: "Signature", sub: "Hero film + variations", price: 1500, billed: "Billed one time", tag: "3 spots", icon: ICONS.star, featured: true, badge: "Most booked",
+    feats: ["15s hero ad + 2 variations", "9:16, 1:1 and 16:9, each cut for its frame", "Concept and script written by me", "Storyboard approved first"] },
   { id: "studio", name: "Studio", sub: "Always-on content engine", price: 2800, unit: "/mo", billed: "Billed monthly", tag: "4 / mo", icon: ICONS.loop,
-    feats: ["4 finished spots / month", "Every format you need", "Weekly review call", "Storyboard for every spot"] },
+    feats: ["4 finished spots / month", "Every format, cut for its frame", "Weekly review call", "Storyboard for every spot"] },
 ];
 
 (function shop() {

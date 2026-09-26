@@ -290,6 +290,11 @@ ul, ol { list-style: none; }
   color: rgba(244,246,250,.82); letter-spacing: -.005em; margin: 0 auto; max-width: 30ch;
 }
 .guarantee__line em { font-style: normal; color: #fff; }
+.guarantee__sub {
+  margin: clamp(18px, 2.4vw, 26px) auto 0; max-width: 46ch;
+  font-family: 'Inter', sans-serif; font-size: .86rem; line-height: 1.6;
+  color: var(--muted);
+}
 
 /* ============================================================
    Value / proof band
