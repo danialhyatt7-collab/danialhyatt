@@ -562,6 +562,8 @@ ul, ol { list-style: none; }
 }
 .hero__sub { max-width: 34ch; }
 .hero__eyebrow {
+  display: block; line-height: 1.6;   /* it inherited this from body as a sibling */
+  margin-bottom: clamp(14px, 1.8vw, 26px);   /* was the flex gap when it was a sibling */
   font-family: 'Syne', sans-serif; font-weight: 600;
   font-size: clamp(.72rem, 1.4vw, .95rem); letter-spacing: .38em;
   text-transform: uppercase; color: #fff;
@@ -571,6 +573,9 @@ ul, ol { list-style: none; }
   font-size: clamp(2.4rem, 9vw, 7rem); line-height: .94;
   letter-spacing: 0; text-transform: uppercase;
   color: #fff; margin: 0;
+}
+.hero__word {
+  display: block;
   /* compensate Syne Extra's left side-bearing so the M aligns with the eyebrow */
   margin-left: -0.03em;
   filter: drop-shadow(0 20px 50px rgba(0,0,0,.5));
