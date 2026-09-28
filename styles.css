@@ -646,7 +646,8 @@ ul, ol { list-style: none; }
   grid-column: span 6; aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden;
   border: 1px solid var(--line); background: #000000; padding: 0;
   opacity: 0; transform: translateY(60px) scale(.97);
-  transition: opacity .9s var(--ease), transform .9s var(--ease), border-color .3s;
+  transition: opacity .9s var(--ease), transform .9s var(--ease),
+              border-color .3s, box-shadow .4s var(--ease);
 }
 .reel__stage--featured { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
 /* 9:16 spots keep their true portrait frame instead of being cropped to 16:10 */
@@ -654,10 +655,9 @@ ul, ol { list-style: none; }
 /* landscape tile sharing a row with a portrait one: stretch to that row's height */
 .reel__stage--wide { grid-column: span 9; aspect-ratio: auto; }
 .reel__stage--banner { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
-/* closing pair: two portrait tiles centred in the 12-column grid, so the last
-   row reads as deliberate rather than a half-empty one */
-.reel__stage--pair-a { grid-column: 4 / span 3; }
-.reel__stage--pair-b { grid-column: 7 / span 3; }
+/* closing trio: three portrait tiles at four columns each, so the last row
+   fills the grid exactly instead of being centred against empty space */
+.reel__stage--trio { grid-column: span 4; }
 .reel__stage:nth-child(2) { transition-delay: .06s; }
 .reel__stage:nth-child(3) { transition-delay: .12s; }
 .reel__stage:nth-child(4) { transition-delay: .18s; }
@@ -666,7 +666,9 @@ ul, ol { list-style: none; }
 .reel__stage:nth-child(7) { transition-delay: .36s; }
 .reel__stage:nth-child(8) { transition-delay: .42s; }
 .reel__stage.is-in { opacity: 1; transform: translateY(0) scale(1); }
-.reel__stage:hover { border-color: rgba(255,255,255,.4); }
+/* hover lifts the tile off the page instead of ringing it in white: at .4 the
+   rim read as a hard outline against the near-black ground */
+.reel__stage:hover { border-color: rgba(255,255,255,.16); box-shadow: 0 20px 44px rgba(0,0,0,.6); }
 
 .reel__img {
   position: absolute; inset: 0; background-size: cover; background-position: center;
@@ -953,8 +955,9 @@ ul, ol { list-style: none; }
    ============================================================ */
 @media (max-width: 900px) {
   .reel__stage { grid-column: 1 / -1; }
-  .reel__stage--vertical { grid-column: span 6; }
+  .reel__stage--vertical, .reel__stage--trio { grid-column: span 6; }
   .reel__stage--wide { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
+  .reel__stage--featured { aspect-ratio: 16 / 10; }
   .sidenav { display: none; }
   .social { display: none; }
   /* collapse header: logo + cart + menu */
