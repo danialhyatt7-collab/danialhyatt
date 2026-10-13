@@ -1,0 +1,162 @@
+{
+  "al-qanoon-e-stamps": {
+    "client": "Al-Qanoon E-Stamps",
+    "live": "https://danialhyatt7-collab.github.io/alqanoon/",
+    "live_label": "danialhyatt7-collab.github.io/alqanoon",
+    "poster": "/assets/work-alqanoon-tall.webp",
+    "poster_alt": "The Al-Qanoon E-Stamps homepage, showing the WhatsApp-first hero, process explainer and flat pricing",
+    "title": "Al-Qanoon E-Stamps Case Study | WhatsApp-First Service Site",
+    "desc": "How we built Al-Qanoon E-Stamps, a WhatsApp-first service site for online e-stamp paper in Islamabad and Rawalpindi. Order builder, flat pricing, trust-first structure.",
+    "eyebrow": "Case Study · Service Site · Islamabad & Rawalpindi",
+    "h1": "Selling a government document on WhatsApp, at 3 AM",
+    "standfirst": "Al-Qanoon issues official e-stamp paper for people in Islamabad and Rawalpindi without anyone visiting an office. The hard part was never the design. It was convincing a stranger, at the moment they need a legal document, that handing over a CNIC number to a website is safe and that the price will not move.",
+    "og_desc": "A WhatsApp-first service site for e-stamp paper in Islamabad and Rawalpindi. How we designed for the 3 AM visitor who needs a legal document and has never heard of you.",
+    "wa_text": "Hi%20Designs%20Redefined%2C%20I%27d%20like%20a%20site%20like%20the%20Al-Qanoon%20one.",
+    "meta": [["Client","Al-Qanoon E-Stamps"],["Sector","Legal services"],["Market","Islamabad &amp; Rawalpindi"],["Scope","Service site, lead gen, local SEO"],["Primary channel","WhatsApp"]],
+    "brief_heading": "What we were actually solving",
+    "brief": [
+      "Stamp paper in Pakistan has always moved through middlemen. You go to the courts, you find an agent, you pay a fee nobody quotes in advance, and you wait. Al-Qanoon does the same job through the government e-stamping portal and delivers the finished document on WhatsApp, usually within the hour, at any time of day.",
+      "That is a genuinely better service. But a better service does not sell itself when the buyer has never heard of you and is about to send you their CNIC number."
+    ],
+    "challenges": [
+      ["The product is invisible","An e-stamp is a government document. Nobody browses for one. People search for it at the moment they need it, often at an hour when no office is open, and they need to trust a stranger with a CNIC number before they have met anyone."],
+      ["The competition is an agent","The default way to get a stamp paper in the twin cities is a middleman at the courts, with a fee nobody quotes upfront. The site had to make the price and the process more legible than the alternative, not just look better."],
+      ["Trust before transaction","A first-time visitor has one question: is this legal and is this person real. If the site does not answer that before asking for a CNIC, nothing else matters."]
+    ],
+    "pull": "We did not design a website with a WhatsApp button on it. We designed a WhatsApp conversation with a website in front of it.",
+    "decisions": [
+      ["WhatsApp is the product, not a contact link","In Pakistan the transaction already happens on WhatsApp, so we did not fight it with a form that emails a lead nobody reads. Every path on the site ends in a pre-written WhatsApp message. The site's job is to get someone to press send with confidence, not to capture them."],
+      ["An order builder that writes the message for you","Asking a stressed visitor to compose a message is friction. A three-field builder (purpose, city, stamp value) assembles the WhatsApp text for them. Crucially it sends nothing by itself, and the page says so out loud: you review it in WhatsApp and hit send yourself. Control stays with the visitor, which is the point when the next step is handing over a CNIC."],
+      ["One flat fee, stated before anything is asked","PKR 1,000 appears in the hero, in the pricing block and in the FAQ, with the government stamp duty broken out separately and explicitly never marked up. Publishing the number is what separates the site from the agent at the courts."],
+      ["Legality answered first, not buried in the FAQ","QR-verifiable, issued through the government e-stamping portal, carries a unique ID. That claim is on the page above the fold and expanded in the first FAQ answer, because it is the objection that stops every first order."],
+      ["Built around the 3 AM visitor","The strongest differentiator was that the service runs 24/7/365, so the site repeats it everywhere: the top bar, the hero sub-line, the benefit grid, the FAQ. Someone who needs an affidavit on Eid is the highest-intent visitor there is."],
+      ["Local, specifically","Islamabad and Rawalpindi are named in the title tag, the top bar, the hero chips and the city selector in the order builder. The service is geographically bound and the site never pretends otherwise, which is what makes it findable for the people who can actually use it."]
+    ],
+    "built": [
+      ["Process explainer","Three steps, zero office visits, so the whole transaction is legible in ten seconds."],
+      ["Eight document types","Rent agreement, affidavit, power of attorney, sale deed, business contract, partnership deed, undertaking, indemnity bond — each named, because each is a separate search."],
+      ["Flat pricing block","One fee, what it includes, and what is charged separately at official rates."],
+      ["WhatsApp order builder","Pre-writes the order message from three fields. Sends nothing without the visitor pressing send."],
+      ["Seven-question FAQ","Legality, what you need to provide, what the fee covers, overseas use, turnaround and more."],
+      ["Lead capture to Google Sheets","Orders logged to a sheet the client actually opens, instead of an inbox that fills up."],
+      ["Meta Pixel","So the client can retarget and measure ad spend against real orders."],
+      ["Overseas Pakistani path","Power of attorney for overseas clients is called out specifically — a high-value segment that cannot visit an office by definition."]
+    ],
+    "stats": [["5,000+","E-stamps delivered, as published by Al-Qanoon"],["~30 min","Average turnaround the client quotes to customers"],["24/7/365","Ordering window the site is built around"],["PKR 1,000","Flat service fee, published openly on the page"]],
+    "stats_note": "These are Al-Qanoon's own published figures, shown here as the client states them on the live site. We build the site and the measurement around it; the service volume is theirs.",
+    "lessons": [
+      "Most service businesses in Pakistan already run on WhatsApp and then bolt a website on the side that routes people into a contact form nobody checks. It is backwards. If the deal closes in a chat, the site's only job is to get someone into that chat already convinced, with their question half-answered and the price already known.",
+      "The other lesson is that publishing the price is a competitive weapon in a market where nobody does. Al-Qanoon's flat PKR 1,000 fee is the single most persuasive thing on the page, precisely because the alternative is an agent who will not tell you."
+    ],
+    "cta_h": "Want a site that works like this one?",
+    "cta_p": "If your business closes deals on WhatsApp, we will build you the site that gets people there ready to buy. Tell us what you do and we will come back with a clear quote in PKR."
+  },
+
+  "oakly": {
+    "client": "Oakly",
+    "live": "https://danialhyatt7-collab.github.io/O-kly/index.html",
+    "live_label": "danialhyatt7-collab.github.io/O-kly",
+    "poster": "/assets/work-oakly-tall.webp",
+    "poster_alt": "The Oakly storefront homepage, showing the hero, incentive marquee and the Perfect Chair Collection",
+    "title": "Oakly Case Study | Selling PKR 295,000 Furniture Online",
+    "desc": "How we built the Oakly storefront: a furniture brand site that sells handmade solid-oak pieces at PKR 118,000 to 295,000 online, against a market trained to buy flat-pack.",
+    "eyebrow": "Case Study · E-Commerce · Brand Site",
+    "h1": "Selling a PKR 295,000 sofa to someone who cannot sit on it",
+    "standfirst": "Oakly makes solid-oak furniture by hand in Lahore and sells it across Pakistan. Pieces run from PKR 118,000 to PKR 295,000, they are built to order over three weeks, and the buyer commits before ever touching one. The site's entire job is to carry the weight that a showroom normally carries.",
+    "og_desc": "A furniture storefront built to sell handmade solid oak at PKR 118,000 to 295,000, in a market trained to buy flat-pack. How we replaced the showroom.",
+    "wa_text": "Hi%20Designs%20Redefined%2C%20I%27d%20like%20a%20store%20like%20the%20Oakly%20one.",
+    "meta": [["Client","Oakly"],["Sector","Furniture &amp; homeware"],["Market","Pakistan, made in Lahore"],["Scope","E-commerce, brand site, animation"],["Price range","PKR 118,000 – 295,000"]],
+    "brief_heading": "The problem with selling furniture online",
+    "brief": [
+      "Furniture is the hardest thing to sell on the internet. It is expensive, it is physical, and every instinct a buyer has says go and sit on it first. In Pakistan that instinct is stronger still, because the established way to buy a sofa is to visit a showroom and negotiate.",
+      "Oakly had no showroom to send anyone to. Every piece is cut and joined to order in Lahore, which means there is nothing in stock to go and see. The site had to do the convincing on its own, at a price point where a wrong decision genuinely hurts."
+    ],
+    "challenges": [
+      ["No showroom, no stock","Nothing is pulled from a warehouse. A visitor cannot touch the product before paying, so the site has to transmit material quality through photography, copy and detail instead."],
+      ["Anchored against flat-pack","The price most buyers carry in their head comes from mass-produced furniture. Until the site explains why hand-cut joinery costs what it costs, PKR 145,000 for a chair reads as a mistake."],
+      ["Three weeks is a long time","Build-to-order means waiting. Unmanaged, that is a reason to abandon. Named and explained upfront, it becomes proof the thing is actually being made for you."]
+    ],
+    "pull": "At this price nobody is browsing. They are deciding. The site's job is to answer every objection before it becomes a reason to close the tab.",
+    "decisions": [
+      ["Lead with longevity, not with the product","The headline is \"Built once. Loved for years,\" not a product name. At this price the purchase is not a chair, it is a decision to stop replacing chairs. The whole page argues from that position before it shows a single price."],
+      ["Say the price out loud, early","PKR 145,000, PKR 295,000, PKR 118,000 sit right on the collection cards. Hiding prices behind an enquiry form on a premium product reads as something to be ashamed of, and it wastes the time of the people who can afford it."],
+      ["A marquee that does the objection handling","Twenty-four rotating incentives run across the hero: free white-glove delivery, handmade to order in Lahore, solid oak never veneer, ships in three weeks, repairable never disposable. It is a lot of reassurance delivered in the space a single sentence would take."],
+      ["Name the competitor and draw the table","A direct Oakly-versus-flat-pack comparison puts glued and stapled joints next to hand-cut mortise and tenon, mass production next to made in Lahore. The comparison is what makes the price legible, so we gave it a section rather than a footnote."],
+      ["Turn the wait into craft","\"From order to your living room\" breaks three weeks into order, handcraft, delivery, and says Lahore carpenters are cutting and joining it by hand. The delay stops being a delay and becomes the reason the piece is worth the money."],
+      ["Care instructions as a sales argument","Wipe don't soak, re-oil yearly, keep it out of direct sun. Telling someone how to look after a thing for decades is an implicit promise that it will last decades, and it pre-empts the fear of spending this much on something fragile."],
+      ["White-glove delivery, stated as a feature","Delivered fully assembled, placed in the room, packaging taken away. For a heavy, expensive object bought online, the last hundred metres is a real anxiety, and resolving it is worth saying three separate times."]
+    ],
+    "built": [
+      ["Hero with email capture","Built into the hero rather than a pop-up, so a visitor who is not ready to spend PKR 145,000 today still becomes a contact."],
+      ["Incentive marquee","Twenty-four buying reasons on a loop, so the reassurance is always on screen without a wall of text."],
+      ["Perfect Chair Collection","A named series with per-piece pricing in PKR, giving the catalogue a reason to be browsed as a story rather than a grid."],
+      ["Comparison section","Oakly versus flat-pack, point by point, which is where the price objection actually gets answered."],
+      ["Process explainer","Order, handcraft, delivery, with the three-week build named explicitly rather than discovered at checkout."],
+      ["Reviews from real cities","Testimonials attributed to Lahore, Karachi, Islamabad and Rawalpindi, because a buyer in Pakistan wants proof from Pakistan."],
+      ["Care guide","Three maintenance rules, positioned as stewardship of something that lasts rather than as a warning."],
+      ["Trade and bulk path","A separate route for interior designers and project buyers, who order differently and in volume."]
+    ],
+    "stats": [["PKR 118k–295k","Price range the site sells at without a showroom"],["4.9 / 5","Customer rating as published on the site"],["3 weeks","Order to finished piece, stated upfront"],["24","Buying incentives running in the hero marquee"]],
+    "stats_note": "The rating and review content are Oakly's own published claims, shown here as they appear on the live site. We built the storefront and the structure around those claims rather than measuring them.",
+    "lessons": [
+      "Premium pricing does not need to be defended, it needs to be explained. Every expensive thing on this site is paired with the reason it costs that much: hand-cut joinery, solid oak rather than veneer, three weeks of one person's work. Price objections are almost always information problems.",
+      "The second lesson is that a build-to-order delay is an asset if you name it first. The brands that lose on it are the ones that let the customer discover the wait at checkout."
+    ],
+    "cta_h": "Selling something that needs explaining?",
+    "cta_p": "If your product costs more than the obvious alternative and you need the site to make that case, this is the kind of build we do. Tell us what you sell and we will come back with a clear quote in PKR."
+  },
+
+  "danial-hyatt": {
+    "client": "Danial Hyatt",
+    "live": "https://danialhyatt.com/",
+    "live_label": "danialhyatt.com",
+    "poster": "/assets/work-danialhyatt-tall.webp",
+    "poster_alt": "The Danial Hyatt portfolio homepage, showing the showreel-led hero and the packages section",
+    "title": "Danial Hyatt Case Study | Productising a Motion Design Service",
+    "desc": "How we built danialhyatt.com: a motion designer's portfolio that sells fixed packages with a cart, a free storyboard before payment, and honest delivery expectations.",
+    "eyebrow": "Case Study · Portfolio · Services",
+    "h1": "Turning a freelance motion designer into a product you can buy",
+    "standfirst": "Most creative portfolios end at a contact form and a hope. This one ends at a cart. The brief was to stop Danial quoting every job from scratch and let a buyer pick a package, see the price, and send an enquiry that already contains the answer to half the usual questions.",
+    "og_desc": "A motion designer's portfolio that sells fixed packages with a cart, a free storyboard before payment, and honest expectations about what gets delivered.",
+    "wa_text": "Hi%20Designs%20Redefined%2C%20I%27d%20like%20a%20portfolio%20site%20like%20this.",
+    "meta": [["Client","Danial Hyatt"],["Sector","Motion design"],["Based","Islamabad, Pakistan"],["Scope","Portfolio, services, video"],["Model","Fixed packages"]],
+    "brief_heading": "Why most creative portfolios do not sell",
+    "brief": [
+      "A portfolio full of beautiful work and a mailto link puts the entire burden on the visitor. They have to guess whether you are in their budget, guess how long it takes, and write an email describing a project they have not thought through yet. Most of them do not bother, and the ones who do arrive asking for a quote on nothing in particular.",
+      "The fix is not more work in the grid. It is turning the service into something with a shape: a named deliverable, a price, a timeline, and a first step that costs the buyer nothing."
+    ],
+    "challenges": [
+      ["Vague enquiries, endless quoting","Every job starting from \"how much for a video?\" means a bespoke quote for each one, most of which go nowhere. The site needed to filter and qualify before the conversation starts."],
+      ["Creative work is hard to price publicly","Published prices feel risky when every project differs. But a buyer with no number has no way to tell whether this is a conversation worth starting."],
+      ["Trust runs both ways","A client is paying upfront for something that does not exist yet. That fear kills more creative projects than budget does."]
+    ],
+    "pull": "A portfolio proves you can do the work. A product tells someone how to buy it. These are different jobs and most creative sites only do the first.",
+    "decisions": [
+      ["Open with the buyer's reason, not the designer's","The page leads on why product video sells, with a stat about shoppers watching video before they buy, before it shows any work. A prospective client arrives wondering whether motion is worth paying for at all, and that question comes before whether this particular designer is good."],
+      ["Be specific about the deliverable","Not \"video services\" but 15-second product ads. A narrow, named deliverable is easier to price, easier to judge and far easier to remember than a general creative offering."],
+      ["A cart that takes no money","Packages go into a cart, but checkout sends an enquiry rather than charging a card. The buyer gets the clarity of e-commerce, and nobody pays for creative work before a human conversation has happened. The page says plainly that no payment is taken there."],
+      ["The free storyboard de-risks the whole thing","Every project starts with a storyboard the client approves before paying anything. It is the single most persuasive element on the site, because it moves all the risk onto the designer at exactly the moment the buyer feels most exposed."],
+      ["Say what the render will and will not match","The site states that the finished film matches the approved frames in content, order and timing, and that fine detail varies between renders. Volunteering that is unusual and it is the whole trust argument: someone willing to name the limits in advance is someone who will not surprise you later."],
+      ["Lead with the reel, not with a bio","The showreel is the hero. For motion work the proof is motion, and no amount of written positioning substitutes for showing someone ten seconds of the thing."],
+      ["Work organised by category, not chronology","Fragrance, tech, skincare, beverage, home, beauty. A buyer scanning for someone who has shot their category finds it instantly instead of scrolling a date-ordered archive."]
+    ],
+    "built": [
+      ["Showreel-led hero","Motion as the first thing on the page, because for this service the proof and the product are the same thing."],
+      ["Categorised work grid","Spots grouped by sector so a buyer can find their own category in seconds."],
+      ["Package shop with cart","Fixed tiers, added to a cart, submitted as an enquiry rather than a payment."],
+      ["Enquiry invoice flow","Checkout collects the brief and replies with a payment link and a storyboard slot, keeping a human in the loop."],
+      ["Free storyboard promise","Stated on the page, before pricing, as the first step of every project."],
+      ["Honest delivery note","What the final render will match and where it will vary, written out rather than buried in terms."],
+      ["24-hour tier","A fast entry package that gives a hesitant buyer a low-commitment way to start."],
+      ["Multiple contact paths","Email, Instagram and WhatsApp, because creative clients each have a channel they actually answer."]
+    ],
+    "stats": [["15 sec","The single named deliverable the whole service is built around"],["24 hrs","Turnaround on the entry tier"],["PKR 0","Cost of the storyboard the client approves before paying"],["8","Sectors represented in the work grid"]],
+    "stats_note": "These describe the offer the site presents, not performance results. Enquiry and conversion figures would need to come from the site's own analytics.",
+    "lessons": [
+      "Productising creative work does not cheapen it. Naming the deliverable, publishing a price and fixing the first step removes the part of the sale that was never creative anyway, which leaves more of the conversation for the work itself.",
+      "The other lesson is that volunteering your limits builds more trust than any guarantee. Saying out loud what will vary between renders costs nothing and separates you from everyone promising perfection."
+    ],
+    "cta_h": "Want your service to work like a product?",
+    "cta_p": "If you are quoting every job from scratch and losing hours to vague enquiries, we will build you the site that does the qualifying. Tell us what you sell and we will come back with a clear quote in PKR."
+  }
+}

@@ -1,0 +1,52 @@
+/* Shared layout for the case study pages under /work/.
+   Loaded after site.css, which supplies the tokens and the base components. */
+
+/* reveal-on-scroll is progressive: .rv only hides once JS flags the document,
+   so a failed script leaves the page readable instead of blank */
+.rv{opacity:1;transform:none}
+html.js .rv{opacity:0;transform:translateY(26px)}
+html.js .rv.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html.js .rv{opacity:1;transform:none;transition:none}}
+
+.crumb{font-size:13px;color:var(--ink-faint);margin-bottom:18px}
+.crumb a{color:var(--ink-dim)}
+.cs-hero{padding:140px 0 44px}
+.standfirst{color:var(--ink-dim);max-width:680px;margin-top:18px;line-height:1.75;font-size:16px}
+
+.meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:34px}
+.meta-row div{background:var(--bg);padding:18px 20px}
+.meta-row dt{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:6px}
+.meta-row dd{margin:0;font-size:14.5px;color:var(--ink);line-height:1.5}
+
+/* the portfolio posters are tall full-page captures, so they are cropped to a
+   browser-chrome frame rather than rendered at their full ~2600px height */
+.shotframe{margin-top:38px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card)}
+.shotframe img{display:block;width:100%;height:auto;max-height:560px;object-fit:cover;object-position:top center;background:var(--bg-2)}
+.shotbar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.shotbar i{width:9px;height:9px;border-radius:50%;background:rgba(var(--ink-rgb),.16);flex:none}
+.shotbar em{font-style:normal;font-size:12px;color:var(--ink-faint);margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.shotcap{font-size:13px;color:var(--ink-faint);padding:14px 18px;border-top:1px solid var(--line)}
+
+.loc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:30px;text-align:left}
+.loc-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.loc-card h3{font-size:16.5px;margin:0 0 8px}
+.loc-card p{color:var(--ink-dim);font-size:14px;margin:0;line-height:1.65}
+
+.dec{display:flex;gap:20px;padding:26px 0;border-bottom:1px solid var(--line)}
+.dec:last-child{border-bottom:0}
+.dec-n{font-family:'Space Grotesk',Inter,sans-serif;font-size:14px;font-weight:700;color:var(--ink-faint);padding-top:3px;flex:none}
+.dec h3{font-size:18px;margin:0 0 10px;max-width:40ch}
+.dec p{color:var(--ink-dim);font-size:15px;line-height:1.75;margin:0;max-width:68ch}
+
+.pull{border-left:3px solid rgba(var(--ink-rgb),.35);padding:6px 0 6px 22px;margin:34px 0;font-size:19px;line-height:1.6;color:var(--ink);max-width:62ch;font-weight:500}
+
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:28px}
+.statbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.statbox b{font-family:'Space Grotesk',Inter,sans-serif;font-size:28px;letter-spacing:-.02em;display:block}
+.statbox small{color:var(--ink-dim);font-size:13.5px;display:block;margin-top:6px;line-height:1.5}
+.src-note{font-size:13px;color:var(--ink-faint);margin-top:18px;line-height:1.7;max-width:62ch}
+
+.prose p{color:var(--ink-dim);font-size:15.5px;line-height:1.8;max-width:68ch;margin:0 0 18px}
+
+footer address{color:var(--ink-dim);font-size:13.5px;max-width:280px;margin-top:14px;font-style:normal;line-height:1.7}
+footer address span{color:var(--ink-faint)}

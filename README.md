@@ -7,7 +7,10 @@ Islamabad local-SEO work for [designsredefined.com](https://designsredefined.com
 | Path | What it is |
 |---|---|
 | `index.html` | The live homepage **with Islamabad localisation applied** — local business + FAQ schema, geo meta, rewritten title/description, a new `#areas` section and NAP in the footer. |
-| `work/al-qanoon-e-stamps/` | Case study for the Al-Qanoon E-Stamps build, with `Article` + `BreadcrumbList` markup. Linked from the homepage work card and both city pages. |
+| `work/*/` | Three case studies (Al-Qanoon E-Stamps, Oakly, Danial Hyatt), each with `Article` + `BreadcrumbList` markup and cross-links to the other two. **Generated — do not edit by hand.** |
+| `tools/case-studies.json` | The words for every case study. Edit here. |
+| `tools/build-case-studies.py` | Renders `work/*/index.html` from that JSON. Run after any edit. |
+| `assets/case-study.css` | Shared layout for the case study pages. |
 | `pricing/` | PKR pricing page targeting "website design cost in Pakistan", with `OfferCatalog` + `FAQPage` markup. **Confirm the numbers before deploying — see below.** |
 | `islamabad-web-design/` | New city landing page targeting "web design Islamabad". |
 | `rawalpindi-web-design/` | New city landing page targeting "web design Rawalpindi". |
@@ -60,6 +63,19 @@ cards, the `OfferCatalog` JSON-LD in `<head>`, and the FAQ answers (both the vis
 The same goes for the payment terms (50/50), the 30-day free-fix window, and the domain
 and hosting estimates. They read as commitments to a client, so they need to be true.
 
+## Editing a case study
+
+The three pages share one template, so they are generated rather than hand-written:
+
+```sh
+# edit tools/case-studies.json, then
+python3 tools/build-case-studies.py
+```
+
+Editing `work/*/index.html` directly will be overwritten the next time that runs. Adding
+a fourth case study means adding a JSON entry, running the script, and pasting the
+sitemap line it prints.
+
 ## About the case study claims
 
 Everything in the case study is drawn from the live Al-Qanoon site or from the build
@@ -69,12 +85,18 @@ and the page says so directly underneath them rather than presenting them as res
 produced. There are no invented conversion lifts, because there is no analytics data to
 support any.
 
+The same rule holds for the other two. Oakly's 4.9 rating and review quotes are its own
+published content, and the Danial Hyatt figures describe the offer the site presents
+(15-second spots, 24-hour entry tier, free storyboard) rather than results. Nothing on
+any of the three pages claims a conversion lift, because there is no analytics to back one.
+
 If you later get real numbers from the client — enquiry volume before and after, ad cost
 per order, search rankings — that section is where they belong, and it is worth asking
 them for. A case study with a real before-and-after outsells one without.
 
-Get the client's sign-off before this goes live. It names them, quotes their pricing and
-describes their lead flow.
+Get each client's sign-off before these go live. They name the client, quote their pricing
+and describe their lead flow. Worth confirming too whether Oakly is a live commercial
+client or a concept build, since the page presents it as client work.
 
 ## Before deploying
 
