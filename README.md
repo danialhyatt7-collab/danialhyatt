@@ -7,6 +7,7 @@ Islamabad local-SEO work for [designsredefined.com](https://designsredefined.com
 | Path | What it is |
 |---|---|
 | `index.html` | The live homepage **with Islamabad localisation applied** — local business + FAQ schema, geo meta, rewritten title/description, a new `#areas` section and NAP in the footer. |
+| `work/al-qanoon-e-stamps/` | Case study for the Al-Qanoon E-Stamps build, with `Article` + `BreadcrumbList` markup. Linked from the homepage work card and both city pages. |
 | `pricing/` | PKR pricing page targeting "website design cost in Pakistan", with `OfferCatalog` + `FAQPage` markup. **Confirm the numbers before deploying — see below.** |
 | `islamabad-web-design/` | New city landing page targeting "web design Islamabad". |
 | `rawalpindi-web-design/` | New city landing page targeting "web design Rawalpindi". |
@@ -58,6 +59,22 @@ cards, the `OfferCatalog` JSON-LD in `<head>`, and the FAQ answers (both the vis
 
 The same goes for the payment terms (50/50), the 30-day free-fix window, and the domain
 and hosting estimates. They read as commitments to a client, so they need to be true.
+
+## About the case study claims
+
+Everything in the case study is drawn from the live Al-Qanoon site or from the build
+itself. The four figures in the "site in service" row (5,000+ e-stamps delivered,
+~30 min turnaround, 24/7, PKR 1,000 flat fee) are **Al-Qanoon's own published claims**,
+and the page says so directly underneath them rather than presenting them as results we
+produced. There are no invented conversion lifts, because there is no analytics data to
+support any.
+
+If you later get real numbers from the client — enquiry volume before and after, ad cost
+per order, search rankings — that section is where they belong, and it is worth asking
+them for. A case study with a real before-and-after outsells one without.
+
+Get the client's sign-off before this goes live. It names them, quotes their pricing and
+describes their lead flow.
 
 ## Before deploying
 
