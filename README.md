@@ -7,6 +7,7 @@ Islamabad local-SEO work for [designsredefined.com](https://designsredefined.com
 | Path | What it is |
 |---|---|
 | `index.html` | The live homepage **with Islamabad localisation applied** — local business + FAQ schema, geo meta, rewritten title/description, a new `#areas` section and NAP in the footer. |
+| `pricing/` | PKR pricing page targeting "website design cost in Pakistan", with `OfferCatalog` + `FAQPage` markup. **Confirm the numbers before deploying — see below.** |
 | `islamabad-web-design/` | New city landing page targeting "web design Islamabad". |
 | `rawalpindi-web-design/` | New city landing page targeting "web design Rawalpindi". |
 | `assets/site.css` | The homepage's stylesheet, extracted verbatim so the city pages match the site exactly. |
@@ -35,6 +36,28 @@ python3 -m http.server 8777
 
 Then open http://127.0.0.1:8777/ — the city pages are at `/islamabad-web-design/`
 and `/rawalpindi-web-design/`.
+
+## The pricing numbers are placeholders
+
+`pricing/` ships with starting prices I set from the Pakistani market, positioned above
+the template crowd because you sell hand-built work:
+
+| Package | From |
+|---|---|
+| Landing page | PKR 45,000 |
+| Business website (5–8 pages) | PKR 120,000 |
+| Online store | PKR 250,000 |
+| Site care | PKR 12,000/month |
+| SEO retainer | PKR 35,000/month |
+| Branding | PKR 60,000 |
+
+**These are my estimates, not your prices.** Edit them before the page goes live — and
+when you do, change them in three places so the markup keeps matching the page: the tier
+cards, the `OfferCatalog` JSON-LD in `<head>`, and the FAQ answers (both the visible
+`<details>` and the `FAQPage` JSON-LD). Mismatched price markup is a manual-action risk.
+
+The same goes for the payment terms (50/50), the 30-day free-fix window, and the domain
+and hosting estimates. They read as commitments to a client, so they need to be true.
 
 ## Before deploying
 
