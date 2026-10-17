@@ -638,6 +638,19 @@ ul, ol { list-style: none; }
 }
 .reel__head { display: flex; flex-direction: column; gap: 8px; margin-bottom: clamp(26px, 4vw, 48px); }
 
+/* Brand cut / Ad cut — the same spot with and without sales furniture */
+.cutswitch { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.cutswitch__btn {
+  appearance: none; cursor: pointer; font: inherit; font-size: .8rem; letter-spacing: .08em;
+  text-transform: uppercase; padding: 9px 18px; border-radius: 999px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--line); color: var(--muted);
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+.cutswitch__btn:hover { color: var(--ink); border-color: rgba(255,255,255,.26); }
+.cutswitch__btn.is-on { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.cutswitch__note { color: var(--muted); font-size: .82rem; margin-left: 6px; max-width: 42ch; }
+@media (max-width: 640px) { .cutswitch__note { margin-left: 0; flex-basis: 100%; } }
+
 .reel__grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(14px, 1.8vw, 24px); }
 
 /* slide-in on scroll */

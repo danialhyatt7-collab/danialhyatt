@@ -160,6 +160,40 @@ document.getElementById("reelBtn")?.addEventListener("click", () =>
   window.__reelStop = () => stages.forEach(stop);
 })();
 
+/* ============================================================
+   Brand cut / Ad cut. Both the hover preview and the lightbox
+   read stage.dataset.video, so swapping that one value is the
+   whole switch. Any source already attached is dropped, or the
+   tile would keep playing the cut the visitor just left.
+   ============================================================ */
+(function cutSwitch() {
+  const box = document.querySelector(".cutswitch");
+  if (!box) return;
+  const btns = [...box.querySelectorAll(".cutswitch__btn")];
+  const stages = [...document.querySelectorAll(".reel__stage[data-video-cta]")];
+  if (!stages.length) { box.remove(); return; }
+
+  stages.forEach(s => { s.dataset.videoBrand = s.dataset.video; });
+
+  function apply(cut) {
+    window.__reelStop?.();
+    stages.forEach(s => {
+      const src = cut === "ad" ? s.dataset.videoCta : s.dataset.videoBrand;
+      if (s.dataset.video === src) return;
+      s.dataset.video = src;
+      const v = s.querySelector(".reel__vid");
+      if (v && v.src) { v.removeAttribute("src"); v.load(); }
+    });
+    btns.forEach(b => {
+      const on = b.dataset.cut === cut;
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
+  }
+
+  btns.forEach(b => b.addEventListener("click", () => apply(b.dataset.cut)));
+})();
+
 /* Reel cards → open each spot in the lightbox */
 document.querySelectorAll(".reel__stage").forEach(card =>
   card.addEventListener("click", () =>
@@ -232,11 +266,11 @@ const ICONS = {
 };
 const PRODUCTS = [
   { id: "spark", name: "Spark", sub: "Your ad, live in 24 hours", price: 600, billed: "Billed one time", tag: "1 spot", icon: ICONS.bolt,
-    feats: ["One 15s vertical ad", "Delivered in 9:16", "Storyboard before production"] },
+    feats: ["One 15s vertical ad", "Brand cut and ad cut, both delivered", "Delivered in 9:16", "Storyboard before production"] },
   { id: "signature", name: "Signature", sub: "Hero film + variations", price: 1500, billed: "Billed one time", tag: "3 spots", icon: ICONS.star, featured: true, badge: "Most booked",
-    feats: ["15s hero ad + 2 variations", "9:16, 1:1 and 16:9, each cut for its frame", "Concept and script written by me", "Storyboard approved first"] },
+    feats: ["15s hero ad + 2 variations", "Brand cut and ad cut of each", "9:16, 1:1 and 16:9, each cut for its frame", "Concept and script written by me", "Storyboard approved first"] },
   { id: "studio", name: "Studio", sub: "Always-on content engine", price: 2800, unit: "/mo", billed: "Billed monthly", tag: "4 / mo", icon: ICONS.loop,
-    feats: ["4 finished spots / month", "Every format, cut for its frame", "Weekly review call", "Storyboard for every spot"] },
+    feats: ["4 finished spots / month", "Brand cut and ad cut of each", "Every format, cut for its frame", "Weekly review call", "Storyboard for every spot"] },
 ];
 
 (function shop() {
