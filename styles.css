@@ -638,6 +638,8 @@ ul, ol { list-style: none; }
 }
 .reel__head { display: flex; flex-direction: column; gap: 8px; margin-bottom: clamp(26px, 4vw, 48px); }
 
+.reel__note { color: var(--muted); font-size: .82rem; margin-top: clamp(18px, 2.4vw, 28px); }
+
 /* Brand cut / Ad cut — the same spot with and without sales furniture */
 .cutswitch { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .cutswitch__btn {
