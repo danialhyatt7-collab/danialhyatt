@@ -640,16 +640,6 @@ ul, ol { list-style: none; }
 
 .reel__note { color: var(--muted); font-size: .82rem; margin-top: clamp(18px, 2.4vw, 28px); }
 
-/* Founding rate. Set FOUNDING_LEFT to 0 in script.js to retire it. */
-.founding {
-  margin: 0 0 clamp(20px, 2.6vw, 30px); padding: 14px 20px;
-  border: 1px solid rgba(255,255,255,.18); border-radius: 12px;
-  background: rgba(255,255,255,.04); color: var(--ink);
-  font-size: .92rem; line-height: 1.55; max-width: 72ch;
-}
-.founding b { font-weight: 600; }
-.founding span { color: var(--muted); }
-
 /* Brand cut / Ad cut — the same spot with and without sales furniture */
 .cutswitch { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .cutswitch__btn {
