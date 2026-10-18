@@ -264,6 +264,23 @@ const ICONS = {
   star: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z" fill="currentColor"/></svg>',
   loop: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 8a4 4 0 1 0 0 8c2.2 0 3.3-1.7 5-4s2.8-4 5-4a4 4 0 1 1 0 8c-2.2 0-3.3-1.7-5-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
 };
+/* Founding rate: Spark at $300 for the first three clients, in return
+   for a testimonial and permission to name them. Decrement as they book;
+   at 0 the line disappears and the offer is over. */
+const FOUNDING_LEFT = 3;
+const FOUNDING_PRICE = 300;
+
+(function foundingNote() {
+  const el = document.getElementById("founding");
+  if (!el || FOUNDING_LEFT < 1) return;
+  const n = ["", "one", "two", "three"][FOUNDING_LEFT] || FOUNDING_LEFT;
+  el.innerHTML = `<b>Founding rate.</b> The first three clients get Spark at
+    $${FOUNDING_PRICE} instead of $600, in exchange for a testimonial and
+    permission to name them here. <span>${FOUNDING_LEFT === 1
+      ? "One place left." : `${n[0].toUpperCase()}${n.slice(1)} places left.`}</span>`;
+  el.hidden = false;
+})();
+
 const PRODUCTS = [
   { id: "spark", name: "Spark", sub: "Your ad, live in 24 hours", price: 600, billed: "Billed one time", tag: "1 spot", icon: ICONS.bolt,
     feats: ["One 15s vertical ad", "Brand cut and ad cut, both delivered", "Delivered in 9:16", "Storyboard before production"] },
