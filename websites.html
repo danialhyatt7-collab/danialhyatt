@@ -69,40 +69,16 @@
     <section class="webhero" id="websites">
       <div class="webhero__inner">
         <p class="section__label">Designs Redefined</p>
-        <h1 class="webhero__title"><span>Websites</span></h1>
+        <h1 class="webhero__title">Websites</h1>
         <p class="webhero__lead">
           The other half of what I do. Hand-coded sites, no page builder, no template
           licence. Each one below ships as plain HTML, CSS and JavaScript, so it loads
           fast and stays cheap to host.
         </p>
         <dl class="webhero__meta">
-          <div class="gauge" data-to="5" data-max="10" data-pad="2">
-            <svg class="gauge__dial" viewBox="0 0 120 70" aria-hidden="true" focusable="false">
-              <path class="gauge__track" d="M10 60 A50 50 0 0 1 110 60" />
-              <path class="gauge__fill"  d="M10 60 A50 50 0 0 1 110 60" />
-              <line class="gauge__needle" x1="60" y1="60" x2="60" y2="19" />
-              <circle class="gauge__hub" cx="60" cy="60" r="3.4" />
-            </svg>
-            <dt>05</dt><dd>Builds shipped</dd>
-          </div>
-          <div class="gauge" data-to="0" data-max="10" data-pad="1">
-            <svg class="gauge__dial" viewBox="0 0 120 70" aria-hidden="true" focusable="false">
-              <path class="gauge__track" d="M10 60 A50 50 0 0 1 110 60" />
-              <path class="gauge__fill"  d="M10 60 A50 50 0 0 1 110 60" />
-              <line class="gauge__needle" x1="60" y1="60" x2="60" y2="19" />
-              <circle class="gauge__hub" cx="60" cy="60" r="3.4" />
-            </svg>
-            <dt>0</dt><dd>Page builders used</dd>
-          </div>
-          <div class="gauge" data-to="100" data-max="100" data-pad="1">
-            <svg class="gauge__dial" viewBox="0 0 120 70" aria-hidden="true" focusable="false">
-              <path class="gauge__track" d="M10 60 A50 50 0 0 1 110 60" />
-              <path class="gauge__fill"  d="M10 60 A50 50 0 0 1 110 60" />
-              <line class="gauge__needle" x1="60" y1="60" x2="60" y2="19" />
-              <circle class="gauge__hub" cx="60" cy="60" r="3.4" />
-            </svg>
-            <dt>100<i>%</i></dt><dd>Hand&#8209;written code</dd>
-          </div>
+          <div><dt data-to="5" data-pad="2">05</dt><dd>Builds shipped</dd></div>
+          <div><dt data-to="0" data-pad="1">0</dt><dd>Page builders used</dd></div>
+          <div><dt data-to="100" data-pad="1">100<i>%</i></dt><dd>Hand&#8209;written code</dd></div>
         </dl>
       </div>
     </section>
@@ -282,46 +258,104 @@
   <script src="script.js"></script>
 
   <!--
-    Reveal, and the speedometer sweep.
+    Hero line reveal, then the rest of the page.
 
-    Two details that were wrong before and are worth keeping right:
+    The hero's text is split into its real visual lines and each one rises
+    through its own window, one after the next. Lines are found by walking
+    the text with a Range and watching where the client rectangle's top
+    changes, so wrapping is whatever the browser actually did rather than a
+    guess, and it survives any font or width.
 
-    The whole thing waits on document.fonts.ready. The masthead is set in a
-    display face with font-display:block, so before the font arrives the
-    text is not painted at all. Revealing on DOM-ready meant the entrance
-    animation played against invisible glyphs and the type simply appeared,
-    already finished.
+    Two things learned the hard way and kept here:
 
-    Elements are observed a frame after the hidden state is applied. Adding
-    the start and end state in the same frame gives the browser nothing to
-    animate between, so anything already on screen jumped straight to its
-    final state with no transition at all.
+    It all waits on document.fonts.ready. The masthead is font-display:block,
+    so before the face lands nothing is painted and an entrance animation
+    plays against invisible glyphs. Splitting early would also measure the
+    wrong lines.
+
+    Observation starts a frame after the hidden state is applied. Setting
+    the start and end state in the same frame leaves the browser nothing to
+    animate between, and anything already on screen simply jumps.
   -->
   <script>
     (function () {
       var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var targets = [];
+      var heroEls = [].slice.call(document.querySelectorAll(
+        '.webhero__inner .section__label, .webhero__title, .webhero__lead'));
 
-      [['.webhero__inner > *', 90],
+      /* Wrap each visual line of an element in .ln > .ln__i.
+         Returns the number of lines produced. */
+      function splitLines(el) {
+        if (el.dataset.split === '1') return el.querySelectorAll('.ln').length;
+        var text = el.textContent.replace(/\s+/g, ' ').trim();
+        if (!text) return 0;
+        var probe = document.createElement('span');
+        probe.textContent = text;
+        el.textContent = '';
+        el.appendChild(probe);
+
+        var node = probe.firstChild, range = document.createRange();
+        var lines = [], last = null, startAt = 0;
+        for (var i = 1; i <= text.length; i++) {
+          range.setStart(node, i - 1);
+          range.setEnd(node, i);
+          var top = range.getBoundingClientRect().top;
+          if (last === null) last = top;
+          else if (Math.abs(top - last) > 1) {       // the line broke here
+            lines.push(text.slice(startAt, i - 1).trim());
+            startAt = i - 1;
+            last = top;
+          }
+        }
+        lines.push(text.slice(startAt).trim());
+
+        el.textContent = '';
+        lines.forEach(function (line, n) {
+          var outer = document.createElement('span');
+          outer.className = 'ln';
+          var inner = document.createElement('span');
+          inner.className = 'ln__i';
+          inner.textContent = line;
+          inner.style.setProperty('--ld', (n * 95) + 'ms');
+          outer.appendChild(inner);
+          el.appendChild(outer);
+        });
+        el.dataset.split = '1';
+        return lines.length;
+      }
+
+      // offset each element's lines so the hero reads top to bottom as one run
+      function layoutHero() {
+        var n = 0;
+        heroEls.forEach(function (el) {
+          el.dataset.split = '';
+          var count = splitLines(el);
+          [].slice.call(el.querySelectorAll('.ln__i')).forEach(function (inner, i) {
+            inner.style.setProperty('--ld', ((n + i) * 95) + 'ms');
+          });
+          n += count;
+        });
+      }
+
+      var targets = [];
+      [['.webhero__inner > *', 0],
        ['.webcard__shot', 0],
        ['.webcard__body > *', 55],
        ['.cta > *', 70]].forEach(function (pair) {
         var step = pair[1];
         [].slice.call(document.querySelectorAll(pair[0])).forEach(function (el) {
           var i = [].indexOf.call(el.parentNode.children, el);
+          // hero lines carry their own stagger, so the block itself just fades
+          if (heroEls.indexOf(el) === -1) el.style.setProperty('--d', (i * step) + 'ms');
           el.classList.add('anim');
-          el.style.setProperty('--d', (i * step) + 'ms');
           targets.push(el);
         });
       });
-      [].slice.call(document.querySelectorAll('.webcard__facts, .gauge'))
+      [].slice.call(document.querySelectorAll('.webcard__facts, .webhero__meta div'))
         .forEach(function (el) { targets.push(el); });
 
       if (still) {
         targets.forEach(function (t) { t.classList.add('is-in'); });
-        [].slice.call(document.querySelectorAll('.gauge')).forEach(function (g) {
-          setDial(g, +g.dataset.to / +g.dataset.max);
-        });
         return;
       }
 
@@ -332,12 +366,13 @@
           if (!e.isIntersecting) return;
           e.target.classList.add('is-in');
           io.unobserve(e.target);
-          if (e.target.classList.contains('gauge')) sweep(e.target);
+          var dt = e.target.matches('.webhero__meta div') && e.target.querySelector('dt');
+          if (dt) countUp(dt);
         });
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
 
       function arm() {
-        // one more frame so the start state is actually painted first
+        layoutHero();
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
             targets.forEach(function (t) { io.observe(t); });
@@ -345,52 +380,35 @@
         });
       }
 
-      // fonts first: the display face is font-display:block, so until it
-      // lands there is nothing on screen for the entrance to animate
-      var waited = false;
-      function go() { if (!waited) { waited = true; arm(); } }
+      var started = false;
+      function go() { if (!started) { started = true; arm(); } }
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(go);
-        setTimeout(go, 1200); // never hold the page hostage to a slow font
+        setTimeout(go, 1200);               // never wait forever on a font
       } else { go(); }
 
-      function setDial(g, v) {
-        g.style.setProperty('--v', v.toFixed(4));
-        var dt = g.querySelector('dt');
-        var node = dt && dt.firstChild;
-        if (!node || node.nodeType !== 3) return;
-        var shown = Math.round(+g.dataset.max * v);
-        node.nodeValue = String(shown).length < +g.dataset.pad
-          ? new Array(+g.dataset.pad - String(shown).length + 1).join('0') + shown
-          : String(shown);
-      }
+      // re-measure on width change; the hero is already revealed by then
+      var rt;
+      addEventListener('resize', function () {
+        clearTimeout(rt);
+        rt = setTimeout(function () {
+          if (!started) return;
+          layoutHero();
+          heroEls.forEach(function (el) { el.classList.add('is-in'); });
+        }, 180);
+      }, { passive: true });
 
-      /* Ignition sweep: hard to full, a beat at the stop, then settle back
-         to the real reading. Same shape as a car's needle on start-up. */
-      function sweep(g) {
-        var target = +g.dataset.to / +g.dataset.max;
-        var UP = 620, HOLD = 140, DOWN = 760;
-        var t0 = performance.now();
+      function countUp(dt) {
+        var node = dt.firstChild;
+        if (!node || node.nodeType !== 3) return;
+        var to = +dt.dataset.to, pad = +dt.dataset.pad || 1;
+        if (!to) return;
+        var t0 = performance.now(), dur = 850;
         requestAnimationFrame(function step(now) {
-          var t = now - t0, v;
-          if (t < UP) {
-            var p = t / UP;
-            v = 1 - Math.pow(1 - p, 3);            // quick to the stop
-          } else if (t < UP + HOLD) {
-            v = 1;                                  // sits pinned for a beat
-          } else if (t < UP + HOLD + DOWN) {
-            var q = (t - UP - HOLD) / DOWN;
-            var e = 1 - Math.pow(1 - q, 4);
-            // a little wobble as it falls back, damped to nothing
-            var wob = Math.sin(q * Math.PI * 2.2) * 0.045 * (1 - q) * (1 - q);
-            v = 1 + (target - 1) * e + wob;
-            if (v < 0) v = 0;
-          } else {
-            setDial(g, target);
-            return;
-          }
-          setDial(g, v);
-          requestAnimationFrame(step);
+          var p = Math.min(1, (now - t0) / dur);
+          var v = Math.round(to * (1 - Math.pow(1 - p, 3)));
+          node.nodeValue = String(v).padStart ? String(v).padStart(pad, '0') : String(v);
+          if (p < 1) requestAnimationFrame(step);
         });
       }
     })();
