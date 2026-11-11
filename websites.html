@@ -75,11 +75,11 @@
           licence. Each one below ships as plain HTML, CSS and JavaScript, so it loads
           fast and stays cheap to host.
         </p>
-        <div class="webhero__meta">
-          <span>Five recent builds</span>
-          <span>Source on GitHub</span>
-          <span>Static, no CMS tax</span>
-        </div>
+        <dl class="webhero__meta">
+          <div><dt>05</dt><dd>Builds shipped</dd></div>
+          <div><dt>0</dt><dd>Page builders used</dd></div>
+          <div><dt>100<i>%</i></dt><dd>Hand&#8209;written code</dd></div>
+        </dl>
       </div>
     </section>
 
@@ -256,6 +256,74 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <!--
+    Scroll-driven pan on the screenshots.
+
+    Each shot is a short window over a very tall capture. As a card travels
+    through the viewport the image is pulled upward by exactly the amount it
+    overflows, so a visitor reads the whole page without clicking anything.
+
+    Work is batched into one rAF and skipped when the scroll position has not
+    moved, which keeps it smooth during iOS momentum scrolling, where scroll
+    events are unreliable. Only cards near the viewport are tracked, and the
+    loop stops entirely once none are.
+  -->
+  <script>
+    (function () {
+      var shots = [].slice.call(document.querySelectorAll('.webcard__shot'));
+      if (!shots.length) return;
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var live = [];
+      var raf = 0;
+      var lastY = -1;
+
+      function paint() {
+        var vh = window.innerHeight;
+        for (var i = 0; i < live.length; i++) {
+          var shot = live[i];
+          var img = shot.firstElementChild;
+          if (!img) continue;
+          var travel = img.offsetHeight - shot.clientHeight;
+          if (travel <= 0) { img.style.setProperty('--sy', '0px'); continue; }
+          var r = shot.getBoundingClientRect();
+          // 0 as the window enters from the bottom, 1 as it leaves the top
+          var p = (vh - r.top) / (vh + r.height);
+          p = p < 0 ? 0 : (p > 1 ? 1 : p);
+          img.style.setProperty('--sy', (-travel * p).toFixed(1) + 'px');
+        }
+      }
+
+      function loop() {
+        var y = window.pageYOffset;
+        if (y !== lastY) { lastY = y; paint(); }
+        raf = live.length ? requestAnimationFrame(loop) : 0;
+      }
+
+      function start() { if (!raf && live.length) { lastY = -1; loop(); } }
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          var at = live.indexOf(e.target);
+          if (e.isIntersecting && at === -1) live.push(e.target);
+          else if (!e.isIntersecting && at > -1) live.splice(at, 1);
+        });
+        start();
+      }, { rootMargin: '150px 0px' });
+
+      shots.forEach(function (s) { io.observe(s); });
+
+      // the image's own height decides the travel, so recompute once it is known
+      shots.forEach(function (s) {
+        var img = s.firstElementChild;
+        if (img && !img.complete) img.addEventListener('load', function () { lastY = -1; paint(); });
+      });
+
+      window.addEventListener('resize', function () { lastY = -1; paint(); }, { passive: true });
+      start();
+    })();
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
   <script>

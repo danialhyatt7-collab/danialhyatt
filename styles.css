@@ -1060,15 +1060,28 @@ ul, ol { list-style: none; }
   max-width: 48ch;
 }
 
+/* spec row, echoing the 63% stat block on the home page */
 .webhero__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 26px;
-  margin-top: clamp(26px, 4vw, 40px);
-  padding-top: 22px;
+  gap: 26px clamp(30px, 5vw, 64px);
+  margin: clamp(30px, 4.5vw, 46px) 0 0;
+  padding-top: 26px;
   border-top: 1px solid var(--line);
-  font-size: .82rem;
-  letter-spacing: .08em;
+}
+.webhero__meta div { display: block; }
+.webhero__meta dt {
+  font-family: 'Syne Extra', 'Syne', sans-serif;
+  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  line-height: .95;
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+.webhero__meta dt i { font-style: normal; font-size: .46em; color: var(--muted); }
+.webhero__meta dd {
+  margin: 8px 0 0;
+  font-size: .72rem;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -1109,8 +1122,16 @@ ul, ol { list-style: none; }
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
   object-position: top center;
+  /* --sy is written by the scroll handler in websites.html. The image is
+     taller than its window, so moving it up reveals the rest of the page
+     as the card travels through the viewport. */
+  transform: translate3d(0, var(--sy, 0px), 0);
+  will-change: transform;
+}
+/* Without JS, or with reduced motion, the shot simply sits at the top. */
+@media (prefers-reduced-motion: reduce) {
+  .webcard__shot img { transform: none; }
 }
 
 .webcard__num {
@@ -1191,4 +1212,36 @@ ul, ol { list-style: none; }
 @media (prefers-reduced-motion: reduce) {
   .webcard__link a,
   .webcard__link a span { transition: none; }
+}
+
+
+/* ---- footer hierarchy on small screens -------------------------------
+   Centring four items at the same size gave the footer no order at all.
+   Stacked, the address people actually use leads, the section link sits
+   under it, and the small print drops to the bottom. */
+@media (max-width: 640px) {
+  .foot__base {
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+    padding-top: 30px;
+    padding-bottom: 34px;
+    text-align: center;
+  }
+  .foot__base a[href^="mailto:"] {
+    order: -2;
+    font-size: 1.04rem;
+    letter-spacing: -.01em;
+    text-transform: none;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 5px;
+  }
+  .foot__base a[href="websites.html"],
+  .foot__base a[href="index.html"] {
+    order: -1;
+    color: var(--muted);
+  }
+  .foot__base span:nth-of-type(2) { order: 1; max-width: 30ch; line-height: 1.7; }
+  .foot__base span:nth-of-type(1) { order: 2; opacity: .62; font-size: .66rem; }
 }
