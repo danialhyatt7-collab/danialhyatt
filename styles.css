@@ -1061,7 +1061,13 @@ ul, ol { list-style: none; }
   margin: 0 auto;
   padding: clamp(130px, 20vh, 220px) var(--hero-gutter) clamp(50px, 8vh, 90px);
 }
-.webhero__inner { max-width: 54ch; }
+/* The masthead is far wider than a comfortable measure for prose, and it
+   used to simply spill past this box. Now that each line sits in a window
+   that clips, spilling means the word gets cut, so the container no longer
+   constrains anything: the prose carries its own measure instead. */
+.webhero__inner { max-width: none; }
+.webhero__lead { max-width: 48ch; }
+.webhero__meta { max-width: 54ch; }
 
 .webhero__title {
   font-family: 'Syne Extra', 'Syne', sans-serif;
