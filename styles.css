@@ -1026,3 +1026,169 @@ ul, ol { list-style: none; }
   .nav__logo-svg { clip-path: none !important; opacity: 1 !important; }
   .logo-draw { fill-opacity: 1 !important; }
 }
+
+/* ============================================================
+   Websites page (websites.html) — Designs Redefined
+   Reuses the site's tokens, type scale and section furniture.
+   Everything here is namespaced .webhero / .webwork / .webcard
+   so index.html is untouched.
+   ============================================================ */
+
+.webhero {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(130px, 20vh, 220px) var(--hero-gutter) clamp(50px, 8vh, 90px);
+}
+.webhero__inner { max-width: 54ch; }
+
+.webhero__title {
+  font-family: 'Syne Extra', 'Syne', sans-serif;
+  /* a step below the home hero so that page keeps the loudest type.
+     11.5vw, not 13: "Websites" is eight characters in an expanded face
+     and Syne Extra runs ~7.3px of width per 1px of font-size, so 13vw
+     overran the 22px gutters on a 390px screen. */
+  font-size: clamp(2.2rem, 11.5vw, 8.5rem);
+  line-height: .88;
+  letter-spacing: -.03em;
+  margin: 18px 0 0;
+}
+
+.webhero__lead {
+  color: var(--muted);
+  margin-top: clamp(22px, 3vw, 32px);
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  max-width: 48ch;
+}
+
+.webhero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin-top: clamp(26px, 4vw, 40px);
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: .82rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---- work ---- */
+.webwork {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--hero-gutter) clamp(60px, 10vh, 120px);
+  display: grid;
+  gap: clamp(60px, 11vh, 140px);
+}
+
+.webcard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+  /* grid children default to min-width:auto and refuse to shrink below
+     their content's minimum, which pushed the card past the gutters on a
+     320px screen. min-width:0 lets the column actually track 1fr. */
+  min-width: 0;
+}
+.webcard > * { min-width: 0; }
+/* alternate which side the screenshot sits on */
+.webcard--flip .webcard__shot { order: 2; }
+
+.webcard__shot {
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  /* the screenshots are tall; crop to a window rather than let one card
+     run three screens long */
+  max-height: 560px;
+}
+.webcard__shot img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.webcard__num {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: .78rem;
+  letter-spacing: .14em;
+  color: var(--muted);
+}
+
+.webcard__title {
+  font-family: 'Syne Extra', 'Syne', sans-serif;
+  /* "Al-Qanoon" uses a non-breaking hyphen so the name never splits across
+     lines. That makes it one unbreakable token, so the floor has to be low
+     enough for it to fit a 320px screen inside 22px gutters. */
+  font-size: clamp(1.7rem, 4.6vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -.02em;
+  margin: 10px 0 0;
+}
+.webcard__title sup { font-size: .32em; top: -1.3em; }
+
+.webcard__kind {
+  margin-top: 12px;
+  font-size: .82rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.webcard__copy {
+  color: var(--muted);
+  margin-top: 18px;
+  max-width: 44ch;
+}
+
+.webcard__facts {
+  list-style: none;
+  margin: 22px 0 0;
+  display: grid;
+  gap: 9px;
+  font-size: .94rem;
+}
+.webcard__facts li {
+  padding-left: 18px;
+  position: relative;
+  color: var(--ink);
+}
+.webcard__facts li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .62em;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.webcard__link { margin-top: 26px; font-size: .95rem; }
+.webcard__link a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 3px;
+  transition: border-color .3s var(--ease), color .3s var(--ease);
+}
+.webcard__link a:hover { border-color: var(--orange); color: var(--orange); }
+.webcard__link a span { display: inline-block; transition: transform .3s var(--ease); }
+.webcard__link a:hover span { transform: translateX(4px); }
+
+/* a repo nobody else can open gets stated, not linked to a 404 */
+.webcard__link--off { color: var(--muted); font-size: .88rem; font-style: italic; }
+
+@media (max-width: 860px) {
+  .webcard { grid-template-columns: 1fr; gap: 26px; }
+  .webcard--flip .webcard__shot { order: 0; }
+  .webcard__shot { max-height: 420px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .webcard__link a,
+  .webcard__link a span { transition: none; }
+}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Websites — Designs Redefined</title>
+  <meta name="description" content="Designs Redefined builds fast, hand-coded websites for service businesses and product brands. Three recent builds, with the source for each on GitHub." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Websites — Designs Redefined" />
+  <meta property="og:description" content="Hand-coded websites for service businesses and product brands." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://danialhyatt.com/websites.html" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#000000" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== Top Nav ===== -->
+  <header class="nav" id="nav">
+    <div class="nav__bar">
+      <a href="index.html#home" class="nav__logo" aria-label="DanialH home">
+        <span class="nav__logo-lottie js-logo-lottie" id="logoLottie" aria-hidden="true"></span>
+      </a>
+      <div class="nav__search">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" placeholder="Search work, clients, formats…" aria-label="Search" />
+      </div>
+      <div class="nav__actions"></div>
+      <button class="nav__menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">
+        <span class="nav__menu-icon"><span></span><span></span></span>
+        <span class="nav__menu-label">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="menu" id="menuOverlay" aria-label="Primary" aria-hidden="true">
+    <ol class="menu__list">
+      <li><a href="index.html#home" data-num="01">Home</a></li>
+      <li><a href="index.html#reel" data-num="02">Reel</a></li>
+      <li><a href="index.html#shop" data-num="03">Shop</a></li>
+      <li><a href="websites.html" data-num="04" aria-current="page">Websites</a></li>
+      <li><a href="mailto:hello@danialhyatt.com" data-num="05">Contact</a></li>
+    </ol>
+    <div class="menu__foot">
+      <a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>
+      <div class="menu__social">
+        <a href="https://www.instagram.com/daniiaallllllllll/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
+  </nav>
+
+  <aside class="social" aria-label="Social links">
+    <a href="https://www.instagram.com/daniiaallllllllll/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+    <a href="mailto:hello@danialhyatt.com" class="social__sub">Hire me</a>
+  </aside>
+
+  <main>
+
+    <!-- ===== Masthead ===== -->
+    <section class="webhero" id="websites">
+      <div class="webhero__inner">
+        <p class="section__label">Designs Redefined</p>
+        <h1 class="webhero__title">Websites</h1>
+        <p class="webhero__lead">
+          The other half of what I do. Hand-coded sites, no page builder, no template
+          licence. Each one below ships as plain HTML, CSS and JavaScript, so it loads
+          fast and stays cheap to host.
+        </p>
+        <div class="webhero__meta">
+          <span>Three recent builds</span>
+          <span>Source on GitHub</span>
+          <span>Static, no CMS tax</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Work ===== -->
+    <section class="webwork" aria-label="Selected websites">
+
+      <!-- 01 -->
+      <article class="webcard">
+        <div class="webcard__shot">
+          <img src="assets/img/web-alqanoon.webp" width="880" height="1815" loading="lazy" decoding="async"
+               alt="Al-Qanoon website: a three-step e-stamping flow, a flat-fee panel and an order builder." />
+        </div>
+        <div class="webcard__body">
+          <p class="webcard__num">01</p>
+          <h2 class="webcard__title">Al&#8209;Qanoon</h2>
+          <p class="webcard__kind">E&#8209;stamp papers &middot; service site</p>
+          <p class="webcard__copy">
+            Stamp paper ordered without the queue or the portal. The page explains the
+            whole service in three steps, puts one flat fee in front of you instead of a
+            quote form, and ends in an order builder rather than a contact box.
+          </p>
+          <ul class="webcard__facts">
+            <li>Three-step explainer above the fold</li>
+            <li>Flat-fee pricing panel, no quote form</li>
+            <li>Order builder as the closing section</li>
+          </ul>
+          <p class="webcard__link webcard__link--off">
+            Source is in a private repository
+          </p>
+        </div>
+      </article>
+
+      <!-- 02 -->
+      <article class="webcard webcard--flip">
+        <div class="webcard__shot">
+          <img src="assets/img/web-oakly.webp" width="880" height="1815" loading="lazy" decoding="async"
+               alt="Oakly website: a warm hero reading Built once. Loved for years., then a chair collection grid." />
+        </div>
+        <div class="webcard__body">
+          <p class="webcard__num">02</p>
+          <h2 class="webcard__title">Oakly<sup>&reg;</sup></h2>
+          <p class="webcard__kind">Handmade furniture &middot; storefront</p>
+          <p class="webcard__copy">
+            Solid wood and hand-cut joinery, sold on longevity rather than price. The
+            argument runs the length of the page and lands on one line: most furniture is
+            built to be replaced, this is built to be passed down.
+          </p>
+          <ul class="webcard__facts">
+            <li>Warm, product-led art direction</li>
+            <li>Collection grid with per-piece detail</li>
+            <li>One idea carried from hero to footer</li>
+          </ul>
+          <p class="webcard__link">
+            <a href="https://github.com/danialhyatt7-collab/O-kly" target="_blank" rel="noopener noreferrer">
+              Source on GitHub <span aria-hidden="true">&rarr;</span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <!-- 03 -->
+      <article class="webcard">
+        <div class="webcard__shot">
+          <img src="assets/img/web-danialhyatt.webp" width="880" height="1815" loading="lazy" decoding="async"
+               alt="Danial Hyatt website: a dark hero over a product film, a statistic block and a grid of spots." />
+        </div>
+        <div class="webcard__body">
+          <p class="webcard__num">03</p>
+          <h2 class="webcard__title">Danial&nbsp;Hyatt</h2>
+          <p class="webcard__kind">Product motion &middot; portfolio</p>
+          <p class="webcard__copy">
+            This site. Full-bleed film behind the masthead, a reel that plays on hover
+            without loading a megabyte before you ask, and a cart that quotes a monthly
+            retainer. Built to the same rules as the two above.
+          </p>
+          <ul class="webcard__facts">
+            <li>Video previews that load only on intent</li>
+            <li>Respects reduced-motion throughout</li>
+            <li>No framework, no build step</li>
+          </ul>
+          <p class="webcard__link">
+            <a href="https://github.com/danialhyatt7-collab/danialhyatt" target="_blank" rel="noopener noreferrer">
+              Source on GitHub <span aria-hidden="true">&rarr;</span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta" aria-label="Start a project">
+      <p class="section__label">Next</p>
+      <h2 class="section__title">Need&nbsp;one&nbsp;built?</h2>
+      <p class="cta__lead">
+        Tell me what the site has to do and who it is for. I will come back with a page
+        plan before any money changes hands.
+      </p>
+      <a href="mailto:hello@danialhyatt.com?subject=Website%20enquiry" class="cta__btn cta__btn--solid">Start a website</a>
+      <a href="index.html#reel" class="cta__btn">See the motion work</a>
+    </section>
+
+  </main>
+
+  <footer class="foot" aria-label="Footer">
+    <div class="foot__social">
+      <a class="foot__social-card" href="https://www.instagram.com/daniiaallllllllll/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+        <span>Instagram</span><b class="foot__arrow">&rarr;</b>
+      </a>
+    </div>
+
+    <div class="foot__base">
+      <span>&copy; 2026 Danial Hyatt</span>
+      <span>Websites by Designs Redefined &middot; Islamabad, Pakistan</span>
+      <a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+  <script>
+    (function () {
+      if (!window.lottie) return;
+      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.querySelectorAll(".js-logo-lottie").forEach(function (box) {
+        var anim = lottie.loadAnimation({
+          container: box, renderer: "svg", loop: true, autoplay: !reduce,
+          path: "assets/lottie/play-pause.json"
+        });
+        if (reduce) anim.goToAndStop(62, true);
+        var link = box.closest(".nav__logo");
+        link && link.addEventListener("mouseenter", function () { anim.setSpeed(2); });
+        link && link.addEventListener("mouseleave", function () { anim.setSpeed(1); });
+      });
+    })();
+  </script>
+</body>
+</html>
