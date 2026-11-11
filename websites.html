@@ -69,7 +69,7 @@
     <section class="webhero" id="websites">
       <div class="webhero__inner">
         <p class="section__label">Designs Redefined</p>
-        <h1 class="webhero__title">Websites</h1>
+        <h1 class="webhero__title"><span>Websites</span></h1>
         <p class="webhero__lead">
           The other half of what I do. Hand-coded sites, no page builder, no template
           licence. Each one below ships as plain HTML, CSS and JavaScript, so it loads
@@ -133,8 +133,8 @@
             <li>One idea carried from hero to footer</li>
           </ul>
           <p class="webcard__link">
-            <a href="https://danialhyatt7-collab.github.io/O-kly/" target="_blank" rel="noopener noreferrer">
-              Visit site <span aria-hidden="true">&rarr;</span>
+            <a href="https://danialhyatt7-collab.github.io/O-kly/" target="_blank" rel="noopener noreferrer" aria-label="See the Oakly site live">
+              See it live <span aria-hidden="true">&rarr;</span>
             </a>
           </p>
         </div>
@@ -161,8 +161,8 @@
             <li>Request a quote as the single main action</li>
           </ul>
           <p class="webcard__link">
-            <a href="https://danialhyatt7-collab.github.io/NTF/" target="_blank" rel="noopener noreferrer">
-              Visit site <span aria-hidden="true">&rarr;</span>
+            <a href="https://danialhyatt7-collab.github.io/NTF/" target="_blank" rel="noopener noreferrer" aria-label="See the NTF International site live">
+              See it live <span aria-hidden="true">&rarr;</span>
             </a>
           </p>
         </div>
@@ -189,8 +189,8 @@
             <li>Plain language over legal register throughout</li>
           </ul>
           <p class="webcard__link">
-            <a href="https://danialhyatt7-collab.github.io/legal-nexus-advocates/" target="_blank" rel="noopener noreferrer">
-              Visit site <span aria-hidden="true">&rarr;</span>
+            <a href="https://danialhyatt7-collab.github.io/legal-nexus-advocates/" target="_blank" rel="noopener noreferrer" aria-label="See the Legal Nexus Advocates site live">
+              See it live <span aria-hidden="true">&rarr;</span>
             </a>
           </p>
         </div>
@@ -217,8 +217,8 @@
             <li>No framework, no build step</li>
           </ul>
           <p class="webcard__link">
-            <a href="index.html">
-              Visit site <span aria-hidden="true">&rarr;</span>
+            <a href="index.html" aria-label="See the Danial Hyatt site live">
+              See it live <span aria-hidden="true">&rarr;</span>
             </a>
           </p>
         </div>
@@ -256,6 +256,80 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <!--
+    Reveal and count-up.
+
+    One IntersectionObserver arms everything. The hidden starting state lives
+    behind .js-anim, which is only added here, so a visitor without
+    JavaScript sees the finished page instead of an empty one. Elements are
+    unobserved once revealed, so nothing keeps running behind the scroll.
+  -->
+  <script>
+    (function () {
+      var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var targets = [];
+
+      // selector, stagger between siblings of the same parent, in ms
+      [['.webhero__inner > *', 90],
+       ['.webcard__shot', 0],
+       ['.webcard__body > *', 55],
+       ['.cta > *', 70]].forEach(function (pair) {
+        var step = pair[1];
+        [].slice.call(document.querySelectorAll(pair[0])).forEach(function (el) {
+          // index within its own parent, so each card restarts the stagger
+          var i = [].indexOf.call(el.parentNode.children, el);
+          el.classList.add('anim');
+          el.style.setProperty('--d', (i * step) + 'ms');
+          targets.push(el);
+        });
+      });
+
+      [].slice.call(document.querySelectorAll('.webcard__facts, .webhero__meta div'))
+        .forEach(function (el) { targets.push(el); });
+
+      if (still) {
+        targets.forEach(function (t) { t.classList.add('is-in'); });
+        return;
+      }
+
+      document.documentElement.classList.add('js-anim');
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+          var dt = e.target.querySelector && e.target.querySelector('.webhero__meta dt, dt');
+          if (dt && e.target.matches('.webhero__meta div')) countUp(dt);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+      targets.forEach(function (t) { io.observe(t); });
+
+      /* Roll each stat to its value once, easing out. The first text node is
+         the numeral; any trailing unit sits in its own element and is left
+         alone. "05" keeps its width so the row does not jiggle as it counts. */
+      function countUp(dt) {
+        var node = dt.firstChild;
+        if (!node || node.nodeType !== 3) return;
+        var text = node.nodeValue.trim();
+        var to = parseInt(text, 10);
+        if (isNaN(to) || to === 0) return;
+        var pad = text.length;
+        var t0 = performance.now(), dur = 900;
+        requestAnimationFrame(function step(now) {
+          var p = Math.min(1, (now - t0) / dur);
+          var v = Math.round(to * (1 - Math.pow(1 - p, 3)));
+          node.nodeValue = String(v).length < pad
+            ? new Array(pad - String(v).length + 1).join('0') + v
+            : String(v);
+          if (p < 1) requestAnimationFrame(step);
+          else node.nodeValue = text;
+        });
+      }
+    })();
+  </script>
 
   <!--
     Scroll-driven pan on the screenshots.

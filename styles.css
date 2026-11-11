@@ -1245,3 +1245,83 @@ ul, ol { list-style: none; }
   .foot__base span:nth-of-type(2) { order: 1; max-width: 30ch; line-height: 1.7; }
   .foot__base span:nth-of-type(1) { order: 2; opacity: .62; font-size: .66rem; }
 }
+
+/* ---- websites page: motion -------------------------------------------
+   Everything here animates opacity and transform only, so the compositor
+   handles it and a mid-range phone is not asked to re-layout mid-scroll.
+   The initial hidden state is scoped to .js-anim, which JS adds, so with
+   JavaScript off the page renders fully rather than staying blank. */
+
+.js-anim .anim {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity .72s var(--ease), transform .72s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.js-anim .anim:not(.is-in) { will-change: opacity, transform; }
+.js-anim .anim.is-in { opacity: 1; transform: none; }
+
+/* the screenshot settles in rather than sliding, so it reads as a panel
+   arriving instead of another line of text */
+.js-anim .webcard__shot.anim { transform: translate3d(0, 26px, 0) scale(.985); }
+.js-anim .webcard__shot.anim.is-in { transform: none; }
+
+/* The masthead word wipes up from its own baseline. The clip lives on an
+   inner span, never on the observed element: IntersectionObserver measures
+   the clipped rect, so clipping the h1 itself gave it zero visible area and
+   it never registered as on screen, which left it permanently invisible. */
+.webhero__title { display: block; }
+.webhero__title span { display: inline-block; }
+.js-anim .webhero__title span {
+  clip-path: inset(0 0 102% 0);
+  transform: translate3d(0, 12px, 0);
+  transition: transform .85s var(--ease), clip-path .95s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.js-anim .webhero__title.is-in span { clip-path: inset(0 0 -14% 0); transform: none; }
+
+/* facts tick in one after another under their card */
+.js-anim .webcard__facts li { opacity: 0; transform: translate3d(0, 8px, 0);
+  transition: opacity .5s var(--ease), transform .5s var(--ease); }
+.js-anim .webcard__facts.is-in li { opacity: 1; transform: none; }
+.js-anim .webcard__facts.is-in li:nth-child(1) { transition-delay: .06s; }
+.js-anim .webcard__facts.is-in li:nth-child(2) { transition-delay: .14s; }
+.js-anim .webcard__facts.is-in li:nth-child(3) { transition-delay: .22s; }
+.webcard__facts li::before { transition: transform .45s var(--ease); }
+.js-anim .webcard__facts:not(.is-in) li::before { transform: scale(0); }
+
+/* ---- pointer and touch feedback ---- */
+
+/* hover lift only where there is a real pointer: on a phone :hover sticks
+   after a tap and leaves the card stranded in its hovered state */
+@media (hover: hover) and (pointer: fine) {
+  .webcard__shot { transition: transform .55s var(--ease), border-color .45s var(--ease); }
+  .webcard:hover .webcard__shot.is-in,
+  .webcard:hover .webcard__shot:not(.anim) { transform: translate3d(0, -5px, 0); border-color: rgba(255,255,255,.2); }
+  .webcard__num { transition: color .4s var(--ease), letter-spacing .4s var(--ease); }
+  .webcard:hover .webcard__num { color: var(--orange); letter-spacing: .2em; }
+}
+
+/* touch gets its own acknowledgement, since it never gets hover */
+.webcard__link a { -webkit-tap-highlight-color: transparent; }
+.webcard__link a:active { color: var(--orange); border-color: var(--orange); }
+.webcard__link a:active span { transform: translateX(5px); }
+.cta__btn { -webkit-tap-highlight-color: transparent; }
+.cta__btn:active { transform: translateY(1px) scale(.985); }
+.foot__social-card:active { transform: translateY(1px); }
+
+/* the stat numerals lift very slightly as they land */
+.webhero__meta dt { transition: transform .5s var(--ease); }
+.js-anim .webhero__meta div:not(.is-in) dt { transform: translate3d(0, 6px, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-anim .anim,
+  .js-anim .webcard__shot.anim,
+  .js-anim .webhero__title span,
+  .js-anim .webcard__facts li,
+  .js-anim .webhero__meta div:not(.is-in) dt {
+    opacity: 1; transform: none; clip-path: none; transition: none;
+  }
+  .js-anim .webcard__facts:not(.is-in) li::before { transform: none; }
+  .webcard__shot, .webcard__num, .cta__btn { transition: none; }
+}
