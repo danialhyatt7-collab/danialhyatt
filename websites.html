@@ -16,10 +16,10 @@
   <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <meta name="theme-color" content="#000000" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- the display face paints the masthead, so it is fetched in parallel
+       with the stylesheet rather than after it -->
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/Syne-Extra.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/Inter-var.woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -76,9 +76,33 @@
           fast and stays cheap to host.
         </p>
         <dl class="webhero__meta">
-          <div><dt>05</dt><dd>Builds shipped</dd></div>
-          <div><dt>0</dt><dd>Page builders used</dd></div>
-          <div><dt>100<i>%</i></dt><dd>Hand&#8209;written code</dd></div>
+          <div class="gauge" data-to="5" data-max="10" data-pad="2">
+            <svg class="gauge__dial" viewBox="0 0 120 70" aria-hidden="true" focusable="false">
+              <path class="gauge__track" d="M10 60 A50 50 0 0 1 110 60" />
+              <path class="gauge__fill"  d="M10 60 A50 50 0 0 1 110 60" />
+              <line class="gauge__needle" x1="60" y1="60" x2="60" y2="19" />
+              <circle class="gauge__hub" cx="60" cy="60" r="3.4" />
+            </svg>
+            <dt>05</dt><dd>Builds shipped</dd>
+          </div>
+          <div class="gauge" data-to="0" data-max="10" data-pad="1">
+            <svg class="gauge__dial" viewBox="0 0 120 70" aria-hidden="true" focusable="false">
+              <path class="gauge__track" d="M10 60 A50 50 0 0 1 110 60" />
+              <path class="gauge__fill"  d="M10 60 A50 50 0 0 1 110 60" />
+              <line class="gauge__needle" x1="60" y1="60" x2="60" y2="19" />
+              <circle class="gauge__hub" cx="60" cy="60" r="3.4" />
+            </svg>
+            <dt>0</dt><dd>Page builders used</dd>
+          </div>
+          <div class="gauge" data-to="100" data-max="100" data-pad="1">
+            <svg class="gauge__dial" viewBox="0 0 120 70" aria-hidden="true" focusable="false">
+              <path class="gauge__track" d="M10 60 A50 50 0 0 1 110 60" />
+              <path class="gauge__fill"  d="M10 60 A50 50 0 0 1 110 60" />
+              <line class="gauge__needle" x1="60" y1="60" x2="60" y2="19" />
+              <circle class="gauge__hub" cx="60" cy="60" r="3.4" />
+            </svg>
+            <dt>100<i>%</i></dt><dd>Hand&#8209;written code</dd>
+          </div>
         </dl>
       </div>
     </section>
@@ -258,38 +282,46 @@
   <script src="script.js"></script>
 
   <!--
-    Reveal and count-up.
+    Reveal, and the speedometer sweep.
 
-    One IntersectionObserver arms everything. The hidden starting state lives
-    behind .js-anim, which is only added here, so a visitor without
-    JavaScript sees the finished page instead of an empty one. Elements are
-    unobserved once revealed, so nothing keeps running behind the scroll.
+    Two details that were wrong before and are worth keeping right:
+
+    The whole thing waits on document.fonts.ready. The masthead is set in a
+    display face with font-display:block, so before the font arrives the
+    text is not painted at all. Revealing on DOM-ready meant the entrance
+    animation played against invisible glyphs and the type simply appeared,
+    already finished.
+
+    Elements are observed a frame after the hidden state is applied. Adding
+    the start and end state in the same frame gives the browser nothing to
+    animate between, so anything already on screen jumped straight to its
+    final state with no transition at all.
   -->
   <script>
     (function () {
       var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
       var targets = [];
 
-      // selector, stagger between siblings of the same parent, in ms
       [['.webhero__inner > *', 90],
        ['.webcard__shot', 0],
        ['.webcard__body > *', 55],
        ['.cta > *', 70]].forEach(function (pair) {
         var step = pair[1];
         [].slice.call(document.querySelectorAll(pair[0])).forEach(function (el) {
-          // index within its own parent, so each card restarts the stagger
           var i = [].indexOf.call(el.parentNode.children, el);
           el.classList.add('anim');
           el.style.setProperty('--d', (i * step) + 'ms');
           targets.push(el);
         });
       });
-
-      [].slice.call(document.querySelectorAll('.webcard__facts, .webhero__meta div'))
+      [].slice.call(document.querySelectorAll('.webcard__facts, .gauge'))
         .forEach(function (el) { targets.push(el); });
 
       if (still) {
         targets.forEach(function (t) { t.classList.add('is-in'); });
+        [].slice.call(document.querySelectorAll('.gauge')).forEach(function (g) {
+          setDial(g, +g.dataset.to / +g.dataset.max);
+        });
         return;
       }
 
@@ -300,32 +332,65 @@
           if (!e.isIntersecting) return;
           e.target.classList.add('is-in');
           io.unobserve(e.target);
-          var dt = e.target.querySelector && e.target.querySelector('.webhero__meta dt, dt');
-          if (dt && e.target.matches('.webhero__meta div')) countUp(dt);
+          if (e.target.classList.contains('gauge')) sweep(e.target);
         });
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
 
-      targets.forEach(function (t) { io.observe(t); });
+      function arm() {
+        // one more frame so the start state is actually painted first
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            targets.forEach(function (t) { io.observe(t); });
+          });
+        });
+      }
 
-      /* Roll each stat to its value once, easing out. The first text node is
-         the numeral; any trailing unit sits in its own element and is left
-         alone. "05" keeps its width so the row does not jiggle as it counts. */
-      function countUp(dt) {
-        var node = dt.firstChild;
+      // fonts first: the display face is font-display:block, so until it
+      // lands there is nothing on screen for the entrance to animate
+      var waited = false;
+      function go() { if (!waited) { waited = true; arm(); } }
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(go);
+        setTimeout(go, 1200); // never hold the page hostage to a slow font
+      } else { go(); }
+
+      function setDial(g, v) {
+        g.style.setProperty('--v', v.toFixed(4));
+        var dt = g.querySelector('dt');
+        var node = dt && dt.firstChild;
         if (!node || node.nodeType !== 3) return;
-        var text = node.nodeValue.trim();
-        var to = parseInt(text, 10);
-        if (isNaN(to) || to === 0) return;
-        var pad = text.length;
-        var t0 = performance.now(), dur = 900;
+        var shown = Math.round(+g.dataset.max * v);
+        node.nodeValue = String(shown).length < +g.dataset.pad
+          ? new Array(+g.dataset.pad - String(shown).length + 1).join('0') + shown
+          : String(shown);
+      }
+
+      /* Ignition sweep: hard to full, a beat at the stop, then settle back
+         to the real reading. Same shape as a car's needle on start-up. */
+      function sweep(g) {
+        var target = +g.dataset.to / +g.dataset.max;
+        var UP = 620, HOLD = 140, DOWN = 760;
+        var t0 = performance.now();
         requestAnimationFrame(function step(now) {
-          var p = Math.min(1, (now - t0) / dur);
-          var v = Math.round(to * (1 - Math.pow(1 - p, 3)));
-          node.nodeValue = String(v).length < pad
-            ? new Array(pad - String(v).length + 1).join('0') + v
-            : String(v);
-          if (p < 1) requestAnimationFrame(step);
-          else node.nodeValue = text;
+          var t = now - t0, v;
+          if (t < UP) {
+            var p = t / UP;
+            v = 1 - Math.pow(1 - p, 3);            // quick to the stop
+          } else if (t < UP + HOLD) {
+            v = 1;                                  // sits pinned for a beat
+          } else if (t < UP + HOLD + DOWN) {
+            var q = (t - UP - HOLD) / DOWN;
+            var e = 1 - Math.pow(1 - q, 4);
+            // a little wobble as it falls back, damped to nothing
+            var wob = Math.sin(q * Math.PI * 2.2) * 0.045 * (1 - q) * (1 - q);
+            v = 1 + (target - 1) * e + wob;
+            if (v < 0) v = 0;
+          } else {
+            setDial(g, target);
+            return;
+          }
+          setDial(g, v);
+          requestAnimationFrame(step);
         });
       }
     })();

@@ -3,11 +3,33 @@
    Aesthetic: cinematic, dark, oversized type (NatGeo "Wildlife" ref)
    ============================================================ */
 
-/* Syne Extra — the original expanded display cut (self-hosted, OFL) */
+/* Self-hosted, OFL. Google Fonts cost three sequential hops before the real
+   type appeared: a render-blocking stylesheet on fonts.googleapis.com, then
+   the woff2 files from fonts.gstatic.com, then the display face discovered
+   only once this sheet had parsed. Served from our own origin these arrive
+   on the first connection. Inter and Syne are variable, so one file each
+   covers every weight the site uses. */
 @font-face {
   font-family: 'Syne Extra';
   src: url('assets/fonts/Syne-Extra.woff2') format('woff2');
   font-weight: 400;
+  font-style: normal;
+  font-display: block; /* the masthead is the brand; brief invisibility beats
+                          a flash of the fallback at 8.5rem */
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('assets/fonts/Inter-var.woff2') format('woff2-variations'),
+       url('assets/fonts/Inter-var.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Syne';
+  src: url('assets/fonts/Syne-var.woff2') format('woff2-variations'),
+       url('assets/fonts/Syne-var.woff2') format('woff2');
+  font-weight: 400 800;
   font-style: normal;
   font-display: swap;
 }
@@ -1060,30 +1082,60 @@ ul, ol { list-style: none; }
   max-width: 48ch;
 }
 
-/* spec row, echoing the 63% stat block on the home page */
+/* Speedometer row. Each stat is a dial that sweeps to full on reveal and
+   then settles back to its real value, the way a car's needle does at
+   ignition. The "0 page builders" dial sweeping up and dropping to zero is
+   the whole joke, and it is also the true number. */
 .webhero__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 26px clamp(30px, 5vw, 64px);
+  gap: 24px clamp(22px, 4vw, 52px);
   margin: clamp(30px, 4.5vw, 46px) 0 0;
-  padding-top: 26px;
+  padding-top: 28px;
   border-top: 1px solid var(--line);
 }
-.webhero__meta div { display: block; }
+.gauge { width: clamp(96px, 12vw, 124px); }
+
+.gauge__dial { display: block; width: 100%; height: auto; overflow: visible; }
+.gauge__track,
+.gauge__fill {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+.gauge__track { stroke: rgba(255,255,255,.13); }
+.gauge__fill {
+  stroke: var(--orange);
+  /* semicircle at r=50 is pi*50; JS drives --v from 0 to 1 */
+  stroke-dasharray: 157.08;
+  stroke-dashoffset: calc(157.08 * (1 - var(--v, 0)));
+}
+.gauge__needle {
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transform: rotate(calc(-90deg + var(--v, 0) * 180deg));
+  transform-origin: 60px 60px;
+}
+.gauge__hub { fill: var(--ink); }
+
 .webhero__meta dt {
   font-family: 'Syne Extra', 'Syne', sans-serif;
-  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
-  line-height: .95;
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1;
   letter-spacing: -.02em;
   color: var(--ink);
+  margin-top: 10px;
+  font-variant-numeric: tabular-nums;
 }
-.webhero__meta dt i { font-style: normal; font-size: .46em; color: var(--muted); }
+.webhero__meta dt i { font-style: normal; font-size: .5em; color: var(--muted); }
 .webhero__meta dd {
-  margin: 8px 0 0;
-  font-size: .72rem;
-  letter-spacing: .12em;
+  margin: 6px 0 0;
+  font-size: .66rem;
+  letter-spacing: .11em;
   text-transform: uppercase;
   color: var(--muted);
+  line-height: 1.5;
 }
 
 /* ---- work ---- */
@@ -1311,15 +1363,15 @@ ul, ol { list-style: none; }
 .foot__social-card:active { transform: translateY(1px); }
 
 /* the stat numerals lift very slightly as they land */
-.webhero__meta dt { transition: transform .5s var(--ease); }
-.js-anim .webhero__meta div:not(.is-in) dt { transform: translate3d(0, 6px, 0); }
+.js-anim .gauge:not(.is-in) .gauge__needle,
+.js-anim .gauge:not(.is-in) .gauge__fill { --v: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .js-anim .anim,
   .js-anim .webcard__shot.anim,
   .js-anim .webhero__title span,
   .js-anim .webcard__facts li,
-  .js-anim .webhero__meta div:not(.is-in) dt {
+  .js-anim .gauge:not(.is-in) dt {
     opacity: 1; transform: none; clip-path: none; transition: none;
   }
   .js-anim .webcard__facts:not(.is-in) li::before { transform: none; }
