@@ -415,38 +415,10 @@ ul, ol { list-style: none; }
 .foot { position: relative; background: var(--bg); border-top: 1px solid rgba(255,255,255,.08); overflow: hidden; }
 .foot > * { max-width: var(--maxw); margin-inline: auto; }
 
-/* hero CTA */
-.foot__hero { position: relative; text-align: center; padding: clamp(18px,3vh,36px) var(--hero-gutter) clamp(10px,3vh,24px); }
-.foot__headline { font-family: 'Syne Extra', sans-serif; font-weight: 400; text-transform: uppercase;
-  font-size: clamp(2.2rem,7vw,4.6rem); line-height: .98; letter-spacing: -.01em; }
-.foot__sub { color: var(--muted); max-width: 420px; margin: 16px auto 26px; font-size: .95rem; }
-.foot__get { display: inline-block; background: #fff; color: #000; font-weight: 600; letter-spacing: .06em;
-  text-transform: uppercase; font-size: .78rem; padding: 13px 26px; border-radius: 6px; transition: transform .2s var(--ease), filter .2s; }
-.foot__get:hover { transform: translateY(-2px); filter: brightness(.92); }
-.foot__glow { position: relative; display: grid; place-items: center; height: clamp(120px,20vh,220px); margin-top: 10px; }
-.foot__glow::before { content: ""; position: absolute; width: clamp(180px,40vw,420px); height: clamp(180px,40vw,420px);
-  background: radial-gradient(circle, rgba(255,255,255,.22), transparent 62%); filter: blur(20px); }
-.foot__glow .nav__logo-lottie { position: relative; width: clamp(80px,14vw,150px); height: clamp(80px,14vw,150px);
-  filter: drop-shadow(0 0 36px rgba(255,255,255,.5)); }
-
-/* social cards */
-.foot__social { display: flex; justify-content: center;
-  padding: clamp(26px, 4vh, 44px) var(--hero-gutter);
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-/* one centred pill; the fill sweeps in from the right edge */
-.foot__social-card { position: relative; overflow: hidden; flex: none;
-  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-  padding: 15px clamp(26px, 3vw, 38px); color: rgba(255,255,255,.85);
-  border: 1px solid var(--line); }
-.foot__social-card::before { content: ""; position: absolute; inset: 0;
-  background: rgba(255,255,255,.06); transform: scaleX(0); transform-origin: right center;
-  transition: transform .5s var(--ease); }
-.foot__social-card:hover::before { transform: scaleX(1); }
-.foot__social-card > * { position: relative; }
-.foot__social-card span { font-size: .95rem; letter-spacing: .06em; }
-.foot__social-mk { width: 18px; text-align: center; font-weight: 700; font-size: .82rem; flex: none !important; }
-.foot__arrow { color: var(--muted); font-style: normal; transition: transform .3s var(--ease), color .3s; }
-.foot__social-card:hover .foot__arrow { transform: translateX(5px); color: #fff; }
+/* The old home-page footer (hero lottie, single social pill) lived here.
+   index.html now uses .foot--big like websites.html, so it is gone. Its
+   .foot__glow was also silently overriding the new mark, which is why
+   that one is .foot__play. */
 
 /* link columns */
 .foot__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px,3vw,40px);
@@ -1348,7 +1320,6 @@ ul, ol { list-style: none; }
 .webcard__link a:active span { transform: translateX(5px); }
 .cta__btn { -webkit-tap-highlight-color: transparent; }
 .cta__btn:active { transform: translateY(1px) scale(.985); }
-.foot__social-card:active { transform: translateY(1px); }
 
 /* the stat numerals lift very slightly as they land */
 
@@ -1505,7 +1476,7 @@ ul, ol { list-style: none; }
    frosts the lower half, so the rail's top edge is the line that splits
    it. Blurring the mark here would frost both halves and lose the whole
    effect, which is why there is no filter on it beyond the glow. */
-.foot__glow {
+.foot__play {
   --mark-h: 124px;
   position: absolute;
   left: 32%;
@@ -1519,8 +1490,8 @@ ul, ol { list-style: none; }
   opacity: .55;
   pointer-events: none;
 }
-.foot__glow svg { display: block; width: 100%; height: 100%; }
-.foot__glow path { fill: #fff8f4; }
+.foot__play svg { display: block; width: 100%; height: 100%; }
+.foot__play path { fill: #fff8f4; }
 .foot__cell {
   display: flex;
   align-items: center;
@@ -1636,7 +1607,7 @@ ul, ol { list-style: none; }
   .foot__mail, .foot__wa { flex: 0 1 auto; }
   .foot__mail { font-size: 1.12rem; padding: 16px 24px; }
   .foot__rail { --rail-top: clamp(120px, 15vh, 168px); }
-  .foot__glow { --mark-h: 168px; left: 74%; }
+  .foot__play { --mark-h: 168px; left: 74%; }
   .foot__rail { padding-bottom: clamp(44px, 6vh, 64px); }
   .foot__grid { grid-template-columns: repeat(3, 1fr); gap: 0; padding: clamp(36px, 5vh, 54px) var(--hero-gutter); }
   .foot__col { padding-inline: clamp(22px, 3vw, 40px); border-left: 1px solid var(--line); }
