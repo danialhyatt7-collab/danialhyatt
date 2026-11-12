@@ -1383,12 +1383,33 @@ ul, ol { list-style: none; }
    ============================================================ */
 
 .foot--big {
+  --glass:      rgba(255,255,255,.045);
+  --glass-up:   rgba(255,255,255,.075);
+  --glass-line: rgba(255,255,255,.10);
+  --glass-edge: rgba(255,255,255,.20);
+
+  position: relative;
   border-top: 1px solid var(--line);
   background:
     radial-gradient(900px 340px at 12% 0%, rgba(255,90,44,.10), transparent 64%),
     linear-gradient(180deg, var(--bg) 0%, #0a0a0b 100%);
   overflow: hidden;
 }
+/* Frosted panels need something behind them or they read as flat grey.
+   This is the colour the rail blurs: wide, soft, and far too dim to see
+   on its own. */
+.foot--big::before {
+  content: "";
+  position: absolute;
+  left: -10%; right: -10%;
+  top: 34%; height: 46%;
+  background:
+    radial-gradient(42% 70% at 22% 50%, rgba(255,90,44,.16), transparent 70%),
+    radial-gradient(38% 64% at 76% 46%, rgba(53,208,127,.10), transparent 72%);
+  filter: blur(42px);
+  pointer-events: none;
+}
+.foot--big > * { position: relative; }
 .foot--big > * { max-width: var(--maxw); margin-inline: auto; }
 
 /* ---- the close ---- */
@@ -1436,8 +1457,11 @@ ul, ol { list-style: none; }
   min-height: 60px;
   padding: 12px 18px;
   border-radius: 14px;
-  border: 1px solid rgba(37,211,102,.38);
+  border: 1px solid rgba(37,211,102,.34);
   background: rgba(37,211,102,.07);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  backdrop-filter: blur(16px) saturate(135%);
   color: var(--ink);
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
@@ -1461,6 +1485,56 @@ ul, ol { list-style: none; }
 .foot__wa:hover { background: rgba(37,211,102,.14); border-color: rgba(37,211,102,.62); }
 .foot__wa:hover .foot__wa-go { transform: translateX(5px); color: var(--ink); }
 .foot__wa:active { background: rgba(37,211,102,.2); }
+
+/* ============================================================
+   The rail: frosted cells for everywhere else the work lives.
+   Matte, not shiny. The surfaces are nearly transparent and the
+   only light on them is a one-pixel inner highlight along the top
+   edge, which is what sells glass without turning it glossy.
+   ============================================================ */
+.foot__rail {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 0 var(--hero-gutter) 34px;
+}
+.foot__cell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 74px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  backdrop-filter: blur(16px) saturate(135%);
+  color: var(--ink);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
+}
+.foot__cell:hover { background: var(--glass-up); border-color: var(--glass-edge); }
+.foot__cell:active { transform: translateY(1px); }
+.foot__cell-ic {
+  flex: none;
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.09);
+  color: var(--ink);
+}
+.foot__cell-tx { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.foot__cell-tx b { font-size: .95rem; font-weight: 600; letter-spacing: -.005em; }
+.foot__cell-tx i { font-style: normal; font-size: .78rem; color: var(--muted); }
+.foot__cell-go {
+  margin-left: auto;
+  color: rgba(244,246,250,.42);
+  transition: transform .3s var(--ease), color .3s var(--ease);
+}
+.foot__cell:hover .foot__cell-go { transform: translateX(5px); color: var(--ink); }
 
 /* ---- columns: one per row, then two, then four ----
    The second column arrives at 350px rather than 560px. A 430 to 540px
@@ -1487,9 +1561,11 @@ ul, ol { list-style: none; }
 .foot__col a:hover { color: var(--ink); transform: translateX(3px); }
 
 .foot__clock span { color: var(--ink); font-variant-numeric: tabular-nums; }
-.foot__status { display: inline-flex; align-items: center; gap: 8px; }
+/* aligns to the first line, not the middle, when the label wraps */
+.foot__status { display: inline-flex; align-items: flex-start; gap: 8px; }
 .foot__status i {
   width: 7px; height: 7px; border-radius: 50%; background: #35d07f; flex: none;
+  margin-top: .45em;
   box-shadow: 0 0 0 0 rgba(53,208,127,.6);
   animation: footPulse 2.4s ease-out infinite;
 }
@@ -1524,6 +1600,7 @@ ul, ol { list-style: none; }
 @media (min-width: 560px) {
   .foot__actions { display: flex; flex-direction: row; flex-wrap: wrap; align-items: stretch; }
   .foot__mail, .foot__wa { flex: 1 1 260px; }
+  .foot__rail { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .foot__grid { gap: 32px clamp(24px, 5vw, 44px); }
   .foot--big .foot__base { flex-direction: row; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 }
@@ -1535,10 +1612,15 @@ ul, ol { list-style: none; }
   .foot__actions { gap: 14px; }
   .foot__mail, .foot__wa { flex: 0 1 auto; }
   .foot__mail { font-size: 1.12rem; padding: 16px 24px; }
-  .foot__grid { grid-template-columns: repeat(4, 1fr); gap: clamp(26px, 4vw, 48px); padding: clamp(36px, 5vh, 54px) var(--hero-gutter); }
+  .foot__rail { padding-bottom: clamp(38px, 5vh, 54px); }
+  .foot__grid { grid-template-columns: repeat(3, 1fr); gap: 0; padding: clamp(36px, 5vh, 54px) var(--hero-gutter); }
+  .foot__col { padding-inline: clamp(22px, 3vw, 40px); border-left: 1px solid var(--line); }
+  .foot__col:first-child { padding-left: 0; border-left: 0; }
+  .foot__col:last-child { padding-right: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .foot__status i { animation: none; }
-  .foot__mail, .foot__mail i, .foot__col a, .foot__wa, .foot__wa-go { transition: none; }
+  .foot__mail, .foot__mail i, .foot__col a, .foot__wa, .foot__wa-go,
+  .foot__cell, .foot__cell-go { transition: none; }
 }
