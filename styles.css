@@ -1395,17 +1395,16 @@ ul, ol { list-style: none; }
     linear-gradient(180deg, var(--bg) 0%, #0a0a0b 100%);
   overflow: hidden;
 }
-/* Frosted panels need something behind them or they read as flat grey.
-   This is the colour the rail blurs: wide, soft, and far too dim to see
-   on its own. */
+/* A low wash under the rail, so the glass has colour at its edges as
+   well as at its centre where the mark sits. */
 .foot--big::before {
   content: "";
   position: absolute;
   left: -10%; right: -10%;
   top: 34%; height: 46%;
   background:
-    radial-gradient(42% 70% at 22% 50%, rgba(255,90,44,.16), transparent 70%),
-    radial-gradient(38% 64% at 76% 46%, rgba(53,208,127,.10), transparent 72%);
+    radial-gradient(42% 70% at 18% 50%, rgba(255,90,44,.12), transparent 70%),
+    radial-gradient(38% 64% at 80% 46%, rgba(190,210,255,.07), transparent 72%);
   filter: blur(42px);
   pointer-events: none;
 }
@@ -1413,7 +1412,7 @@ ul, ol { list-style: none; }
 .foot--big > * { max-width: var(--maxw); margin-inline: auto; }
 
 /* ---- the close ---- */
-.foot__call { padding: 56px var(--hero-gutter) 40px; }
+.foot__call { padding: 56px var(--hero-gutter) 40px; z-index: 1; }
 .foot__shout {
   font-family: 'Syne Extra', 'Syne', sans-serif;
   font-weight: 400;
@@ -1448,8 +1447,8 @@ ul, ol { list-style: none; }
 .foot__mail:active { transform: translateY(1px); }
 
 /* WhatsApp: a real button, not a tag. Icon chip, two lines of label with
-   the number spelled out, and a chevron. Green is the point of
-   recognition, so it carries the border and the mark, and fills on press. */
+   the number spelled out, and a chevron. No green anywhere: it sits second
+   in the order by being the brightest glass in the footer, not by hue. */
 .foot__wa {
   display: flex;
   align-items: center;
@@ -1457,9 +1456,9 @@ ul, ol { list-style: none; }
   min-height: 60px;
   padding: 12px 18px;
   border-radius: 14px;
-  border: 1px solid rgba(37,211,102,.34);
-  background: rgba(37,211,102,.07);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.20);
+  background: rgba(255,255,255,.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09);
   -webkit-backdrop-filter: blur(16px) saturate(135%);
   backdrop-filter: blur(16px) saturate(135%);
   color: var(--ink);
@@ -1472,8 +1471,8 @@ ul, ol { list-style: none; }
   width: 38px; height: 38px;
   display: grid; place-items: center;
   border-radius: 11px;
-  background: #25d366;
-  color: #04120a;
+  background: var(--ink);
+  color: #0c0c0d;
 }
 .foot__wa-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .foot__wa-text b { font-size: .96rem; font-weight: 600; letter-spacing: -.005em; }
@@ -1482,9 +1481,9 @@ ul, ol { list-style: none; }
   font-variant-numeric: tabular-nums; letter-spacing: .02em;
 }
 .foot__wa-go { margin-left: auto; color: var(--muted); transition: transform .3s var(--ease), color .3s var(--ease); }
-.foot__wa:hover { background: rgba(37,211,102,.14); border-color: rgba(37,211,102,.62); }
+.foot__wa:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.32); }
 .foot__wa:hover .foot__wa-go { transform: translateX(5px); color: var(--ink); }
-.foot__wa:active { background: rgba(37,211,102,.2); }
+.foot__wa:active { background: rgba(255,255,255,.17); }
 
 /* ============================================================
    The rail: frosted cells for everywhere else the work lives.
@@ -1493,11 +1492,32 @@ ul, ol { list-style: none; }
    edge, which is what sells glass without turning it glossy.
    ============================================================ */
 .foot__rail {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
   padding: 0 var(--hero-gutter) 34px;
 }
+/* The play mark, sat exactly half above the rail and half behind it.
+   It is drawn sharp on purpose: the top half stays crisp in open air and
+   only the bottom half goes soft, because the cell's own backdrop blur is
+   what frosts it. Blurring the mark here would frost both halves and lose
+   the whole effect, so the only filter is a glow that keeps its edges. */
+.foot__glow {
+  --mark-h: 112px;
+  position: absolute;
+  left: 32%; top: calc(var(--mark-h) / -2);
+  transform: translateX(-50%);
+  height: var(--mark-h);
+  width: auto;
+  aspect-ratio: 34 / 42;
+  max-width: none;
+  filter: drop-shadow(0 0 26px rgba(255,248,244,.28));
+  opacity: .55;
+  pointer-events: none;
+}
+.foot__glow svg { display: block; width: 100%; height: 100%; }
+.foot__glow path { fill: #fff8f4; }
 .foot__cell {
   display: flex;
   align-items: center;
@@ -1612,6 +1632,9 @@ ul, ol { list-style: none; }
   .foot__actions { gap: 14px; }
   .foot__mail, .foot__wa { flex: 0 1 auto; }
   .foot__mail { font-size: 1.12rem; padding: 16px 24px; }
+  /* clear of the two buttons at this width, so the sharp half rises into
+     open air instead of being cut flat by them */
+  .foot__glow { --mark-h: 132px; left: 74%; }
   .foot__rail { padding-bottom: clamp(38px, 5vh, 54px); }
   .foot__grid { grid-template-columns: repeat(3, 1fr); gap: 0; padding: clamp(36px, 5vh, 54px) var(--hero-gutter); }
   .foot__col { padding-inline: clamp(22px, 3vw, 40px); border-left: 1px solid var(--line); }
