@@ -1607,7 +1607,9 @@ ul, ol { list-style: none; }
   .foot__mail, .foot__wa { flex: 0 1 auto; }
   .foot__mail { font-size: 1.12rem; padding: 16px 24px; }
   .foot__rail { --rail-top: clamp(120px, 15vh, 168px); }
-  .foot__play { --mark-h: 168px; left: 74%; }
+  /* exactly twice the cell height, so the lower half ends on the cell's
+     bottom edge instead of poking a sharp sliver out below the glass */
+  .foot__play { --mark-h: 154px; left: 74%; }
   .foot__rail { padding-bottom: clamp(44px, 6vh, 64px); }
   .foot__grid { grid-template-columns: repeat(3, 1fr); gap: 0; padding: clamp(36px, 5vh, 54px) var(--hero-gutter); }
   .foot__col { padding-inline: clamp(22px, 3vw, 40px); border-left: 1px solid var(--line); }
