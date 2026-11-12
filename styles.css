@@ -1412,7 +1412,7 @@ ul, ol { list-style: none; }
 .foot--big > * { max-width: var(--maxw); margin-inline: auto; }
 
 /* ---- the close ---- */
-.foot__call { padding: 56px var(--hero-gutter) 40px; z-index: 1; }
+.foot__call { padding: 8px var(--hero-gutter) 40px; }
 .foot__shout {
   font-family: 'Syne Extra', 'Syne', sans-serif;
   font-weight: 400;
@@ -1492,27 +1492,30 @@ ul, ol { list-style: none; }
    edge, which is what sells glass without turning it glossy.
    ============================================================ */
 .foot__rail {
+  --rail-top: 104px;
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
-  padding: 0 var(--hero-gutter) 34px;
+  padding: var(--rail-top) var(--hero-gutter) 40px;
 }
-/* The play mark, sat exactly half above the rail and half behind it.
-   It is drawn sharp on purpose: the top half stays crisp in open air and
-   only the bottom half goes soft, because the cell's own backdrop blur is
-   what frosts it. Blurring the mark here would frost both halves and lose
-   the whole effect, so the only filter is a glow that keeps its edges. */
+
+/* The play mark, sat exactly half above the glass and half behind it.
+   It is drawn sharp on purpose: the cell's own backdrop blur is what
+   frosts the lower half, so the rail's top edge is the line that splits
+   it. Blurring the mark here would frost both halves and lose the whole
+   effect, which is why there is no filter on it beyond the glow. */
 .foot__glow {
-  --mark-h: 112px;
+  --mark-h: 124px;
   position: absolute;
-  left: 32%; top: calc(var(--mark-h) / -2);
+  left: 32%;
+  top: calc(var(--rail-top) - var(--mark-h) / 2);
   transform: translateX(-50%);
   height: var(--mark-h);
   width: auto;
   aspect-ratio: 34 / 42;
   max-width: none;
-  filter: drop-shadow(0 0 26px rgba(255,248,244,.28));
+  filter: drop-shadow(0 0 26px rgba(255,248,244,.26));
   opacity: .55;
   pointer-events: none;
 }
@@ -1627,15 +1630,14 @@ ul, ol { list-style: none; }
 
 /* ---- room for the full row ---- */
 @media (min-width: 900px) {
-  .foot__call { padding: clamp(70px, 11vh, 130px) var(--hero-gutter) clamp(44px, 6vh, 64px); }
+  .foot__call { padding: 10px var(--hero-gutter) clamp(44px, 6vh, 64px); }
   .foot__shout { font-size: clamp(2.6rem, 6.6vw, 4.6rem); margin-bottom: clamp(28px, 4vw, 40px); }
   .foot__actions { gap: 14px; }
   .foot__mail, .foot__wa { flex: 0 1 auto; }
   .foot__mail { font-size: 1.12rem; padding: 16px 24px; }
-  /* clear of the two buttons at this width, so the sharp half rises into
-     open air instead of being cut flat by them */
-  .foot__glow { --mark-h: 132px; left: 74%; }
-  .foot__rail { padding-bottom: clamp(38px, 5vh, 54px); }
+  .foot__rail { --rail-top: clamp(120px, 15vh, 168px); }
+  .foot__glow { --mark-h: 168px; left: 74%; }
+  .foot__rail { padding-bottom: clamp(44px, 6vh, 64px); }
   .foot__grid { grid-template-columns: repeat(3, 1fr); gap: 0; padding: clamp(36px, 5vh, 54px) var(--hero-gutter); }
   .foot__col { padding-inline: clamp(22px, 3vw, 40px); border-left: 1px solid var(--line); }
   .foot__col:first-child { padding-left: 0; border-left: 0; }
