@@ -416,9 +416,7 @@ ul, ol { list-style: none; }
 .foot > * { max-width: var(--maxw); margin-inline: auto; }
 
 /* The old home-page footer (hero lottie, single social pill) lived here.
-   index.html now uses .foot--big like websites.html, so it is gone. Its
-   .foot__glow was also silently overriding the new mark, which is why
-   that one is .foot__play. */
+   index.html now uses .foot--big like websites.html, so it is gone. */
 
 /* link columns */
 .foot__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px,3vw,40px);
@@ -1463,7 +1461,7 @@ ul, ol { list-style: none; }
    edge, which is what sells glass without turning it glossy.
    ============================================================ */
 .foot__rail {
-  --rail-top: 104px;
+  --rail-top: 46px;
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
@@ -1471,27 +1469,6 @@ ul, ol { list-style: none; }
   padding: var(--rail-top) var(--hero-gutter) 40px;
 }
 
-/* The play mark, sat exactly half above the glass and half behind it.
-   It is drawn sharp on purpose: the cell's own backdrop blur is what
-   frosts the lower half, so the rail's top edge is the line that splits
-   it. Blurring the mark here would frost both halves and lose the whole
-   effect, which is why there is no filter on it beyond the glow. */
-.foot__play {
-  --mark-h: 124px;
-  position: absolute;
-  left: 32%;
-  top: calc(var(--rail-top) - var(--mark-h) / 2);
-  transform: translateX(-50%);
-  height: var(--mark-h);
-  width: auto;
-  aspect-ratio: 34 / 42;
-  max-width: none;
-  filter: drop-shadow(0 0 26px rgba(255,248,244,.26));
-  opacity: .55;
-  pointer-events: none;
-}
-.foot__play svg { display: block; width: 100%; height: 100%; }
-.foot__play path { fill: #fff8f4; }
 .foot__cell {
   display: flex;
   align-items: center;
@@ -1606,10 +1583,7 @@ ul, ol { list-style: none; }
   .foot__actions { gap: 14px; }
   .foot__mail, .foot__wa { flex: 0 1 auto; }
   .foot__mail { font-size: 1.12rem; padding: 16px 24px; }
-  .foot__rail { --rail-top: clamp(120px, 15vh, 168px); }
-  /* exactly twice the cell height, so the lower half ends on the cell's
-     bottom edge instead of poking a sharp sliver out below the glass */
-  .foot__play { --mark-h: 154px; left: 74%; }
+  .foot__rail { --rail-top: clamp(54px, 7vh, 76px); }
   .foot__rail { padding-bottom: clamp(44px, 6vh, 64px); }
   .foot__grid { grid-template-columns: repeat(3, 1fr); gap: 0; padding: clamp(36px, 5vh, 54px) var(--hero-gutter); }
   .foot__col { padding-inline: clamp(22px, 3vw, 40px); border-left: 1px solid var(--line); }
