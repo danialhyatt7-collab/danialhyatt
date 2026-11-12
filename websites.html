@@ -229,31 +229,96 @@
     <!-- ===== CTA ===== -->
     <section class="cta" aria-label="Start a project">
       <p class="section__label">Next</p>
-      <h2 class="section__title">Need&nbsp;one&nbsp;built?</h2>
+      <h2 class="cta__title">Need one<br />built?</h2>
       <p class="cta__lead">
         Tell me what the site has to do and who it is for. I will come back with a page
         plan before any money changes hands.
       </p>
-      <a href="mailto:hello@danialhyatt.com?subject=Website%20enquiry" class="cta__btn cta__btn--solid">Start a website</a>
-      <a href="index.html#reel" class="cta__btn">See the motion work</a>
+      <div class="cta__actions">
+        <a href="mailto:hello@danialhyatt.com?subject=Website%20enquiry" class="cta__btn cta__btn--solid">Start a website</a>
+        <a href="index.html#reel" class="cta__btn cta__btn--ghost">See the motion work</a>
+      </div>
     </section>
 
   </main>
 
-  <footer class="foot" aria-label="Footer">
-    <div class="foot__social">
-      <a class="foot__social-card" href="https://www.instagram.com/daniiaallllllllll/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
-        <span>Instagram</span><b class="foot__arrow">&rarr;</b>
+  <footer class="foot foot--big" aria-label="Footer">
+
+    <!-- the close: one line, then the two ways to actually reach him -->
+    <div class="foot__call">
+      <p class="section__label">Say hello</p>
+      <h2 class="foot__shout">Got something<br />worth building?</h2>
+      <a class="foot__mail" href="mailto:hello@danialhyatt.com">
+        hello@danialhyatt.com<span aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="foot__wa" href="https://wa.me/923374841818" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.9-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.5.1-.6.8-.8 1-.3.1-.5 0a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3A2.9 2.9 0 0 0 7 9.5c0 1.2.9 2.4 1 2.6a9.9 9.9 0 0 0 3.9 3.4c1.4.6 2 .7 2.7.6a2.4 2.4 0 0 0 1.6-1.1 2 2 0 0 0 .1-1.1c0-.1-.2-.2-.4-.3Z"/></svg>
+        Message on WhatsApp
       </a>
     </div>
 
+    <nav class="foot__grid" aria-label="Footer">
+      <div class="foot__col">
+        <h3>Pages</h3>
+        <a href="index.html#home">Home</a>
+        <a href="index.html#reel">Reel</a>
+        <a href="index.html#shop">Shop</a>
+        <a href="websites.html" aria-current="page">Websites</a>
+      </div>
+      <div class="foot__col">
+        <h3>Recent builds</h3>
+        <a href="https://danialhyatt7-collab.github.io/O-kly/" target="_blank" rel="noopener noreferrer">Oakly</a>
+        <a href="https://danialhyatt7-collab.github.io/NTF/" target="_blank" rel="noopener noreferrer">NTF International</a>
+        <a href="https://danialhyatt7-collab.github.io/legal-nexus-advocates/" target="_blank" rel="noopener noreferrer">Legal Nexus</a>
+      </div>
+      <div class="foot__col">
+        <h3>Elsewhere</h3>
+        <a href="https://www.instagram.com/daniiaallllllllll/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://github.com/danialhyatt7-collab" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+      <div class="foot__col foot__col--now">
+        <h3>Studio</h3>
+        <p>Islamabad, Pakistan</p>
+        <p class="foot__clock"><span id="footClock">--:--</span> local</p>
+        <p class="foot__status"><i aria-hidden="true"></i>Taking work for next month</p>
+      </div>
+    </nav>
+
     <div class="foot__base">
       <span>&copy; 2026 Danial Hyatt</span>
-      <span>Websites by Designs Redefined &middot; Islamabad, Pakistan</span>
-      <a href="mailto:hello@danialhyatt.com">hello@danialhyatt.com</a>
+      <span>Product motion &middot; Websites by Designs Redefined</span>
+    </div>
+
+    <!-- Decorative wordmark. Drawn as SVG with textLength so it spans the
+         full width exactly at any viewport: a vw font-size cannot promise
+         that, and at 1440px it overran and read "DANIAL H". -->
+    <div class="foot__mark" aria-hidden="true">
+      <svg viewBox="0 0 1000 108" preserveAspectRatio="xMidYMax meet" focusable="false">
+        <text x="500" y="100" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">DANIALHYATT</text>
+      </svg>
     </div>
   </footer>
+
+  <!-- studio local time, so the footer says something true right now -->
+  <script>
+    (function () {
+      var el = document.getElementById('footClock');
+      if (!el) return;
+      function tick() {
+        try {
+          el.textContent = new Intl.DateTimeFormat('en-GB', {
+            hour: '2-digit', minute: '2-digit', hour12: false,
+            timeZone: 'Asia/Karachi'
+          }).format(new Date());
+        } catch (e) {
+          el.closest('.foot__clock').hidden = true;   // no Intl, no claim
+          return;
+        }
+        setTimeout(tick, 15000);
+      }
+      tick();
+    })();
+  </script>
 
   <script src="script.js"></script>
 

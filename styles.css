@@ -1364,3 +1364,130 @@ ul, ol { list-style: none; }
   .js-anim .webcard__facts:not(.is-in) li::before { transform: none; }
   .webcard__shot, .webcard__num, .cta__btn { transition: none; }
 }
+
+/* The ghost button's label is long enough that below ~520px it broke across
+   two lines and dropped "work" under the neighbouring button. Narrow
+   screens get one button per row at full width, which fits the label with
+   room to spare even at 320px. */
+@media (max-width: 560px) {
+  .cta__actions { flex-direction: column; align-items: stretch; gap: 11px; }
+  .cta__btn { width: 100%; text-align: center; white-space: nowrap; }
+}
+
+/* ============================================================
+   Footer — the closing act
+   Scoped to .foot--big so the home page's existing footer is
+   untouched until it opts in.
+   ============================================================ */
+
+.foot--big {
+  border-top: 1px solid var(--line);
+  background:
+    radial-gradient(1200px 420px at 15% 0%, rgba(255,90,44,.10), transparent 62%),
+    linear-gradient(180deg, var(--bg) 0%, #0a0a0b 100%);
+  overflow: hidden;
+}
+.foot--big > * { max-width: var(--maxw); margin-inline: auto; }
+
+/* ---- the close ---- */
+.foot__call {
+  padding: clamp(64px, 11vh, 130px) var(--hero-gutter) clamp(40px, 6vh, 64px);
+}
+.foot__shout {
+  font-family: 'Syne Extra', 'Syne', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.1rem, 6.6vw, 4.6rem);
+  line-height: .98;
+  letter-spacing: -.025em;
+  margin: 14px 0 clamp(26px, 4vw, 40px);
+}
+.foot__mail {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .5em;
+  font-size: clamp(1.05rem, 2.6vw, 1.7rem);
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -.01em;
+  padding-bottom: 8px;
+  background-image: linear-gradient(var(--orange), var(--orange));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size .45s var(--ease), color .35s var(--ease);
+}
+.foot__mail span { transition: transform .35s var(--ease); display: inline-block; }
+.foot__mail:hover { background-size: 100% 1px; color: var(--orange); }
+.foot__mail:hover span { transform: translateX(6px); }
+
+.foot__wa {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-top: 20px; padding: 11px 18px;
+  border: 1px solid var(--line); border-radius: 999px;
+  color: var(--muted); text-decoration: none;
+  font-size: .86rem;
+  transition: border-color .3s var(--ease), color .3s var(--ease), background .3s var(--ease);
+}
+.foot__wa:hover { border-color: rgba(255,255,255,.34); color: var(--ink); background: rgba(255,255,255,.04); }
+
+/* ---- columns ---- */
+.foot__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(26px, 4vw, 48px);
+  padding: clamp(34px, 5vh, 54px) var(--hero-gutter);
+  border-top: 1px solid var(--line);
+}
+.foot__col { display: flex; flex-direction: column; gap: 11px; align-items: flex-start; }
+.foot__col h3 {
+  font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(244,246,250,.45); font-weight: 500; margin-bottom: 3px;
+}
+.foot__col a, .foot__col p { font-size: .94rem; color: var(--muted); text-decoration: none; margin: 0; }
+.foot__col a { position: relative; transition: color .28s var(--ease), transform .28s var(--ease); }
+.foot__col a:hover { color: var(--ink); transform: translateX(3px); }
+
+.foot__clock span { color: var(--ink); font-variant-numeric: tabular-nums; }
+.foot__status { display: inline-flex; align-items: center; gap: 8px; }
+.foot__status i {
+  width: 7px; height: 7px; border-radius: 50%; background: #35d07f; flex: none;
+  box-shadow: 0 0 0 0 rgba(53,208,127,.6);
+  animation: footPulse 2.4s ease-out infinite;
+}
+@keyframes footPulse {
+  70%  { box-shadow: 0 0 0 7px rgba(53,208,127,0); }
+  100% { box-shadow: 0 0 0 0 rgba(53,208,127,0); }
+}
+
+/* ---- small print ---- */
+.foot--big .foot__base {
+  display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  padding: 18px var(--hero-gutter);
+  border-top: 1px solid var(--line);
+  font-size: .7rem; letter-spacing: .09em; text-transform: uppercase; color: rgba(244,246,250,.42);
+}
+
+/* ---- the wordmark ---- */
+.foot__mark { max-width: none; padding: 0 var(--hero-gutter); }
+.foot__mark svg { display: block; width: 100%; height: auto; overflow: visible; }
+.foot__mark text {
+  font-family: 'Syne Extra', 'Syne', sans-serif;
+  font-size: 112px;                /* the viewBox scales this to fit */
+  fill: transparent;
+  stroke: rgba(244,246,250,.13);
+  stroke-width: 1;
+  user-select: none;
+}
+
+@media (max-width: 880px) {
+  .foot__grid { grid-template-columns: repeat(2, 1fr); gap: 30px clamp(20px, 5vw, 40px); }
+}
+@media (max-width: 460px) {
+  .foot__grid { grid-template-columns: 1fr; gap: 26px; }
+  .foot--big .foot__base { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .foot__wa { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .foot__status i { animation: none; }
+  .foot__mail, .foot__mail span, .foot__col a, .foot__wa { transition: none; }
+}
