@@ -1462,13 +1462,19 @@ ul, ol { list-style: none; }
 .foot__wa:hover .foot__wa-go { transform: translateX(5px); color: var(--ink); }
 .foot__wa:active { background: rgba(37,211,102,.2); }
 
-/* ---- columns: one per row, then two, then four ---- */
+/* ---- columns: one per row, then two, then four ----
+   The second column arrives at 350px rather than 560px. A 430 to 540px
+   browser window was getting the 390px layout, which made the link list
+   nearly 700px tall for no reason. */
 .foot__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 28px;
+  gap: 26px 20px;
   padding: 36px var(--hero-gutter);
   border-top: 1px solid var(--line);
+}
+@media (min-width: 350px) {
+  .foot__grid { grid-template-columns: repeat(2, 1fr); }
 }
 .foot__col { display: flex; flex-direction: column; gap: 11px; align-items: flex-start; }
 .foot__col h3 {
@@ -1497,8 +1503,9 @@ ul, ol { list-style: none; }
   display: flex; flex-direction: column; gap: 8px;
   padding: 18px var(--hero-gutter);
   border-top: 1px solid var(--line);
-  font-size: .68rem; letter-spacing: .09em; text-transform: uppercase;
+  font-size: .68rem; letter-spacing: .07em; text-transform: uppercase;
   color: rgba(244,246,250,.42);
+  text-wrap: balance;
 }
 
 /* ---- the wordmark ---- */
@@ -1517,7 +1524,7 @@ ul, ol { list-style: none; }
 @media (min-width: 560px) {
   .foot__actions { display: flex; flex-direction: row; flex-wrap: wrap; align-items: stretch; }
   .foot__mail, .foot__wa { flex: 1 1 260px; }
-  .foot__grid { grid-template-columns: repeat(2, 1fr); gap: 32px clamp(20px, 5vw, 44px); }
+  .foot__grid { gap: 32px clamp(24px, 5vw, 44px); }
   .foot--big .foot__base { flex-direction: row; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 }
 
