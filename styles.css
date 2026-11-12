@@ -1376,66 +1376,98 @@ ul, ol { list-style: none; }
 
 /* ============================================================
    Footer — the closing act
-   Scoped to .foot--big so the home page's existing footer is
-   untouched until it opts in.
+
+   Written mobile first: the base rules are the phone layout, and the
+   min-width queries add columns as there is room. Scoped to .foot--big so
+   index.html keeps its own footer until it is deliberately moved over.
    ============================================================ */
 
 .foot--big {
   border-top: 1px solid var(--line);
   background:
-    radial-gradient(1200px 420px at 15% 0%, rgba(255,90,44,.10), transparent 62%),
+    radial-gradient(900px 340px at 12% 0%, rgba(255,90,44,.10), transparent 64%),
     linear-gradient(180deg, var(--bg) 0%, #0a0a0b 100%);
   overflow: hidden;
 }
 .foot--big > * { max-width: var(--maxw); margin-inline: auto; }
 
 /* ---- the close ---- */
-.foot__call {
-  padding: clamp(64px, 11vh, 130px) var(--hero-gutter) clamp(40px, 6vh, 64px);
-}
+.foot__call { padding: 56px var(--hero-gutter) 40px; }
 .foot__shout {
   font-family: 'Syne Extra', 'Syne', sans-serif;
   font-weight: 400;
-  font-size: clamp(2.1rem, 6.6vw, 4.6rem);
+  font-size: clamp(2rem, 9vw, 4.6rem);
   line-height: .98;
   letter-spacing: -.025em;
-  margin: 14px 0 clamp(26px, 4vw, 40px);
+  margin: 14px 0 28px;
 }
+
+/* one action per row on a phone; side by side once there is width */
+.foot__actions { display: flex; flex-direction: column; gap: 12px; }
+
 .foot__mail {
-  display: inline-flex;
-  align-items: baseline;
-  gap: .5em;
-  font-size: clamp(1.05rem, 2.6vw, 1.7rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 60px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: #0c0c0d;
+  text-decoration: none;
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  transition: filter .25s var(--ease);
+}
+.foot__mail i { font-style: normal; transition: transform .3s var(--ease); }
+.foot__mail:hover { filter: brightness(.9); }
+.foot__mail:hover i { transform: translateX(5px); }
+.foot__mail:active { transform: translateY(1px); }
+
+/* WhatsApp: a real button, not a tag. Icon chip, two lines of label with
+   the number spelled out, and a chevron. Green is the point of
+   recognition, so it carries the border and the mark, and fills on press. */
+.foot__wa {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 60px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(37,211,102,.38);
+  background: rgba(37,211,102,.07);
   color: var(--ink);
   text-decoration: none;
-  letter-spacing: -.01em;
-  padding-bottom: 8px;
-  background-image: linear-gradient(var(--orange), var(--orange));
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size .45s var(--ease), color .35s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+  transition: background .28s var(--ease), border-color .28s var(--ease);
 }
-.foot__mail span { transition: transform .35s var(--ease); display: inline-block; }
-.foot__mail:hover { background-size: 100% 1px; color: var(--orange); }
-.foot__mail:hover span { transform: translateX(6px); }
-
-.foot__wa {
-  display: inline-flex; align-items: center; gap: 9px;
-  margin-top: 20px; padding: 11px 18px;
-  border: 1px solid var(--line); border-radius: 999px;
-  color: var(--muted); text-decoration: none;
-  font-size: .86rem;
-  transition: border-color .3s var(--ease), color .3s var(--ease), background .3s var(--ease);
+.foot__wa-badge {
+  flex: none;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 11px;
+  background: #25d366;
+  color: #04120a;
 }
-.foot__wa:hover { border-color: rgba(255,255,255,.34); color: var(--ink); background: rgba(255,255,255,.04); }
+.foot__wa-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.foot__wa-text b { font-size: .96rem; font-weight: 600; letter-spacing: -.005em; }
+.foot__wa-text i {
+  font-style: normal; font-size: .78rem; color: var(--muted);
+  font-variant-numeric: tabular-nums; letter-spacing: .02em;
+}
+.foot__wa-go { margin-left: auto; color: var(--muted); transition: transform .3s var(--ease), color .3s var(--ease); }
+.foot__wa:hover { background: rgba(37,211,102,.14); border-color: rgba(37,211,102,.62); }
+.foot__wa:hover .foot__wa-go { transform: translateX(5px); color: var(--ink); }
+.foot__wa:active { background: rgba(37,211,102,.2); }
 
-/* ---- columns ---- */
+/* ---- columns: one per row, then two, then four ---- */
 .foot__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(26px, 4vw, 48px);
-  padding: clamp(34px, 5vh, 54px) var(--hero-gutter);
+  grid-template-columns: 1fr;
+  gap: 28px;
+  padding: 36px var(--hero-gutter);
   border-top: 1px solid var(--line);
 }
 .foot__col { display: flex; flex-direction: column; gap: 11px; align-items: flex-start; }
@@ -1444,7 +1476,8 @@ ul, ol { list-style: none; }
   color: rgba(244,246,250,.45); font-weight: 500; margin-bottom: 3px;
 }
 .foot__col a, .foot__col p { font-size: .94rem; color: var(--muted); text-decoration: none; margin: 0; }
-.foot__col a { position: relative; transition: color .28s var(--ease), transform .28s var(--ease); }
+/* comfortable to hit with a thumb */
+.foot__col a { padding: 2px 0; transition: color .28s var(--ease), transform .28s var(--ease); }
 .foot__col a:hover { color: var(--ink); transform: translateX(3px); }
 
 .foot__clock span { color: var(--ink); font-variant-numeric: tabular-nums; }
@@ -1461,10 +1494,11 @@ ul, ol { list-style: none; }
 
 /* ---- small print ---- */
 .foot--big .foot__base {
-  display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  display: flex; flex-direction: column; gap: 8px;
   padding: 18px var(--hero-gutter);
   border-top: 1px solid var(--line);
-  font-size: .7rem; letter-spacing: .09em; text-transform: uppercase; color: rgba(244,246,250,.42);
+  font-size: .68rem; letter-spacing: .09em; text-transform: uppercase;
+  color: rgba(244,246,250,.42);
 }
 
 /* ---- the wordmark ---- */
@@ -1479,15 +1513,25 @@ ul, ol { list-style: none; }
   user-select: none;
 }
 
-@media (max-width: 880px) {
-  .foot__grid { grid-template-columns: repeat(2, 1fr); gap: 30px clamp(20px, 5vw, 40px); }
+/* ---- room for two columns ---- */
+@media (min-width: 560px) {
+  .foot__actions { flex-direction: row; flex-wrap: wrap; align-items: stretch; }
+  .foot__mail, .foot__wa { flex: 1 1 260px; }
+  .foot__grid { grid-template-columns: repeat(2, 1fr); gap: 32px clamp(20px, 5vw, 44px); }
+  .foot--big .foot__base { flex-direction: row; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 }
-@media (max-width: 460px) {
-  .foot__grid { grid-template-columns: 1fr; gap: 26px; }
-  .foot--big .foot__base { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .foot__wa { width: 100%; justify-content: center; }
+
+/* ---- room for the full row ---- */
+@media (min-width: 900px) {
+  .foot__call { padding: clamp(70px, 11vh, 130px) var(--hero-gutter) clamp(44px, 6vh, 64px); }
+  .foot__shout { font-size: clamp(2.6rem, 6.6vw, 4.6rem); margin-bottom: clamp(28px, 4vw, 40px); }
+  .foot__actions { gap: 14px; }
+  .foot__mail, .foot__wa { flex: 0 1 auto; }
+  .foot__mail { font-size: 1.12rem; padding: 16px 24px; }
+  .foot__grid { grid-template-columns: repeat(4, 1fr); gap: clamp(26px, 4vw, 48px); padding: clamp(36px, 5vh, 54px) var(--hero-gutter); }
 }
+
 @media (prefers-reduced-motion: reduce) {
   .foot__status i { animation: none; }
-  .foot__mail, .foot__mail span, .foot__col a, .foot__wa { transition: none; }
+  .foot__mail, .foot__mail i, .foot__col a, .foot__wa, .foot__wa-go { transition: none; }
 }
