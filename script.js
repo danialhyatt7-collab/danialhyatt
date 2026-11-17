@@ -265,11 +265,11 @@ const ICONS = {
   loop: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 8a4 4 0 1 0 0 8c2.2 0 3.3-1.7 5-4s2.8-4 5-4a4 4 0 1 1 0 8c-2.2 0-3.3-1.7-5-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
 };
 const PRODUCTS = [
-  { id: "spark", name: "Spark", sub: "Your ad, live in 24 hours", price: 600, billed: "Billed one time", tag: "1 spot", icon: ICONS.bolt,
+  { id: "spark", name: "Spark", sub: "Your ad, live in 24 hours", price: 400, billed: "Billed one time", tag: "1 spot", icon: ICONS.bolt,
     feats: ["One 15s vertical ad", "Brand cut and ad cut, both delivered", "Delivered in 9:16", "Storyboard before production"] },
-  { id: "signature", name: "Signature", sub: "Hero film + variations", price: 1500, billed: "Billed one time", tag: "3 spots", icon: ICONS.star, featured: true, badge: "Most booked",
+  { id: "signature", name: "Signature", sub: "Hero film + variations", price: 900, billed: "Billed one time", tag: "3 spots", icon: ICONS.star, featured: true, badge: "Most booked",
     feats: ["15s hero ad + 2 variations", "Brand cut and ad cut of each", "9:16, 1:1 and 16:9, each cut for its frame", "Concept and script written by me", "Storyboard approved first"] },
-  { id: "studio", name: "Studio", sub: "Always-on content engine", price: 2800, unit: "/mo", billed: "Billed monthly", tag: "4 / mo", icon: ICONS.loop,
+  { id: "studio", name: "Studio", sub: "Always-on content engine", price: 1800, unit: "/mo", billed: "Billed monthly", tag: "4 / mo", icon: ICONS.loop,
     feats: ["4 finished spots / month", "Brand cut and ad cut of each", "Every format, cut for its frame", "Weekly review call", "Storyboard for every spot"] },
 ];
 
