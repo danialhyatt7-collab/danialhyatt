@@ -268,7 +268,7 @@ const PRODUCTS = [
   { id: "spark", name: "Spark", sub: "Your ad, live in 24 hours", price: 400, billed: "Billed one time", tag: "1 spot", icon: ICONS.bolt,
     feats: ["One 15s vertical ad", "Brand cut and ad cut, both delivered", "Delivered in 9:16", "Storyboard before production"] },
   { id: "signature", name: "Signature", sub: "Hero film + variations", price: 900, billed: "Billed one time", tag: "3 spots", icon: ICONS.star, featured: true, badge: "Most booked",
-    feats: ["15s hero ad + 2 variations", "Brand cut and ad cut of each", "9:16, 1:1 and 16:9, each cut for its frame", "Concept and script written by me", "Storyboard approved first"] },
+    feats: ["3 ads: 1 hero film + 2 alternate hooks", "Brand cut and ad cut of each", "9:16, 1:1 and 16:9, each cut for its frame", "Concept and script written by me", "Storyboard approved first"] },
   { id: "studio", name: "Studio", sub: "Always-on content engine", price: 1800, unit: "/mo", billed: "Billed monthly", tag: "4 / mo", icon: ICONS.loop,
     feats: ["4 finished spots / month", "Brand cut and ad cut of each", "Every format, cut for its frame", "Weekly review call", "Storyboard for every spot"] },
 ];
